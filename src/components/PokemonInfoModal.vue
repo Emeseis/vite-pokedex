@@ -1,6 +1,6 @@
 <template>
-  <v-dialog v-model="visible" width="1244" style="margin: 160px 24px 24px 24px !important;">
-    <div class="px-6 py-6 rounded-xl text-center bg-white elevation-2" style="height: 708px">
+  <v-dialog v-model="visible" width="1244" style="margin: 140px 24px 24px 24px !important;">
+    <div class="px-6 py-6 rounded-xl text-center bg-white elevation-2 dial" style="height: 708px">
       <!-- <v-carousel 
         style="margin: -204px auto 0; height: 360px;" 
         hide-delimiters 
@@ -279,5 +279,8 @@
   }
   .customTable tr {
     line-height: 44px;
+  }
+  .dial {
+    transform: scale(0.9);
   }
 </style>

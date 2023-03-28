@@ -140,7 +140,7 @@
   };
 
   let params = reactive({
-    name: 'a',
+    name: '',
     order: '1',
     gen: 'All',
     type: 'All',
