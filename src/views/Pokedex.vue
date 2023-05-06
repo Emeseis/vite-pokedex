@@ -150,9 +150,10 @@
 
   let pokemonListLength = ref(null);
 
-  let isLoading = ref(true);
+  let isLoading = ref(false);
 
   const onSearch = async () => {
+    isLoading.value = true;
     pokemonsPerPage.value = screen.height >= 1440 ? 30 : screen.height >= 1080 ? 24 : 18;
     page.value = 1;
     try {
