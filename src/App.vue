@@ -47,6 +47,9 @@
   #app {
     background: url('./assets/background2.png') no-repeat, #f6f8fc;
   }
+  .v-application {
+    background: transparent !important;
+  }
   ::-webkit-scrollbar {
     width: 15px;
     box-shadow: 

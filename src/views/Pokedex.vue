@@ -125,12 +125,9 @@
   import Loader from '@/components/Loader.vue';
   import axios from 'axios';
 
-  let page = ref(1);
-  
+  let page = ref(1);  
   let pokemonList = ref({ pokemons: [] });
-
   let pokemonListSliced = ref(null);
-
   let pokemonsPerPage = ref(null);
 
   const pokemonListSlice = () => {
@@ -149,7 +146,6 @@
   });
 
   let pokemonListLength = ref(null);
-
   let isLoading = ref(false);
 
   const onSearch = async () => {
@@ -157,7 +153,7 @@
     pokemonsPerPage.value = screen.height >= 1440 ? 30 : screen.height >= 1080 ? 24 : 18;
     page.value = 1;
     try {
-      const pokemons = await axios.post(`https://node-pokedex-api.onrender.com/pokemons`, params); 
+      const pokemons = await axios.post(`${env.VITE_API_URL}/pokemons`, params); 
       pokemonList.value.pokemons = pokemons.data.pokemons;
       pokemonListLength.value = Math.ceil(pokemonList.value.pokemons.length / pokemonsPerPage.value);
       pokemonListSlice();
@@ -169,7 +165,6 @@
   };
 
   let isPokemonInfoModal = ref(false);
-
   let pokemonClicked = ref(null);
 
   const fetchPokemon = async (pokemon) => {
@@ -181,20 +176,19 @@
     pokemonMoreInfo.data.flavor_text_entries.filter(item => item.language.name == 'en');
 
     pokemonMoreInfo.data.genera = 
-    pokemonMoreInfo.data.genera.filter(item => item.language.name == 'en');
-    
+    pokemonMoreInfo.data.genera.filter(item => item.language.name == 'en');    
 
     const pokemonObject = { pokemon, pokemonInfo: pokemonInfo.data, pokemonMoreInfo: pokemonMoreInfo.data };
 
     if (pokemon.id != 1) {
       const idPrev = (pokemon.id - 1);
-      const pokemonPrev = await axios.get(`https://node-pokedex-api.onrender.com/pokemon/${idPrev}`);
+      const pokemonPrev = await axios.get(`${env.VITE_API_URL}/pokemon/${idPrev}`);
       pokemonObject.pokemonPrev = pokemonPrev.data;
     }
 
     if (pokemon.id != 1010) {
       const idNext = (pokemon.id + 1);
-      const pokemonNext = await axios.get(`https://node-pokedex-api.onrender.com/pokemon/${idNext}`);
+      const pokemonNext = await axios.get(`${env.VITE_API_URL}/pokemon/${idNext}`);
       pokemonObject.pokemonNext = pokemonNext.data;
     }
     console.log(pokemonObject);
