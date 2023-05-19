@@ -153,7 +153,7 @@
     pokemonsPerPage.value = screen.height >= 1440 ? 30 : screen.height >= 1080 ? 24 : 18;
     page.value = 1;
     try {
-      const pokemons = await axios.post(`${env.VITE_API_URL}/pokemons`, params); 
+      const pokemons = await axios.post(`${import.meta.env.VITE_API_URL}/pokemons`, params); 
       pokemonList.value.pokemons = pokemons.data.pokemons;
       pokemonListLength.value = Math.ceil(pokemonList.value.pokemons.length / pokemonsPerPage.value);
       pokemonListSlice();
@@ -182,13 +182,13 @@
 
     if (pokemon.id != 1) {
       const idPrev = (pokemon.id - 1);
-      const pokemonPrev = await axios.get(`${env.VITE_API_URL}/pokemon/${idPrev}`);
+      const pokemonPrev = await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${idPrev}`);
       pokemonObject.pokemonPrev = pokemonPrev.data;
     }
 
     if (pokemon.id != 1010) {
       const idNext = (pokemon.id + 1);
-      const pokemonNext = await axios.get(`${env.VITE_API_URL}/pokemon/${idNext}`);
+      const pokemonNext = await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${idNext}`);
       pokemonObject.pokemonNext = pokemonNext.data;
     }
     console.log(pokemonObject);

@@ -18,7 +18,7 @@ export default defineConfig({
       // styles: { configFile: 'src/styles/variables.scss' }
     }),
   ],
-  define: { 'process.env': {}, 'env': 'import.meta.env' },
+  define: { 'process.env': {}, },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
