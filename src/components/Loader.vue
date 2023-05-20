@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="props.loading">    
+  <v-dialog v-model="props.loading" persistent>    
     <v-card height="72" width="720" class="card-center px-8 rounded-xl">
       <v-progress-linear
         rounded
