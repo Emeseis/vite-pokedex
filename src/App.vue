@@ -50,6 +50,9 @@
   .v-application {
     background: transparent !important;
   }
+  .v-tab__slider {
+    height: 3px !important;
+  }
   ::-webkit-scrollbar {
     width: 15px;
     box-shadow: 
