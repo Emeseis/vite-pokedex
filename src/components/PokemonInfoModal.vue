@@ -1,32 +1,8 @@
 <template>
-  <v-dialog v-model="visible" width="1244" style="margin: 140px 24px 24px 24px !important;">
-    <div class="px-6 py-6 rounded-xl text-center bg-white elevation-2 dial" style="height: 708px">
-      <!-- <v-carousel 
-        style="margin: -204px auto 0; height: 360px;" 
-        hide-delimiters 
-        class="d-flex justify-center"
-        :show-arrows="props.pokemon.pokemonInfo.sprites.other['official-artwork'].front_shiny ? true : false"
-      >
-        <v-carousel-item
-          :src="props.pokemon.pokemonInfo.sprites.other['official-artwork'].front_default"
-          height="360"
-          width="480"
-        ></v-carousel-item>
-        <v-carousel-item
-          v-if="props.pokemon.pokemonInfo.sprites.other['official-artwork'].front_shiny"
-          :src="props.pokemon.pokemonInfo.sprites.other['official-artwork'].front_shiny"
-          height="360"
-          width="480"
-        ></v-carousel-item>
-      </v-carousel> -->
-      <v-img
-        :src="Artwork"
-        height="360"
-        width="360"
-        style="margin: -204px auto 0;"
-      ></v-img>
-      <v-row style="margin: -160px 0 64px;">
-        <div v-if="pokemon.pokemonPrev">
+  <v-dialog v-model="visible" width="1244" class="ma-6">
+    <v-card class="rounded-xl pa-6 text-center"> 
+      <div>
+        <v-row no-gutters justify="space-between">
           <v-btn
             @click="emit('onPokemonClicked', pokemon.pokemonPrev);"
             class="font-weight-black pr-8"
@@ -51,9 +27,6 @@
               </div>
             </div>
           </v-btn>
-        </div>
-        <v-spacer></v-spacer>
-        <div v-if="pokemon.pokemonNext">
           <v-btn
             @click="$emit('onPokemonClicked', pokemon.pokemonNext)"
             class="font-weight-black pl-8"
@@ -78,155 +51,176 @@
               height="64"
             ></v-img>
           </v-btn>
+        </v-row>
+        <v-row no-gutters justify="center" style="margin-top: -96px;">
+          <v-btn 
+            icon 
+            class="invisible"
+          ></v-btn>
+          <v-img
+            :src="Artwork"
+            height="270"
+            width="270"
+            class="artwork ma-0"
+          ></v-img>
+          <v-btn
+            :icon="!showShiny ? 'mdi-star-outline' : 'mdi-star-off'"
+            @click="showShiny = !showShiny"
+            color="#EEE"
+          ></v-btn>
+        </v-row>
+        <div class="text-h5 font-weight-black text-grey-darken-1">
+          #{{ props.pokemon.pokemon.entry }}
         </div>
-      </v-row>
-      <div class="text-h5 font-weight-black text-grey-darken-1">
-        #{{ props.pokemon.pokemon.entry }}
+        <div class="text-h4 font-weight-black text-black mt-3">
+          <span v-if="props.pokemon.pokemon.name.includes('♂')">
+            {{ props.pokemon.pokemon.name.replace('♂', '') }}
+            <v-icon size="x-small" class="mt-n1 ml-n1">mdi-gender-male</v-icon>
+          </span>
+          <span v-else-if="props.pokemon.pokemon.name.includes('♀')">
+            {{ props.pokemon.pokemon.name.replace('♀', '') }}
+            <v-icon size="x-small" class="mt-n1 ml-n1">mdi-gender-female</v-icon>
+          </span>
+          <span v-else>
+            {{ props.pokemon.pokemon.name }}
+          </span>
+        </div>
+        <div class="mt-4">
+          <type-chip
+            size="x-large"
+            :type="props.pokemon.pokemon.types[0].type.name"
+          ></type-chip>
+          <type-chip
+            v-if="props.pokemon.pokemon.types[1]"
+            class="ml-2"
+            size="x-large"
+            :type="props.pokemon.pokemon.types[1].type.name"
+          ></type-chip>
+        </div>      
+        <v-card class="rounded-xl elevation-2 mt-4">
+          <v-toolbar height="64" floating color="#EEE"  show-arrows>
+            <v-tabs v-model="state.tab" grow>
+              <v-tab value="about" class="font-weight-black">
+                About
+              </v-tab>
+              <v-tab value="stats" class="font-weight-black">
+                Base Stats
+              </v-tab>
+              <v-tab value="evolve" class="font-weight-black">
+                Evolution
+              </v-tab>
+              <v-tab value="moves" class="font-weight-black">
+                Moves
+              </v-tab>
+            </v-tabs>
+          </v-toolbar>
+          <v-window v-model="state.tab" style="height: 280px; margin-top: -7px">
+            <v-window-item value="about">
+              <v-card color="#EEE" height="280px">
+                <v-row class="pa-4">
+                  <v-col cols="6" class="text-left">
+                    <table width="100%" class="customTable mb-4">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <h3>General Information</h3>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table width="100%" class="customTable">
+                      <tbody>
+                        <tr>
+                          <td class="text-grey-darken-1" width="20%">Species</td>
+                          <td>{{ pokemon.pokemonMoreInfo.genera[0] ? pokemon.pokemonMoreInfo.genera[0].genus : 'None' }}</td>
+                        </tr>
+                        <tr>
+                          <td class="text-grey-darken-1">Height</td>
+                          <td>{{ toFeetInch((pokemon.pokemonInfo.height/10)) }} ({{ (pokemon.pokemonInfo.height/10).toFixed(1) }} m)</td>
+                        </tr>
+                        <tr>
+                          <td class="text-grey-darken-1">Weigth</td>
+                          <td>{{ ((pokemon.pokemonInfo.weight/10)*2.2046).toFixed(1) }} lbs ({{ (pokemon.pokemonInfo.weight/10).toFixed(1) }} kg)</td>
+                        </tr>
+                        <tr>
+                          <td class="text-grey-darken-1">Abilities</td>
+                          <td>
+                            <span v-for="(ability, index) in pokemon.pokemonInfo.abilities" :key="index">
+                              <v-chip class="mr-1" :append-icon="ability.is_hidden ? 'mdi-eye-off' : ''">
+                                {{ capitalizeWord(ability.ability.name) }}
+                              </v-chip>
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </v-col>
+                  <v-col cols="6" class="text-left">
+                    <table width="100%" class="customTable mb-4">
+                      <tbody>
+                        <tr>
+                          <td>
+                            <h3>Breeding</h3>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table width="100%" class="customTable">
+                      <tbody>
+                        <tr>
+                          <td class="text-grey-darken-1" width="20%">Gender</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td class="text-grey-darken-1">Egg Groups</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td class="text-grey-darken-1">Egg Cycles</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td class="text-grey-darken-1">ㅤ</td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-window-item>
+            <v-window-item value="stats">
+              <v-card color="#EEE" height="280px">
+          
+              </v-card>
+            </v-window-item>
+            <v-window-item value="evolve">
+              <v-card color="#EEE" height="280px">
+          
+              </v-card>
+            </v-window-item>
+            <v-window-item value="moves">
+              <v-card color="#EEE" height="280px">
+          
+              </v-card>
+            </v-window-item>
+          </v-window>
+        </v-card>
       </div>
-      <div class="text-h4 font-weight-black text-black mt-3">
-        <span v-if="props.pokemon.pokemon.name.includes('♂')">
-          {{ props.pokemon.pokemon.name.replace('♂', '') }}
-          <v-icon size="x-small" class="mt-n1 ml-n1">mdi-gender-male</v-icon>
-        </span>
-        <span v-else-if="props.pokemon.pokemon.name.includes('♀')">
-          {{ props.pokemon.pokemon.name.replace('♀', '') }}
-          <v-icon size="x-small" class="mt-n1 ml-n1">mdi-gender-female</v-icon>
-        </span>
-        <span v-else>
-          {{ props.pokemon.pokemon.name }}
-        </span>
-      </div>
-      <div class="mt-4">
-        <type-chip
-          size="x-large"
-          :type="props.pokemon.pokemon.types[0].type.name"
-        ></type-chip>
-        <type-chip
-          v-if="props.pokemon.pokemon.types[1]"
-          class="ml-2"
-          size="x-large"
-          :type="props.pokemon.pokemon.types[1].type.name"
-        ></type-chip>
-      </div>      
-      <v-card class="rounded-xl elevation-2 mt-4">
-        <v-toolbar height="64" floating color="#EEE"  show-arrows>
-          <v-tabs v-model="state.tab" grow>
-            <v-tab value="about" class="font-weight-black">
-              About
-            </v-tab>
-            <v-tab value="stats" class="font-weight-black">
-              Base Stats
-            </v-tab>
-            <v-tab value="evolve" class="font-weight-black">
-              Evolution
-            </v-tab>
-            <v-tab value="moves" class="font-weight-black">
-              Moves
-            </v-tab>
-          </v-tabs>
-        </v-toolbar>
-        <v-window v-model="state.tab" class="mt-n2" style="height: 280px;">
-          <v-window-item value="about">
-            <v-card color="#EEE" height="280px">
-              <v-row class="pa-4">
-                <v-col cols="6" class="text-left">
-                  <table width="100%" class="customTable mb-4">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <h3>General Information</h3>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <table width="100%" class="customTable">
-                    <tbody>
-                      <tr>
-                        <td class="text-grey-darken-1" width="20%">Species</td>
-                        <td>{{ pokemon.pokemonMoreInfo.genera[0] ? pokemon.pokemonMoreInfo.genera[0].genus : 'None' }}</td>
-                      </tr>
-                      <tr>
-                        <td class="text-grey-darken-1">Height</td>
-                        <td>{{ toFeetInch((pokemon.pokemonInfo.height/10)) }} ({{ (pokemon.pokemonInfo.height/10).toFixed(1) }} m)</td>
-                      </tr>
-                      <tr>
-                        <td class="text-grey-darken-1">Weigth</td>
-                        <td>{{ ((pokemon.pokemonInfo.weight/10)*2.2046).toFixed(1) }} lbs ({{ (pokemon.pokemonInfo.weight/10).toFixed(1) }} kg)</td>
-                      </tr>
-                      <tr>
-                        <td class="text-grey-darken-1">Abilities</td>
-                        <td>
-                          <span v-for="(ability, index) in pokemon.pokemonInfo.abilities" :key="index">
-                            <v-chip class="mr-1" :append-icon="ability.is_hidden ? 'mdi-eye-off' : ''">
-                              {{ capitalizeWord(ability.ability.name) }}
-                            </v-chip>
-                          </span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </v-col>
-                <v-col cols="6" class="text-left">
-                  <table width="100%" class="customTable mb-4">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <h3>Breeding</h3>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <table width="100%" class="customTable">
-                    <tbody>
-                      <tr>
-                        <td class="text-grey-darken-1" width="20%">Gender</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td class="text-grey-darken-1">Egg Groups</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td class="text-grey-darken-1">Egg Cycles</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td class="text-grey-darken-1">ㅤ</td>
-                        <td></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-window-item>
-          <v-window-item value="stats">
-            <v-card color="#EEE" height="280px">
-        
-            </v-card>
-          </v-window-item>
-          <v-window-item value="evolve">
-            <v-card color="#EEE" height="280px">
-        
-            </v-card>
-          </v-window-item>
-          <v-window-item value="moves">
-            <v-card color="#EEE" height="280px">
-        
-            </v-card>
-          </v-window-item>
-        </v-window>
-      </v-card>
-    </div>
+    </v-card>
   </v-dialog>
 </template>
 
 <script setup>
   import TypeChip from '@/components/TypeChip.vue';
-  import { computed, reactive } from 'vue';
+  import { computed, reactive, ref, watch } from 'vue';
   import { toFeetInch, capitalizeWord } from '@/composables/functions'
 
   const emit = defineEmits(['toggleDialog', 'onPokemonClicked']);
+
+  watch(() => props.pokemon, () => showShiny.value = false)
+
+  let showShiny = ref(false);
 
   const props = defineProps({
     showDialog: Boolean,
@@ -238,8 +232,10 @@
     set: (newVal) => emit('toggleDialog', newVal)
   });
 
-  const Artwork = computed(() => props.pokemon.pokemonInfo.sprites.other['official-artwork'].front_default);
-  // const Artwork2 = computed(() => props.pokemon.pokemonInfo.sprites.other['official-artwork'].front_shiny);
+  const Artwork = computed(() => { 
+    if (showShiny.value) return props.pokemon.pokemonInfo.sprites.other['official-artwork'].front_shiny;
+    else return props.pokemon.pokemonInfo.sprites.other['official-artwork'].front_default;
+  });
 
   const state = reactive({ tab: 'about' });
 </script>
@@ -280,7 +276,16 @@
   .customTable tr {
     line-height: 44px;
   }
-  .dial {
-    transform: scale(0.9);
+  .v-responsive {
+    flex: 0 0 auto;
+  }
+  .invisible {
+    visibility: hidden !important;
+  }
+  .v-window .v-card {
+    border-radius: 0;
+  }
+  .artwork {
+    margin-bottom: -96px;
   }
 </style>

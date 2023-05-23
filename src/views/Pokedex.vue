@@ -150,7 +150,7 @@
 
   const onSearch = async () => {
     isLoading.value = true;
-    pokemonsPerPage.value = screen.height >= 1440 ? 30 : screen.height >= 1080 ? 24 : 18;
+    pokemonsPerPage.value = screen.height >= 1440 ? 30 : screen.height >= 1080 ? 18 : screen.height >= 690 ? 12 : 18;
     page.value = 1;
     try {
       const pokemons = await axios.post(`${import.meta.env.VITE_API_URL}/pokemons`, params); 
@@ -191,14 +191,17 @@
       const pokemonNext = await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${idNext}`);
       pokemonObject.pokemonNext = pokemonNext.data;
     }
-    console.log(pokemonObject);
-    console.log(pokemonObject.pokemonInfo.sprites.other['official-artwork'].front_shiny)
+    
     return pokemonObject;
   };
 
-  const onPokemonClicked = async (pokemon) => {
-    isLoading.value = true;    
+  const onPokemonClicked = async (pokemon, done) => {
+    isLoading.value = true;
     pokemonClicked = await fetchPokemon(pokemon);
+    if (done) {
+      done();
+      console.log({done})
+    }
     isLoading.value = false;
     isPokemonInfoModal.value = true;
   };
