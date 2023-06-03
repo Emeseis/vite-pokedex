@@ -1,24 +1,22 @@
 <template>
   <v-row class="mt-6 justify-center"> <!-- justify-space-evenly -->
-    <v-col cols="2">
+    <v-col cols="3">
       <v-card class="rounded-xl elevation-2">
         <v-text-field
           hideDetails
           clearable
           label="Name"
-          bgColor="white"
           prependInnerIcon="mdi-text-search"
           v-model="params.name"
           @update:modelValue="onSearch"
         ></v-text-field>
       </v-card>
     </v-col>
-    <v-col cols="2">
+    <v-col cols="3">
       <v-card class="rounded-xl elevation-2">
         <v-select
           hideDetails
           label="Type"
-          bgColor="white"
           :menuProps="{ contentClass: 'v-select-custom-menu' }" 
           :items="typeList"
           v-model="params.type"
@@ -44,12 +42,11 @@
         </v-select>
       </v-card>
     </v-col>
-    <v-col cols="2">
+    <v-col cols="3">
       <v-card class="rounded-xl elevation-2">
         <v-select
           hideDetails
           label="Generation"
-          bgColor="white"
           :prependInnerIcon="genList[genList.findIndex(item => item.value == params.gen)].icon"
           :menuProps="{ contentClass: 'v-select-custom-menu' }"
           :items="genList"
@@ -66,12 +63,11 @@
         </v-select>
       </v-card>
     </v-col>
-    <v-col cols="2">
+    <v-col cols="3">
       <v-card class="rounded-xl elevation-2">
         <v-select
           hideDetails
           label="Order"
-          bgColor="white"
           :prependInnerIcon="orderList[orderList.findIndex(item => item.value == params.order)].icon"
           :menuProps="{ contentClass: 'v-select-custom-menu' }"
           :items="orderList"
@@ -88,7 +84,7 @@
         </v-select>
       </v-card>
     </v-col>
-    <v-col cols="4">
+    <!-- <v-col cols="4">
       <v-card class="rounded-xl elevation-2" height="56">
         <v-pagination
           v-model="page"
@@ -99,13 +95,11 @@
           @update:model-value="pokemonListSlice"
         ></v-pagination>
       </v-card>
-    </v-col>
+    </v-col> -->
   </v-row>
-  <loader
-    :loading="isLoading"
-  ></loader>
+  <loader :loading="isLoading"></loader>
   <pokemon-grid
-    :pokemonList="pokemonListSliced"
+    :pokemonList="sliceList ? pokemonListSliced : pokemonList"
     @onPokemonClicked="onPokemonClicked"
   ></pokemon-grid>
   <pokemon-info-modal
@@ -125,21 +119,22 @@
   import Loader from '@/components/Loader.vue';
   import axios from 'axios';
 
-  let page = ref(1);  
-  let pokemonList = ref({ pokemons: [] });
+  let page = ref(1);
+  let sliceList = ref(false);
+  let pokemonList = ref([]);
   let pokemonListSliced = ref(null);
   let pokemonsPerPage = ref(null);
 
   const pokemonListSlice = () => {
     let paginationStart = (page.value - 1) * pokemonsPerPage.value;
     let paginationEnd = page.value * pokemonsPerPage.value;
-    pokemonListSliced.value = pokemonList.value.pokemons.slice(paginationStart, paginationEnd);
+    pokemonListSliced.value = pokemonList.slice(paginationStart, paginationEnd);
   };
 
   let params = reactive({
     name: '',
     order: '1',
-    gen: 'All',
+    gen: '1',
     type: 'All',
     from: '',
     to: '',
@@ -154,8 +149,8 @@
     page.value = 1;
     try {
       const pokemons = await axios.post(`${import.meta.env.VITE_API_URL}/pokemons`, params); 
-      pokemonList.value.pokemons = pokemons.data.pokemons;
-      pokemonListLength.value = Math.ceil(pokemonList.value.pokemons.length / pokemonsPerPage.value);
+      pokemonList = pokemons.data.pokemons;
+      pokemonListLength.value = Math.ceil(pokemonList.length / pokemonsPerPage.value);
       pokemonListSlice();
       isLoading.value = false;
     } catch (err) {
@@ -208,7 +203,7 @@
 
   const onWindowsResize = () => {
     pokemonsPerPage.value = screen.height >= 1440 ? 30 : screen.height >= 1080 ? 24 : 18;
-    pokemonListLength.value = parseInt((pokemonList.value.pokemons.length / pokemonsPerPage.value) + 1);
+    pokemonListLength.value = parseInt((pokemonList.length / pokemonsPerPage.value) + 1);
     if (pokemonsPerPage.value == 30 && page.value > 34) page.value = 34;
     pokemonListSlice();
   };
@@ -223,7 +218,7 @@
 <style>
   .v-select-custom-menu {
     border-radius: 24px !important;
-    max-height: 75vh !important;
+    /* max-height: 70vh !important; */
   }
   input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     -webkit-appearance: none;

@@ -1,39 +1,50 @@
 <template>
+  <v-theme-provider :theme="toggleTheme ? 'dark': 'light'" with-background>
   <v-app>
-    <v-toolbar class="mt-8" rounded="xl" elevation="2" height="84" floating>
-      <v-tabs v-model="state.tab" grow bg-color="white" color="red">
-        <v-tab class="font-weight-bold" value="1" :ripple="false" to="/">
+    <img id="pokeball-watermark" src="@/assets/pokeball.svg">
+    <v-toolbar class="mt-8" rounded="xl" elevation="2" height="84" style="z-index: 1;" floating>
+      <v-tabs v-model="tab" grow color="red">
+        <v-tab class="font-weight-bold" :value="1" :ripple="false" to="/">
           <v-icon start size="36px">mdi-home</v-icon>
           Home
         </v-tab>
-        <v-tab class="font-weight-bold" value="2" :ripple="false" to="/pokedex">
+        <v-tab class="font-weight-bold" :value="2" :ripple="false" to="/pokedex">
           <v-icon start size="36px">mdi-pokeball</v-icon>
           Pokédex
         </v-tab>
-        <v-tab class="font-weight-bold" value="3" :ripple="false" disabled>
+        <v-tab class="font-weight-bold" :value="3" :ripple="false" disabled>
           <v-icon start size="36px">mdi-nintendo-game-boy</v-icon>
           Videogames
         </v-tab>
-        <v-tab class="font-weight-bold" value="4" :ripple="false" disabled>
+        <v-tab class="font-weight-bold" :value="4" :ripple="false" disabled>
           <v-icon start size="36px">mdi-pokemon-go</v-icon>
           GCC Pokemon
         </v-tab>
-        <v-tab class="font-weight-bold" value="5" :ripple="false" disabled>
+        <v-tab class="font-weight-bold" :value="5" :ripple="false" disabled>
           <v-icon start size="36px">mdi-television</v-icon>
           TV Pokemon
         </v-tab>
+        <v-switch
+          inset
+          hide-details
+          v-model="toggleTheme"
+          class="d-flex align-center mr-n8"
+        ></v-switch>
       </v-tabs>
     </v-toolbar>
     <v-main>       
       <router-view/>
     </v-main>
-  </v-app>
+  </v-app>    
+  </v-theme-provider>
 </template>
 
 <script setup>
-  import { reactive } from 'vue';
+  import { ref } from 'vue';
+  import { useTheme } from 'vuetify';
 
-  const state = reactive({ tab: '1' });
+  const tab = ref(1);
+  const toggleTheme = ref(true);
 </script>
 
 <style scoped>
@@ -41,15 +52,21 @@
     max-width: 1244px;
     margin: 0 auto;
   }
+  #pokeball-watermark {
+    position: fixed;
+    top: -10vw; 
+    left: -10vw;
+    width: 50vw;
+    height: 50vw;
+    opacity: 0.1;
+    z-index: 0;
+  }
+  .v-tab--selected {
+    font-weight: 900 !important;
+  }
 </style>
 
 <style>
-  #app {
-    background: url('./assets/background2.png') no-repeat, #f6f8fc;
-  }
-  .v-application {
-    background: transparent !important;
-  }
   .v-tab__slider {
     height: 3px !important;
   }
@@ -61,18 +78,12 @@
       0px 3px 14px 2px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12)) !important;
   }
   ::-webkit-scrollbar-track {
-    background: #f6f8fc;
+    background: rgba(222,222,222);
     border-radius: 7px;
   }
   ::-webkit-scrollbar-thumb {
-    background: #b0b0b0;
-    border: solid 3px #f6f8fc;
+    background: #444;
+    border: solid 3px rgba(222,222,222);
     border-radius: 7px;
-  }
-  .img {
-    opacity: 0.9;
-    height: 200px;
-    width: 200px;
-    z-index: 999 !important;
   }
 </style>
