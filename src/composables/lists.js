@@ -21,7 +21,6 @@ export const typeList = [
 ];
 
 export const genList = [
-  { title: 'All', value: 'All', icon: 'mdi-set-all' },
   { title: 'First', value: '1', icon: 'mdi-roman-numeral-1' },
   { title: 'Second', value: '2', icon: 'mdi-roman-numeral-2' },
   { title: 'Third', value: '3', icon: 'mdi-roman-numeral-3' },
