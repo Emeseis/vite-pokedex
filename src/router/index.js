@@ -12,6 +12,16 @@ const routes = [
     name: 'Pokedex',
     component: () => import('@/views/Pokedex.vue'),
   },
+  {
+    path: '/types',
+    name: 'Types',
+    component: () => import('@/views/Types.vue'),
+  },
+  {
+    path: '/moves',
+    name: 'Moves',
+    component: () => import('@/views/Moves.vue'),
+  },
 ]
 
 const router = createRouter({

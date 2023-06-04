@@ -4,13 +4,13 @@
       <div>
         <v-row no-gutters justify="space-between">
           <v-btn
+            v-if="pokemon.pokemonPrev"
             @click="emit('onPokemonClicked', pokemon.pokemonPrev);"
             class="font-weight-black pr-8"
             prepend-icon="mdi-chevron-left"
             rounded="xl"
             size="large"
             height="96px"
-            color="cardVariant"
           >
             <v-img
               :src="pokemon.pokemonPrev.sprite"
@@ -27,14 +27,15 @@
               </div>
             </div>
           </v-btn>
+          <v-spacer></v-spacer>
           <v-btn
+            v-if="pokemon.pokemonNext"
             @click="$emit('onPokemonClicked', pokemon.pokemonNext)"
             class="font-weight-black pl-8"
             append-icon="mdi-chevron-right"
             rounded="xl"
             size="large"
             height="96px"
-            color="cardVariant"
           >
             <div>
               <div class="font-weigth-bold entry-text-btn mb-2">

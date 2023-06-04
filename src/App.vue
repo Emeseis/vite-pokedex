@@ -12,13 +12,13 @@
           <v-icon start size="36px">mdi-pokeball</v-icon>
           Pokédex
         </v-tab>
-        <v-tab class="font-weight-bold" :value="3" :ripple="false" disabled>
-          <v-icon start size="36px">mdi-nintendo-game-boy</v-icon>
-          Videogames
+        <v-tab class="font-weight-bold" :value="3" :ripple="false" to="/types">
+          <v-icon start size="36px">mdi-atom</v-icon>
+          Types
         </v-tab>
-        <v-tab class="font-weight-bold" :value="4" :ripple="false" disabled>
-          <v-icon start size="36px">mdi-pokemon-go</v-icon>
-          GCC Pokemon
+        <v-tab class="font-weight-bold" :value="4" :ripple="false" to="/moves">
+          <v-icon start size="36px">mdi-arrow-all</v-icon>
+          Moves
         </v-tab>
         <v-tab class="font-weight-bold" :value="5" :ripple="false" disabled>
           <v-icon start size="36px">mdi-television</v-icon>
@@ -41,7 +41,6 @@
 
 <script setup>
   import { ref } from 'vue';
-  import { useTheme } from 'vuetify';
 
   const tab = ref(1);
   const toggleTheme = ref(true);
