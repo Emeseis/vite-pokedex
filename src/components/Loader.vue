@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="props.loading" persistent>    
+  <v-overlay v-model="props.loading" persistent class="align-center justify-center">    
     <v-card height="72" width="720" class="card-center px-8 rounded-xl">
       <v-progress-linear
         rounded
@@ -9,7 +9,7 @@
         height="8"
       ></v-progress-linear>
     </v-card>
-  </v-dialog>
+  </v-overlay>
 </template>
 
 <script setup>

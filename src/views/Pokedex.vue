@@ -114,15 +114,16 @@
   import { ref, reactive, onMounted, onBeforeMount, onBeforeUnmount } from 'vue';
   import { typeList, genList, orderList } from '@/composables/lists'
   import { getColor } from '@/composables/functions'
-  import PokemonGrid from '@/components/PokemonGrid.vue';
   import PokemonInfoModal from '@/components/PokemonInfoModal.vue';
+  import PokemonGrid from '@/components/PokemonGrid.vue';
   import Loader from '@/components/Loader.vue';
   import axios from 'axios';
 
   let page = ref(1);
   let sliceList = ref(false);
+  let loadPokemons = ref(false);
   let pokemonList = ref([]);
-  let pokemonListSliced = ref(null);
+  let pokemonListSliced = ref([]);
   let pokemonsPerPage = ref(null);
 
   const pokemonListSlice = () => {
@@ -152,7 +153,9 @@
       pokemonList = pokemons.data.pokemons;
       pokemonListLength.value = Math.ceil(pokemonList.length / pokemonsPerPage.value);
       pokemonListSlice();
-      isLoading.value = false;
+      isLoading.value = false;   
+      await new Promise(r => setTimeout(r))   
+      loadPokemons.value = true;
     } catch (err) {
       console.error(err);
       isLoading.value = false;
