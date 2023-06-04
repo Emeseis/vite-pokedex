@@ -1,23 +1,24 @@
 export const getColor = (type) => {
-  if (type == 'Normal') return '#aaaa99';
-  if (type == 'Fire') return '#ff4422';
-  if (type == 'Water') return '#3399ff';
-  if (type == 'Electric') return '#ffcc33';
-  if (type == 'Grass') return '#77cc55';
-  if (type == 'Ice') return '#66ccff';
-  if (type == 'Fighting') return '#bb5544';
-  if (type == 'Poison') return '#aa5599';
-  if (type == 'Ground') return '#ddbb55';
-  if (type == 'Flying') return '#8899ff';
-  if (type == 'Psychic') return '#ff5599';
-  if (type == 'Bug') return '#aabb22';
-  if (type == 'Rock') return '#bbaa66';
-  if (type == 'Ghost') return '#6666bb';
-  if (type == 'Dragon') return '#7766ee';
-  if (type == 'Dark') return '#775544';
-  if (type == 'Steel') return '#aaaabb';
-  if (type == 'Fairy') return '#ee99ee';  
-  return '#000000'
+  switch (type) {
+    case 'Normal': return '#aaaa99';
+    case 'Fire': return '#ff4422';
+    case 'Water': return '#3399ff';
+    case 'Electric': return '#ffcc33';
+    case 'Grass': return '#77cc55';
+    case 'Ice': return '#66ccff';
+    case 'Fighting': return '#bb5544';
+    case 'Poison': return '#aa5599';
+    case 'Ground': return '#ddbb55';
+    case 'Flying': return '#8899ff';
+    case 'Psychic': return '#ff5599';
+    case 'Bug': return '#aabb22';
+    case 'Rock': return '#bbaa66';
+    case 'Ghost': return '#6666bb';
+    case 'Dragon': return '#7766ee';
+    case 'Dark': return '#775544';
+    case 'Steel': return '#aaaabb';
+    case 'Fairy': return '#ee99ee';
+  }
 };
 
 export const toFeetInch = (m) => {
@@ -49,4 +50,4 @@ export const zerofyInch = (value) => {
   if (!value) return;
   let zeroes = new Array(3).join("0");
   return (zeroes + value).slice(-2);
-}
+};

@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="visible" width="1244" class="ma-6">
-    <v-card class="rounded-xl pa-6 text-center"> 
+    <v-card class="rounded-xl pa-6 text-center dialog"> 
       <div>
         <v-row no-gutters justify="space-between">
           <v-btn
@@ -9,8 +9,8 @@
             prepend-icon="mdi-chevron-left"
             rounded="xl"
             size="large"
-            color="#EEE"
             height="96px"
+            color="cardVariant"
           >
             <v-img
               :src="pokemon.pokemonPrev.sprite"
@@ -19,7 +19,7 @@
               height="64"
             ></v-img>
             <div>
-              <div class="font-weigth-bold text-grey-darken-1 mb-2">
+              <div class="font-weigth-bold entry-text-btn mb-2">
                 #{{ pokemon.pokemonPrev.entry }}
               </div>
               <div>
@@ -33,11 +33,11 @@
             append-icon="mdi-chevron-right"
             rounded="xl"
             size="large"
-            color="#EEE"
             height="96px"
+            color="cardVariant"
           >
             <div>
-              <div class="font-weigth-bold text-grey-darken-1 mb-2">
+              <div class="font-weigth-bold entry-text-btn mb-2">
                 #{{ pokemon.pokemonNext.entry }}
               </div>
               <div>
@@ -64,15 +64,14 @@
             class="artwork ma-0"
           ></v-img>
           <v-btn
-            :icon="!showShiny ? 'mdi-star-outline' : 'mdi-star-off'"
+            :icon="!showShiny ? 'mdi-star' : 'mdi-star-off'"
             @click="showShiny = !showShiny"
-            color="#EEE"
           ></v-btn>
         </v-row>
-        <div class="text-h5 font-weight-black text-grey-darken-1">
+        <div class="font-weight-black entry-text mt-2">
           #{{ props.pokemon.pokemon.entry }}
         </div>
-        <div class="text-h4 font-weight-black text-black mt-3">
+        <div class="text-h4 font-weight-black mt-2">
           <span v-if="props.pokemon.pokemon.name.includes('♂')">
             {{ props.pokemon.pokemon.name.replace('♂', '') }}
             <v-icon size="x-small" class="mt-n1 ml-n1">mdi-gender-male</v-icon>
@@ -98,7 +97,7 @@
           ></type-chip>
         </div>      
         <v-card class="rounded-xl elevation-2 mt-4">
-          <v-toolbar height="64" floating color="#EEE"  show-arrows>
+          <v-toolbar height="64" floating  show-arrows>
             <v-tabs v-model="state.tab" grow>
               <v-tab value="about" class="font-weight-black">
                 About
@@ -116,7 +115,7 @@
           </v-toolbar>
           <v-window v-model="state.tab" style="height: 280px; margin-top: -7px">
             <v-window-item value="about">
-              <v-card color="#EEE" height="280px">
+              <v-card height="280px">
                 <v-row class="pa-4">
                   <v-col cols="6" class="text-left">
                     <table width="100%" class="customTable mb-4">
@@ -131,19 +130,19 @@
                     <table width="100%" class="customTable">
                       <tbody>
                         <tr>
-                          <td class="text-grey-darken-1" width="20%">Species</td>
+                          <td class="" width="20%">Species</td>
                           <td>{{ pokemon.pokemonMoreInfo.genera[0] ? pokemon.pokemonMoreInfo.genera[0].genus : 'None' }}</td>
                         </tr>
                         <tr>
-                          <td class="text-grey-darken-1">Height</td>
+                          <td class="">Height</td>
                           <td>{{ toFeetInch((pokemon.pokemonInfo.height/10)) }} ({{ (pokemon.pokemonInfo.height/10).toFixed(1) }} m)</td>
                         </tr>
                         <tr>
-                          <td class="text-grey-darken-1">Weigth</td>
+                          <td class="">Weigth</td>
                           <td>{{ ((pokemon.pokemonInfo.weight/10)*2.2046).toFixed(1) }} lbs ({{ (pokemon.pokemonInfo.weight/10).toFixed(1) }} kg)</td>
                         </tr>
                         <tr>
-                          <td class="text-grey-darken-1">Abilities</td>
+                          <td class="">Abilities</td>
                           <td>
                             <span v-for="(ability, index) in pokemon.pokemonInfo.abilities" :key="index">
                               <v-chip class="mr-1" :append-icon="ability.is_hidden ? 'mdi-eye-off' : ''">
@@ -168,19 +167,19 @@
                     <table width="100%" class="customTable">
                       <tbody>
                         <tr>
-                          <td class="text-grey-darken-1" width="20%">Gender</td>
+                          <td class="" width="20%">Gender</td>
                           <td></td>
                         </tr>
                         <tr>
-                          <td class="text-grey-darken-1">Egg Groups</td>
+                          <td class="">Egg Groups</td>
                           <td></td>
                         </tr>
                         <tr>
-                          <td class="text-grey-darken-1">Egg Cycles</td>
+                          <td class="">Egg Cycles</td>
                           <td></td>
                         </tr>
                         <tr>
-                          <td class="text-grey-darken-1">ㅤ</td>
+                          <td class="">ㅤ</td>
                           <td></td>
                         </tr>
                       </tbody>
@@ -190,17 +189,17 @@
               </v-card>
             </v-window-item>
             <v-window-item value="stats">
-              <v-card color="#EEE" height="280px">
+              <v-card height="280px">
           
               </v-card>
             </v-window-item>
             <v-window-item value="evolve">
-              <v-card color="#EEE" height="280px">
+              <v-card height="280px">
           
               </v-card>
             </v-window-item>
             <v-window-item value="moves">
-              <v-card color="#EEE" height="280px">
+              <v-card height="280px">
           
               </v-card>
             </v-window-item>
@@ -246,8 +245,10 @@
     font-size: 5rem !important;
     font-weight: 900 !important;
   }
+  .dialog {
+    background-color: rgba(var(--v-theme-background));
+  }
   .vertical-header {
-    color: #737373;
     text-align: right;
     font-size: 0.875rem !important;
   }
@@ -269,9 +270,9 @@
       0px 1px 5px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12));
   }
   .customTable {
-    background-color: white;
     border-radius: 24px;
     padding: 0 16px;
+    background-color: rgb(var(--v-theme-on-surface-variant));
   }
   .customTable tr {
     line-height: 44px;
@@ -287,5 +288,15 @@
   }
   .artwork {
     margin-bottom: -96px;
+  }
+  .entry-text-btn {
+    font-size: 0.8rem !important;
+    font-family: "Roboto", sans-serif !important;
+    text-transform: uppercase !important;
+  }
+  .entry-text {
+    font-size: 1.5rem !important;
+    font-family: "Roboto", sans-serif !important;
+    text-transform: uppercase !important;
   }
 </style>

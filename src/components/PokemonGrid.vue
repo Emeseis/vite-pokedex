@@ -1,9 +1,9 @@
 <template>  
-  <div class="pokemon-grid mt-8">
+  <div class="pokemon-grid my-6">
     <v-col
       v-for="(pokemon, index) in pokemonList" :key="index"
       @click="$emit('onPokemonClicked', pokemon)"
-      class="text-center rounded-xl elevation-2 pokemon-card mt-6 mb-2"
+      class="text-center rounded-xl elevation-2 pokemon-card mt-10"
       cols="auto"
       v-ripple
     >
@@ -14,8 +14,8 @@
         style="z-index: 1;"
         :src="pokemon.sprite" 
       ></v-img>
-      <div class="font-weight-bold" style="color: #777; font-size: 14px">#{{ pokemon.entry }}</div>
-      <div class="font-weight-bold mt-1 text-black">{{ pokemon.name }}</div>
+      <div class="font-weight-bold entry-text">#{{ pokemon.entry }}</div>
+      <div class="font-weight-bold mt-1">{{ pokemon.name }}</div>
       <div class="mt-2">
         <type-chip
           :type="pokemon.types[0].type.name"
@@ -43,13 +43,18 @@
     grid-gap: 24px;
   }
   .pokemon-card {
-    background-color: white;
+    z-index: 1;
+    background-color: rgb(var(--v-theme-surface))
   }
   .pokemon-card:hover {
-    background-color: rgb(240, 240, 240);
     cursor: pointer;
   }
   .sprite {
     margin: 0 auto;
+  }
+  .entry-text {
+    font-size: 0.8rem !important;
+    font-family: "Roboto", sans-serif !important;
+    text-transform: uppercase !important;
   }
 </style>

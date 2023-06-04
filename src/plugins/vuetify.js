@@ -4,25 +4,30 @@ import { createVuetify } from 'vuetify'
 
 const light = {
   colors: {
-    background: '#fff0', // transparent does not work here, for background use $application-background on variables.scss
+    background: '#f6f8fc',
     primary: '#1867C0',
     secondary: '#5CBBF6',
+    pokeball: '#000'
   },
 }
 
-const customTheme = {
+const dark = {
+  dark: true,
   colors: {
+    background: '#121212',
     primary: '#1867C0',
     secondary: '#5CBBF6',
+    pokeball: '#fff'
   }
 }
 
 export default createVuetify({
+  treeShake: true,
   theme: {
-    defaultTheme: 'light',
+    options: { customProperties: true },
     themes: {
       light,
-      customTheme
+      dark
     },
   },
 })
