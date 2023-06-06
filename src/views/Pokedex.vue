@@ -1,5 +1,5 @@
 <template>
-  <v-row class="mt-6 justify-center"> <!-- justify-space-evenly -->
+  <v-row class="justify-center"> <!-- justify-space-evenly -->
     <v-col cols="3">
       <v-card class="rounded-xl elevation-2">
         <v-text-field

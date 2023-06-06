@@ -1,5 +1,5 @@
 <template>  
-  <div class="type-grid my-6">
+  <div class="type-grid">
     <v-col
       v-for="(type, index) in types" :key="index"
       @click="onTypeClicked(type.title)"
