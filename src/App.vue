@@ -21,14 +21,12 @@
             Moves
           </v-tab>
           <v-tab class="font-weight-bold" :value="5" :ripple="false" disabled>
-            <v-icon start size="36px">mdi-television</v-icon>
-            TV Pokemon
           </v-tab>
           <v-switch
             inset
             hide-details
             v-model="toggleTheme"
-            class="d-flex align-center mr-n8"
+            class="d-flex align-center mr-n12"
           ></v-switch>
         </v-tabs>
       </v-toolbar>
