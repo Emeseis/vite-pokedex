@@ -65,6 +65,7 @@
   }
   .type-card:hover {
     cursor: pointer;
+    outline: 3px solid;
   }
   .icon {
     z-index: 2;

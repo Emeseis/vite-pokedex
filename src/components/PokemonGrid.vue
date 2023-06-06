@@ -3,30 +3,33 @@
     <v-col
       v-for="(pokemon, index) in pokemonList" :key="index"
       @click="$emit('onPokemonClicked', pokemon)"
-      class="text-center rounded-xl elevation-2 pokemon-card mt-10"
-      cols="auto"
-      v-ripple
+      class="pa-0 mt-n4"
     >
       <v-img 
         width="96" 
         height="96" 
-        class="sprite mt-n16"
-        :src="pokemon.sprite" 
+        class="sprite mb-n11"
+        :src="pokemon.sprite"
       ></v-img>
-      <div class="font-weight-bold entry-text">#{{ pokemon.entry }}</div>
-      <div class="font-weight-bold mt-1">{{ pokemon.name }}</div>
-      <div class="mt-2">
-        <TypeChip 
-          :type="pokemon.types[0].type.name"
-          @onTypeClicked="$emit('onTypeClicked', pokemon.types[0].type.name)"
-        />
-        <TypeChip
-          v-if="pokemon.types.length == 2"
-          :type="pokemon.types[1].type.name"
-          @onTypeClicked="$emit('onTypeClicked', pokemon.types[1].type.name)"
-          class="ml-1"
-        />
-      </div>
+      <v-card
+        class="text-center rounded-xl elevation-2 pokemon-card pb-3 pt-11"
+        @click="$emit('onPokemonClicked', pokemon)"
+      >
+        <div class="font-weight-bold entry-text">#{{ pokemon.entry }}</div>
+        <div class="font-weight-bold mt-1">{{ pokemon.name }}</div>
+        <div class="mt-2">
+          <TypeChip
+            :type="pokemon.types[0].type.name"
+            @onTypeClicked="$emit('onTypeClicked', pokemon.types[0].type.name)"
+          />
+          <TypeChip
+            v-if="pokemon.types.length == 2"
+            :type="pokemon.types[1].type.name"
+            @onTypeClicked="$emit('onTypeClicked', pokemon.types[1].type.name)"
+            class="ml-1"
+          />
+        </div>
+      </v-card>
     </v-col>
   </div>
 </template>
@@ -44,15 +47,26 @@
     grid-template-columns: repeat(auto-fit, minmax(auto, 187.333px));
     grid-gap: 24px;
   }
+  .sprite {
+    margin: 0 auto;
+    z-index: 2;
+  }
+  .sprite:hover {
+    cursor: pointer;
+  }
+  .sprite:hover + .pokemon-card {
+    outline: 3px solid #F44336;
+  }
+  .sprite:hover + .pokemon-card :deep(.v-card__overlay) {
+    opacity: calc(var(--v-hover-opacity)*var(--v-theme-overlay-multiplier));
+  }
   .pokemon-card {
     z-index: 1;
     background-color: rgb(var(--v-theme-surface))
   }
   .pokemon-card:hover {
     cursor: pointer;
-  }
-  .sprite {
-    margin: 0 auto;
+    outline: 3px solid #F44336;
   }
   .entry-text {
     font-size: 0.8rem !important;
