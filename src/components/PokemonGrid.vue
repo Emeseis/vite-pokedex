@@ -10,8 +10,7 @@
       <v-img 
         width="96" 
         height="96" 
-        class="sprite mt-n16" 
-        style="z-index: 1;"
+        class="sprite mt-n16"
         :src="pokemon.sprite" 
       ></v-img>
       <div class="font-weight-bold entry-text">#{{ pokemon.entry }}</div>
