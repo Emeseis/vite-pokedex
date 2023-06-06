@@ -98,16 +98,23 @@
     </v-col> -->
   </v-row>
   <loader :loading="isLoading"></loader>
-  <pokemon-grid
+  <PokemonGrid
     :pokemonList="sliceList ? pokemonListSliced : pokemonList"
     @onPokemonClicked="onPokemonClicked"
-  ></pokemon-grid>
-  <pokemon-info-modal
+    @onTypeClicked="onTypeClicked"
+  />
+  <PokemonInfoModal
     :showDialog="isPokemonInfoModal"
     :pokemon="pokemonClicked"
     @toggleDialog="isPokemonInfoModal = false"
     @onPokemonClicked="onPokemonClicked"
-  ></pokemon-info-modal>
+    @onTypeClicked="onTypeClicked"
+  />
+  <TypeInfoModal
+    :showDialog="isTypeInfoModal"
+    :type="typeClicked" 
+    @toggleDialog="isTypeInfoModal = false"
+  />
 </template>
 
 <script setup>
@@ -115,6 +122,7 @@
   import { typeList, genList, orderList } from '@/composables/lists'
   import { getColor } from '@/composables/functions'
   import PokemonInfoModal from '@/components/PokemonInfoModal.vue';
+  import TypeInfoModal from '@/components/TypeInfoModal.vue'
   import PokemonGrid from '@/components/PokemonGrid.vue';
   import Loader from '@/components/Loader.vue';
   import axios from 'axios';
@@ -193,15 +201,19 @@
     return pokemonObject;
   };
 
-  const onPokemonClicked = async (pokemon, done) => {
+  const onPokemonClicked = async (pokemon) => {
     isLoading.value = true;
     pokemonClicked = await fetchPokemon(pokemon);
-    if (done) {
-      done();
-      console.log({done})
-    }
     isLoading.value = false;
     isPokemonInfoModal.value = true;
+  };
+  
+  let isTypeInfoModal = ref(false);
+  let typeClicked = ref(null);
+
+  const onTypeClicked = (type) => {
+    typeClicked.value = type;
+    isTypeInfoModal.value = true;
   };
 
   const onWindowsResize = () => {

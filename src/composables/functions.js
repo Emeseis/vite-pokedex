@@ -14,8 +14,8 @@ export const getColor = (type) => {
     case 'Bug': return '#aabb22';
     case 'Rock': return '#bbaa66';
     case 'Ghost': return '#6666bb';
-    case 'Dragon': return '#7766ee';
     case 'Dark': return '#775544';
+    case 'Dragon': return '#7766ee';
     case 'Steel': return '#aaaabb';
     case 'Fairy': return '#ee99ee';
   }
