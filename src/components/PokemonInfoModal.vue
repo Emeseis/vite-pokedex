@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="visible" width="1244" class="ma-6">
-    <v-card class="pa-6 text-center dialog" rounded="xl"> 
+    <v-card class="pa-6 text-center" color="background" rounded="xl"> 
       <div>
         <v-row no-gutters justify="space-between">
           <v-btn
@@ -173,9 +173,6 @@
     font-family: 'Franklin Gothic Medium' !important;
     font-size: 5rem !important;
     font-weight: 900 !important;
-  }
-  .dialog {
-    background-color: rgba(var(--v-theme-background));
   }
   :deep(.v-btn .v-icon) {
     --v-icon-size-multiplier: 1.2 !important;

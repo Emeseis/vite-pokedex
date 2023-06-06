@@ -12,6 +12,7 @@
         :src="pokemon.sprite"
       ></v-img>
       <v-card
+        color="surface"
         class="text-center rounded-xl elevation-2 pokemon-card pb-3 pt-11"
         @click="$emit('onPokemonClicked', pokemon)"
       >
@@ -62,7 +63,6 @@
   }
   .pokemon-card {
     z-index: 1;
-    background-color: rgb(var(--v-theme-surface))
   }
   .pokemon-card:hover {
     cursor: pointer;

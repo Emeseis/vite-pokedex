@@ -18,7 +18,7 @@
         v-ripple
         :color="getColor(type.title)" 
         style="z-index: 1 !important"
-        class="text-center rounded-xl type-card pt-12 pb-4"
+        class="type-card text-center rounded-xl pt-12 pb-4"
       >
         <TypeChip 
           size="x-large"
@@ -61,7 +61,6 @@
   }
   .type-card {
     z-index: 1 !important;
-    background-color: rgb(var(--v-theme-surface))
   }
   .type-card:hover {
     cursor: pointer;
