@@ -2,7 +2,7 @@
   <div class="type-grid my-6">
     <v-col
       v-for="(type, index) in types" :key="index"
-      @click="$emit('onPokemonClicked', type)"
+      @click="onTypeClicked(type.title)"
       class="pa-0 text-center"
       cols="auto"
     >
@@ -10,34 +10,47 @@
         size="64"
         v-ripple
         color="surface"
-        class="icon mb-n8 elevation-2 mt-1">
-        <v-icon :color="getColor(type.title)" :icon="type.icon"/>
+        class="icon mb-n8 elevation-1 mt-1"
+      >
+        <v-icon size="x-large" :color="getColor(type.title)" :icon="type.icon"/>
       </v-avatar>
       <v-card 
         v-ripple
         :color="getColor(type.title)" 
         style="z-index: 1 !important"
-        class="text-center rounded-xl type-card pt-12 pb-4">
-        <div>
-          <v-chip 
-            size="x-large" 
-            class="font-weight-bold text-black elevation-2"
-            @click.stop
-          >
-            {{ type.title }}
-          </v-chip>
-        </div>
+        class="text-center rounded-xl type-card pt-12 pb-4"
+      >
+        <TypeChip 
+          size="x-large"
+          variant="tonal" 
+          :type="type.title"
+          @onTypeClicked="onTypeClicked"
+        />
       </v-card>
     </v-col>
   </div>
+  <TypeInfoModal
+    :showDialog="isTypeInfoModal"
+    :type="typeClicked" 
+    @toggleDialog="isTypeInfoModal = false"
+  />
 </template>
 
 <script setup>
-  import { computed } from 'vue';
+  import { computed, ref } from 'vue';
   import { typeList } from '@/composables/lists';
   import { getColor } from '@/composables/functions';
+  import TypeChip from '@/components/TypeChip.vue';
+  import TypeInfoModal from '@/components/TypeInfoModal.vue';
   
   const types = computed(() => typeList.slice(1));
+  const isTypeInfoModal = ref(false);
+  const typeClicked = ref(null);
+
+  const onTypeClicked = (type) => {
+    typeClicked.value = type;
+    isTypeInfoModal.value = true;
+  };
 </script>
 
 <style scoped> 

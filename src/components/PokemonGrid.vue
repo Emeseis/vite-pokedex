@@ -16,14 +16,16 @@
       <div class="font-weight-bold entry-text">#{{ pokemon.entry }}</div>
       <div class="font-weight-bold mt-1">{{ pokemon.name }}</div>
       <div class="mt-2">
-        <type-chip
+        <TypeChip 
           :type="pokemon.types[0].type.name"
-        ></type-chip>
-        <type-chip
+          @onTypeClicked="$emit('onTypeClicked', pokemon.types[0].type.name)"
+        />
+        <TypeChip
           v-if="pokemon.types.length == 2"
           :type="pokemon.types[1].type.name"
+          @onTypeClicked="$emit('onTypeClicked', pokemon.types[1].type.name)"
           class="ml-1"
-        ></type-chip>
+        />
       </div>
     </v-col>
   </div>
@@ -33,6 +35,7 @@
   import TypeChip from '@/components/TypeChip.vue';
 
   const props = defineProps({ pokemonList: Array });
+  const emit = defineEmits(['onPokemonClicked','onTypeClicked']);
 </script>
 
 <style scoped> 

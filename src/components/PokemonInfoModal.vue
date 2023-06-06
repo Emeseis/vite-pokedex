@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="visible" width="1244" class="ma-6">
-    <v-card class="rounded-xl pa-6 text-center dialog"> 
+    <v-card class="pa-6 text-center dialog" rounded="xl"> 
       <div>
         <v-row no-gutters justify="space-between">
           <v-btn
@@ -70,32 +70,34 @@
           ></v-btn>
         </v-row>
         <div class="font-weight-black entry-text mt-2">
-          #{{ props.pokemon.pokemon.entry }}
+          #{{ pokemon.pokemon.entry }}
         </div>
         <div class="text-h4 font-weight-black mt-2">
-          <span v-if="props.pokemon.pokemon.name.includes('♂')">
-            {{ props.pokemon.pokemon.name.replace('♂', '') }}
+          <span v-if="pokemon.pokemon.name.includes('♂')">
+            {{ pokemon.pokemon.name.replace('♂', '') }}
             <v-icon size="x-small" class="mt-n1 ml-n1">mdi-gender-male</v-icon>
           </span>
-          <span v-else-if="props.pokemon.pokemon.name.includes('♀')">
-            {{ props.pokemon.pokemon.name.replace('♀', '') }}
+          <span v-else-if="pokemon.pokemon.name.includes('♀')">
+            {{ pokemon.pokemon.name.replace('♀', '') }}
             <v-icon size="x-small" class="mt-n1 ml-n1">mdi-gender-female</v-icon>
           </span>
           <span v-else>
-            {{ props.pokemon.pokemon.name }}
+            {{ pokemon.pokemon.name }}
           </span>
         </div>
         <div class="mt-4">
-          <type-chip
+          <TypeChip
             size="x-large"
-            :type="props.pokemon.pokemon.types[0].type.name"
-          ></type-chip>
-          <type-chip
-            v-if="props.pokemon.pokemon.types[1]"
+            :type="pokemon.pokemon.types[0].type.name"
+            @onTypeClicked="emit('onTypeClicked', pokemon.pokemon.types[0].type.name);"
+          />
+          <TypeChip
             class="ml-2"
             size="x-large"
-            :type="props.pokemon.pokemon.types[1].type.name"
-          ></type-chip>
+            v-if="pokemon.pokemon.types[1]"
+            :type="pokemon.pokemon.types[1].type.name"
+            @onTypeClicked="emit('onTypeClicked', pokemon.pokemon.types[1].type.name);"
+          />
         </div>      
         <v-card class="rounded-xl elevation-2 mt-4">
           <v-toolbar height="64" floating  show-arrows>
@@ -116,93 +118,16 @@
           </v-toolbar>
           <v-window v-model="state.tab" style="height: 280px; margin-top: -7px">
             <v-window-item value="about">
-              <v-card height="280px">
-                <v-row class="pa-4">
-                  <v-col cols="6" class="text-left">
-                    <table width="100%" class="customTable mb-4">
-                      <tbody>
-                        <tr>
-                          <td>
-                            <h3>General Information</h3>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <table width="100%" class="customTable">
-                      <tbody>
-                        <tr>
-                          <td class="" width="20%">Species</td>
-                          <td>{{ pokemon.pokemonMoreInfo.genera[0] ? pokemon.pokemonMoreInfo.genera[0].genus : 'None' }}</td>
-                        </tr>
-                        <tr>
-                          <td class="">Height</td>
-                          <td>{{ toFeetInch((pokemon.pokemonInfo.height/10)) }} ({{ (pokemon.pokemonInfo.height/10).toFixed(1) }} m)</td>
-                        </tr>
-                        <tr>
-                          <td class="">Weigth</td>
-                          <td>{{ ((pokemon.pokemonInfo.weight/10)*2.2046).toFixed(1) }} lbs ({{ (pokemon.pokemonInfo.weight/10).toFixed(1) }} kg)</td>
-                        </tr>
-                        <tr>
-                          <td class="">Abilities</td>
-                          <td>
-                            <span v-for="(ability, index) in pokemon.pokemonInfo.abilities" :key="index">
-                              <v-chip class="mr-1" :append-icon="ability.is_hidden ? 'mdi-eye-off' : ''">
-                                {{ capitalizeWord(ability.ability.name) }}
-                              </v-chip>
-                            </span>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </v-col>
-                  <v-col cols="6" class="text-left">
-                    <table width="100%" class="customTable mb-4">
-                      <tbody>
-                        <tr>
-                          <td>
-                            <h3>Breeding</h3>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <table width="100%" class="customTable">
-                      <tbody>
-                        <tr>
-                          <td class="" width="20%">Gender</td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <td class="">Egg Groups</td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <td class="">Egg Cycles</td>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <td class="">ㅤ</td>
-                          <td></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </v-col>
-                </v-row>
-              </v-card>
+              <AboutTab :pokemon="pokemon"/>
             </v-window-item>
             <v-window-item value="stats">
-              <v-card height="280px">
-          
-              </v-card>
+              <BaseStatsTab :pokemon="pokemon"/>
             </v-window-item>
             <v-window-item value="evolve">
-              <v-card height="280px">
-          
-              </v-card>
+              <EvolutionTab :pokemon="pokemon"/>
             </v-window-item>
             <v-window-item value="moves">
-              <v-card height="280px">
-          
-              </v-card>
+              <MovesTab :pokemon="pokemon"/>
             </v-window-item>
           </v-window>
         </v-card>
@@ -213,12 +138,15 @@
 
 <script setup>
   import TypeChip from '@/components/TypeChip.vue';
+  import AboutTab from '@/components/PokemonInfoTabs/AboutTab.vue';
+  import BaseStatsTab from '@/components/PokemonInfoTabs/BaseStatsTab.vue';
+  import EvolutionTab from '@/components/PokemonInfoTabs/EvolutionTab.vue';
+  import MovesTab from '@/components/PokemonInfoTabs/MovesTab.vue';
   import { computed, reactive, ref, watch } from 'vue';
-  import { toFeetInch, capitalizeWord } from '@/composables/functions'
 
-  const emit = defineEmits(['toggleDialog', 'onPokemonClicked']);
+  const emit = defineEmits(['toggleDialog', 'onPokemonClicked', 'onTypeClicked']);
 
-  watch(() => props.pokemon, () => showShiny.value = false)
+  watch(() => props.pokemon, () => showShiny.value = false);
 
   let showShiny = ref(false);
 
@@ -249,17 +177,6 @@
   .dialog {
     background-color: rgba(var(--v-theme-background));
   }
-  .vertical-header {
-    text-align: right;
-    font-size: 0.875rem !important;
-  }
-  .card-title {
-    font-weight: 900;
-    font-size: 18px !important;
-  }
-  .card-content {
-    font-size: 18px;
-  }
   :deep(.v-btn .v-icon) {
     --v-icon-size-multiplier: 1.2 !important;
   }
@@ -270,22 +187,11 @@
       0px 2px 2px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.14)), 
       0px 1px 5px 0px var(--v-shadow-key-penumbra-opacity, rgba(0, 0, 0, 0.12));
   }
-  .customTable {
-    border-radius: 24px;
-    padding: 0 16px;
-    background-color: rgb(var(--v-theme-on-surface-variant));
-  }
-  .customTable tr {
-    line-height: 44px;
-  }
   .v-responsive {
     flex: 0 0 auto;
   }
   .invisible {
     visibility: hidden !important;
-  }
-  .v-window .v-card {
-    border-radius: 0;
   }
   .artwork {
     margin-bottom: -96px;

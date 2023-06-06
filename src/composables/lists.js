@@ -14,8 +14,8 @@ export const typeList = [
   { title: 'Bug', icon: 'mdi-ladybug' },
   { title: 'Rock', icon: 'mdi-landslide' },
   { title: 'Ghost', icon: 'mdi-ghost' },
-  { title: 'Dragon', icon: 'mdi-firefox' },
   { title: 'Dark', icon: 'mdi-moon-full' },
+  { title: 'Dragon', icon: 'mdi-firefox' },
   { title: 'Steel', icon: 'mdi-mine' },
   { title: 'Fairy', icon: 'mdi-butterfly' },
 ];
