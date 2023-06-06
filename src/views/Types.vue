@@ -1,5 +1,5 @@
 <template>  
-  <div class="type-grid my-6">
+  <div class="type-grid">
     <v-col
       v-for="(type, index) in types" :key="index"
       @click="onTypeClicked(type.title)"
@@ -18,7 +18,7 @@
         v-ripple
         :color="getColor(type.title)" 
         style="z-index: 1 !important"
-        class="text-center rounded-xl type-card pt-12 pb-4"
+        class="type-card text-center rounded-xl pt-12 pb-4"
       >
         <TypeChip 
           size="x-large"
@@ -61,10 +61,10 @@
   }
   .type-card {
     z-index: 1 !important;
-    background-color: rgb(var(--v-theme-surface))
   }
   .type-card:hover {
     cursor: pointer;
+    outline: 3px solid;
   }
   .icon {
     z-index: 2;
