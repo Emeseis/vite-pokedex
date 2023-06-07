@@ -1,11 +1,19 @@
 <template>
   <v-dialog v-model="visible" width="1244" class="ma-6">
-    <v-card class="text-center rounded-xl pa-6" color="background"> 
-      <div v-if="pokemon">
+    <v-card class="text-center rounded-xl pa-6" color="background">      
+      <div>
+        <v-progress-linear
+          v-if="isLoading"
+          indeterminate
+          color="red"
+          height="8"
+          class="mt-n6 mb-4"
+          style="width: 1244px;"
+        ></v-progress-linear>
         <v-row no-gutters justify="space-between">
           <v-btn
             v-if="pokemon.pokemonPrev"
-            @click="emit('onPokemonClicked', pokemon.pokemonPrev);"
+            @click="onPokemonPrev"
             class="font-weight-black pr-8"
             prepend-icon="mdi-chevron-left"
             rounded="xl"
@@ -30,7 +38,7 @@
           <v-spacer></v-spacer>
           <v-btn
             v-if="pokemon.pokemonNext"
-            @click="$emit('onPokemonClicked', pokemon.pokemonNext)"
+            @click="onPokemonNext"
             class="font-weight-black pl-8"
             append-icon="mdi-chevron-right"
             rounded="xl"
@@ -101,7 +109,7 @@
             />
           </div>
         </div>
-        <v-card class="rounded-xl elevation-2 mt-4">
+        <v-card class="rounded-xl elevation-2 mt-6">
           <v-toolbar height="64" floating  show-arrows>
             <v-tabs v-model="state.tab" grow>
               <v-tab value="about" class="font-weight-black">
@@ -134,61 +142,6 @@
           </v-window>
         </v-card>
       </div>
-      <div v-else>
-        <v-row no-gutters>
-          <v-col cols="3">
-            <v-card class="skeleton-card rounded-xl" heigth="96">
-              <v-skeleton-loader color="background" class="skeleton-prev-next ml-n1"/>
-            </v-card>
-          </v-col>
-          <v-spacer></v-spacer>
-          <v-col cols="3">
-            <v-card class="skeleton-card rounded-xl" heigth="96">
-              <v-skeleton-loader color="background" class="skeleton-prev-next ml-n1"/>
-            </v-card>
-          </v-col>
-        </v-row>
-        <v-row no-gutters justify="center" style="margin-top: -96px;">
-          <v-card style="height: 48px; width: 48px; border-radius: 48px;" class="invisible">
-            <v-skeleton-loader type="image" color="background"/>
-          </v-card>
-          <v-card style="height: 270px; border-radius: 135px;" class="invisible">
-            <v-skeleton-loader type="image" color="background" class="skeleton-artwork ml-n1"/>
-            <v-skeleton-loader type="image" color="background" class="skeleton-artwork ml-n1"/>
-          </v-card>
-          <v-card style="height: 48px; width: 48px; border-radius: 48px;" class="ml-1">
-            <v-skeleton-loader type="image" color="background" class="ml-n1"/>
-          </v-card>
-        </v-row>
-        <div>
-          <div class="invisible d-flex justify-center mt-1">
-            <v-card style="height: 36px; width: 100px;" rounded="0">
-              <v-skeleton-loader type="image" color="background" class="ml-n1"/>
-            </v-card>
-          </div>
-          <div class="invisible d-flex justify-center mt-3">
-            <v-card style="height: 44px; width: 208px;" rounded="0">
-              <v-skeleton-loader type="image" color="background" class="ml-n1"/>
-            </v-card>
-          </div>
-          <div class="d-flex justify-center mt-3">
-            <v-card style="height: 44px; width: 100px;" class="rounded-xl mr-2">
-              <v-skeleton-loader type="image" color="background" class="ml-n1"/>
-            </v-card>
-            <v-card style="height: 44px; width: 100px;" class="rounded-xl">
-              <v-skeleton-loader type="image" color="background" class="ml-n1"/>
-            </v-card>
-          </div>
-        </div>
-        <v-row no-gutters>
-          <v-col>            
-            <v-card class="mt-4 rounded-xl">
-              <v-skeleton-loader type="card-avatar" color="background" style="margin-top: -10px;"/>
-              <v-skeleton-loader type="article" color="background"/>
-            </v-card>
-          </v-col>
-        </v-row>
-      </div>
     </v-card>
   </v-dialog>
 </template>
@@ -199,14 +152,9 @@
   import MovesTab from '@/components/PokemonInfoTabs/MovesTab.vue';
   import BaseStatsTab from '@/components/PokemonInfoTabs/BaseStatsTab.vue';
   import EvolutionTab from '@/components/PokemonInfoTabs/EvolutionTab.vue';
-  import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader';
   import { computed, reactive, ref, watch } from 'vue';
 
   const emit = defineEmits(['toggleDialog', 'onPokemonClicked', 'onTypeClicked']);
-
-  watch(() => props.pokemon, () => showShiny.value = false);
-
-  let showShiny = ref(false);
 
   const props = defineProps({
     showDialog: Boolean,
@@ -217,6 +165,25 @@
     get: () => props.showDialog,
     set: (newVal) => emit('toggleDialog', newVal)
   });
+
+  watch(() => props.pokemon, () => { 
+    isLoading.value = false;
+    showShiny.value = false;
+  });
+
+  let isLoading = ref(false);
+
+  const onPokemonPrev = () => {
+    isLoading.value = true;
+    emit('onPokemonClicked', props.pokemon.pokemonPrev);
+  };
+
+  const onPokemonNext = () => {
+    isLoading.value = true;
+    emit('onPokemonClicked', props.pokemon.pokemonNext);
+  };
+
+  let showShiny = ref(false);
 
   const Artwork = computed(() => { 
     if (showShiny.value) return props.pokemon.pokemonInfo.sprites.other['official-artwork'].front_shiny;

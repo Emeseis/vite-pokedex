@@ -85,7 +85,6 @@
       </v-card>
     </v-col>
   </v-row>
-  <loader :loading="isLoading"></loader>
   <PokemonGrid
     :pokemonList="pokemonList"
     @onPokemonClicked="onPokemonClicked"
@@ -112,10 +111,8 @@
   import PokemonInfoModal from '@/components/PokemonInfoModal.vue';
   import TypeInfoModal from '@/components/TypeInfoModal.vue'
   import PokemonGrid from '@/components/PokemonGrid.vue';
-  import Loader from '@/components/Loader.vue';
   import axios from 'axios';
 
-  let isLoading = ref(false);
   let pokemonList = ref([]);
   let params = reactive({
     name: '',
@@ -124,17 +121,31 @@
     type: 'All'
   });
 
-  const onSearch = () => {
-    pokemonList.value = [];
-    setTimeout(async () => {        
-      try {
-        const pokemons = await axios.post(`${import.meta.env.VITE_API_URL}/pokemons`, params); 
-        if (pokemons.data.pokemons.length) pokemonList.value = pokemons.data.pokemons;
-        else pokemonList.value = null;
-      } catch (err) {
-        console.error(err);
-      }
-    }, 150);
+  const onSearch = async () => {
+    pokemonList.value = [];     
+    try {
+      const pokemons = await axios.post(`${import.meta.env.VITE_API_URL}/pokemons`, params); 
+      if (pokemons.data.pokemons.length) pokemonList.value = pokemons.data.pokemons;
+      else pokemonList.value = null;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  let pokemonClicked = ref(null);
+  let isPokemonInfoModal = ref(false);
+
+  const onPokemonClicked = async (pokemon) => {    
+    pokemonClicked.value = await fetchPokemon(pokemon);
+    isPokemonInfoModal.value = true;
+  };
+
+  let typeClicked = ref(null);
+  let isTypeInfoModal = ref(false);
+
+  const onTypeClicked = (type) => {
+    typeClicked.value = type;
+    isTypeInfoModal.value = true;
   };
 
   const fetchPokemon = async (pokemon) => {
@@ -160,27 +171,6 @@
       pokemonObject.pokemonNext = pokemonNext.data;
     }    
     return pokemonObject;
-  };
-
-  let pokemonClicked = ref(null);
-  let isPokemonInfoModal = ref(false);
-
-  const onPokemonClicked = async (pokemon) => {
-    pokemonClicked.value = null;
-    try {
-      isPokemonInfoModal.value = true;
-      pokemonClicked.value = await fetchPokemon(pokemon);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  
-  let typeClicked = ref(null);
-  let isTypeInfoModal = ref(false);
-
-  const onTypeClicked = (type) => {
-    typeClicked.value = type;
-    isTypeInfoModal.value = true;
   };
 
   onMounted(() => { onSearch(); });
