@@ -26,7 +26,7 @@
             inset
             hide-details
             v-model="toggleTheme"
-            class="d-flex align-center mr-n12"
+            class="d-flex align-center mr-n16"
           ></v-switch>
         </v-tabs>
       </v-toolbar>

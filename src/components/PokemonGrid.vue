@@ -1,6 +1,7 @@
 <template>  
-  <div class="pokemon-grid my-6">
+  <div class="pokemon-grid my-6" v-if="pokemonList">
     <v-col
+      v-if="pokemonList.length"
       v-for="(pokemon, index) in pokemonList" :key="index"
       @click="$emit('onPokemonClicked', pokemon)"
       class="pa-0 mt-n4"
@@ -16,8 +17,12 @@
         class="text-center rounded-xl elevation-2 pokemon-card pb-3 pt-11"
         @click="$emit('onPokemonClicked', pokemon)"
       >
-        <div class="font-weight-bold entry-text">#{{ pokemon.entry }}</div>
-        <div class="font-weight-bold mt-1">{{ pokemon.name }}</div>
+        <div class="font-weight-bold entry-text">
+          #{{ pokemon.entry }}
+        </div>
+        <div class="font-weight-bold mt-1">
+          {{ pokemon.name }}
+        </div>
         <div class="mt-2">
           <TypeChip
             :type="pokemon.types[0].type.name"
@@ -32,10 +37,19 @@
         </div>
       </v-card>
     </v-col>
+    <v-col v-else v-for="item in 30" :key="item" class="pa-0 mt-9">        
+      <v-card class="skeleton-card rounded-xl" @click.stop height="143.19">
+        <v-skeleton-loader
+          class="skeleton"
+          color="background"
+        ></v-skeleton-loader>
+      </v-card>    
+    </v-col>
   </div>
 </template>
 
 <script setup>
+  import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader';
   import TypeChip from '@/components/TypeChip.vue';
 
   const props = defineProps({ pokemonList: Array });
@@ -66,6 +80,12 @@
   }
   .pokemon-card:hover {
     cursor: pointer;
+    outline: 3px solid #F44336;
+  }
+  .skeleton:hover {
+    cursor: pointer;
+  }
+  .skeleton-card:hover {
     outline: 3px solid #F44336;
   }
   .entry-text {

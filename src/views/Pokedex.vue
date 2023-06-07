@@ -1,5 +1,5 @@
 <template>
-  <v-row class="justify-center"> <!-- justify-space-evenly -->
+  <v-row class="justify-center">
     <v-col cols="3">
       <v-card class="rounded-xl elevation-2">
         <v-text-field
@@ -84,22 +84,10 @@
         </v-select>
       </v-card>
     </v-col>
-    <!-- <v-col cols="4">
-      <v-card class="rounded-xl elevation-2" height="56">
-        <v-pagination
-          v-model="page"
-          rounded="xl"
-          size="47"
-          :length="pokemonListLength"          
-          :total-visible="pokemonListLength == 5 ? 5 : 4"
-          @update:model-value="pokemonListSlice"
-        ></v-pagination>
-      </v-card>
-    </v-col> -->
   </v-row>
   <loader :loading="isLoading"></loader>
   <PokemonGrid
-    :pokemonList="sliceList ? pokemonListSliced : pokemonList"
+    :pokemonList="pokemonList"
     @onPokemonClicked="onPokemonClicked"
     @onTypeClicked="onTypeClicked"
   />
@@ -118,7 +106,7 @@
 </template>
 
 <script setup>
-  import { ref, reactive, onMounted, onBeforeMount, onBeforeUnmount } from 'vue';
+  import { ref, reactive, onMounted } from 'vue';
   import { typeList, genList, orderList } from '@/composables/lists'
   import { getColor } from '@/composables/functions'
   import PokemonInfoModal from '@/components/PokemonInfoModal.vue';
@@ -127,51 +115,27 @@
   import Loader from '@/components/Loader.vue';
   import axios from 'axios';
 
-  let page = ref(1);
-  let sliceList = ref(false);
-  let loadPokemons = ref(false);
+  let isLoading = ref(false);
   let pokemonList = ref([]);
-  let pokemonListSliced = ref([]);
-  let pokemonsPerPage = ref(null);
-
-  const pokemonListSlice = () => {
-    let paginationStart = (page.value - 1) * pokemonsPerPage.value;
-    let paginationEnd = page.value * pokemonsPerPage.value;
-    pokemonListSliced.value = pokemonList.slice(paginationStart, paginationEnd);
-  };
-
   let params = reactive({
     name: '',
     order: '1',
     gen: '1',
-    type: 'All',
-    from: '',
-    to: '',
+    type: 'All'
   });
 
-  let pokemonListLength = ref(null);
-  let isLoading = ref(false);
-
-  const onSearch = async () => {
-    isLoading.value = true;
-    pokemonsPerPage.value = screen.height >= 1440 ? 30 : screen.height >= 1080 ? 18 : screen.height >= 690 ? 12 : 18;
-    page.value = 1;
-    try {
-      const pokemons = await axios.post(`${import.meta.env.VITE_API_URL}/pokemons`, params); 
-      pokemonList = pokemons.data.pokemons;
-      pokemonListLength.value = Math.ceil(pokemonList.length / pokemonsPerPage.value);
-      pokemonListSlice();
-      isLoading.value = false;   
-      await new Promise(r => setTimeout(r))   
-      loadPokemons.value = true;
-    } catch (err) {
-      console.error(err);
-      isLoading.value = false;
-    }
+  const onSearch = () => {
+    pokemonList.value = [];
+    setTimeout(async () => {        
+      try {
+        const pokemons = await axios.post(`${import.meta.env.VITE_API_URL}/pokemons`, params); 
+        if (pokemons.data.pokemons.length) pokemonList.value = pokemons.data.pokemons;
+        else pokemonList.value = null;
+      } catch (err) {
+        console.error(err);
+      }
+    }, 150);
   };
-
-  let isPokemonInfoModal = ref(false);
-  let pokemonClicked = ref(null);
 
   const fetchPokemon = async (pokemon) => {
     const baseUrl = `https://pokeapi.co/api/v2`;
@@ -180,7 +144,6 @@
        
     pokemonMoreInfo.data.flavor_text_entries = 
     pokemonMoreInfo.data.flavor_text_entries.filter(item => item.language.name == 'en');
-
     pokemonMoreInfo.data.genera = 
     pokemonMoreInfo.data.genera.filter(item => item.language.name == 'en');    
 
@@ -191,49 +154,41 @@
       const pokemonPrev = await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${idPrev}`);
       pokemonObject.pokemonPrev = pokemonPrev.data;
     }
-
     if (pokemon.id != 1010) {
       const idNext = (pokemon.id + 1);
       const pokemonNext = await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${idNext}`);
       pokemonObject.pokemonNext = pokemonNext.data;
-    }
-    
+    }    
     return pokemonObject;
   };
 
+  let pokemonClicked = ref(null);
+  let isPokemonInfoModal = ref(false);
+
   const onPokemonClicked = async (pokemon) => {
-    isLoading.value = true;
-    pokemonClicked = await fetchPokemon(pokemon);
-    isLoading.value = false;
-    isPokemonInfoModal.value = true;
+    pokemonClicked.value = null;
+    try {
+      isPokemonInfoModal.value = true;
+      pokemonClicked.value = await fetchPokemon(pokemon);
+    } catch (err) {
+      console.error(err);
+    }
   };
   
-  let isTypeInfoModal = ref(false);
   let typeClicked = ref(null);
+  let isTypeInfoModal = ref(false);
 
   const onTypeClicked = (type) => {
     typeClicked.value = type;
     isTypeInfoModal.value = true;
   };
 
-  const onWindowsResize = () => {
-    pokemonsPerPage.value = screen.height >= 1440 ? 30 : screen.height >= 1080 ? 24 : 18;
-    pokemonListLength.value = parseInt((pokemonList.length / pokemonsPerPage.value) + 1);
-    if (pokemonsPerPage.value == 30 && page.value > 34) page.value = 34;
-    pokemonListSlice();
-  };
-
-  onBeforeMount(() => { window.addEventListener("resize", onWindowsResize); });
-
   onMounted(() => { onSearch(); });
-
-  onBeforeUnmount(() => { window.removeEventListener("resize", onWindowsResize); });
 </script>
 
 <style>
   .v-select-custom-menu {
     border-radius: 24px !important;
-    /* max-height: 70vh !important; */
   }
   input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     -webkit-appearance: none;
