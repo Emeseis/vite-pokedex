@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="visible" width="1244" class="ma-6">
-    <v-card class="text-center rounded-xl pa-6" color="background" height="820"> 
+    <v-card class="text-center rounded-xl pa-6" color="background"> 
       <div v-if="pokemon">
         <v-row no-gutters justify="space-between">
           <v-btn
@@ -69,36 +69,38 @@
             @click="showShiny = !showShiny"
           ></v-btn>
         </v-row>
-        <div class="font-weight-black entry-text mt-2">
-          #{{ pokemon.pokemon.entry }}
+        <div>
+          <div class="font-weight-black entry-text mt-2">
+            #{{ pokemon.pokemon.entry }}
+          </div>
+          <div class="text-h4 font-weight-black mt-2">
+            <span v-if="pokemon.pokemon.name.includes('♂')">
+              {{ pokemon.pokemon.name.replace('♂', '') }}
+              <v-icon size="x-small" class="mt-n1 ml-n1">mdi-gender-male</v-icon>
+            </span>
+            <span v-else-if="pokemon.pokemon.name.includes('♀')">
+              {{ pokemon.pokemon.name.replace('♀', '') }}
+              <v-icon size="x-small" class="mt-n1 ml-n1">mdi-gender-female</v-icon>
+            </span>
+            <span v-else>
+              {{ pokemon.pokemon.name }}
+            </span>
+          </div>
+          <div class="mt-4">
+            <TypeChip
+              size="x-large"
+              :type="pokemon.pokemon.types[0].type.name"
+              @onTypeClicked="emit('onTypeClicked', pokemon.pokemon.types[0].type.name);"
+            />
+            <TypeChip
+              class="ml-2"
+              size="x-large"
+              v-if="pokemon.pokemon.types[1]"
+              :type="pokemon.pokemon.types[1].type.name"
+              @onTypeClicked="emit('onTypeClicked', pokemon.pokemon.types[1].type.name);"
+            />
+          </div>
         </div>
-        <div class="text-h4 font-weight-black mt-2">
-          <span v-if="pokemon.pokemon.name.includes('♂')">
-            {{ pokemon.pokemon.name.replace('♂', '') }}
-            <v-icon size="x-small" class="mt-n1 ml-n1">mdi-gender-male</v-icon>
-          </span>
-          <span v-else-if="pokemon.pokemon.name.includes('♀')">
-            {{ pokemon.pokemon.name.replace('♀', '') }}
-            <v-icon size="x-small" class="mt-n1 ml-n1">mdi-gender-female</v-icon>
-          </span>
-          <span v-else>
-            {{ pokemon.pokemon.name }}
-          </span>
-        </div>
-        <div class="mt-4">
-          <TypeChip
-            size="x-large"
-            :type="pokemon.pokemon.types[0].type.name"
-            @onTypeClicked="emit('onTypeClicked', pokemon.pokemon.types[0].type.name);"
-          />
-          <TypeChip
-            class="ml-2"
-            size="x-large"
-            v-if="pokemon.pokemon.types[1]"
-            :type="pokemon.pokemon.types[1].type.name"
-            @onTypeClicked="emit('onTypeClicked', pokemon.pokemon.types[1].type.name);"
-          />
-        </div>      
         <v-card class="rounded-xl elevation-2 mt-4">
           <v-toolbar height="64" floating  show-arrows>
             <v-tabs v-model="state.tab" grow>
@@ -132,12 +134,61 @@
           </v-window>
         </v-card>
       </div>
-      <v-skeleton-loader
-        v-else
-        class="rounded-xl"
-        color="surface"
-        type="table-heading, table-heading, image, image, table-tfoot, list-item-two-line, actions, card-avatar, list-item-two-line"
-      ></v-skeleton-loader>
+      <div v-else>
+        <v-row no-gutters>
+          <v-col cols="3">
+            <v-card class="skeleton-card rounded-xl" heigth="96">
+              <v-skeleton-loader color="background" class="skeleton-prev-next ml-n1"/>
+            </v-card>
+          </v-col>
+          <v-spacer></v-spacer>
+          <v-col cols="3">
+            <v-card class="skeleton-card rounded-xl" heigth="96">
+              <v-skeleton-loader color="background" class="skeleton-prev-next ml-n1"/>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row no-gutters justify="center" style="margin-top: -96px;">
+          <v-card style="height: 48px; width: 48px; border-radius: 48px;" class="invisible">
+            <v-skeleton-loader type="image" color="background"/>
+          </v-card>
+          <v-card style="height: 270px; border-radius: 135px;" class="invisible">
+            <v-skeleton-loader type="image" color="background" class="skeleton-artwork ml-n1"/>
+            <v-skeleton-loader type="image" color="background" class="skeleton-artwork ml-n1"/>
+          </v-card>
+          <v-card style="height: 48px; width: 48px; border-radius: 48px;" class="ml-1">
+            <v-skeleton-loader type="image" color="background" class="ml-n1"/>
+          </v-card>
+        </v-row>
+        <div>
+          <div class="invisible d-flex justify-center mt-1">
+            <v-card style="height: 36px; width: 100px;" rounded="0">
+              <v-skeleton-loader type="image" color="background" class="ml-n1"/>
+            </v-card>
+          </div>
+          <div class="invisible d-flex justify-center mt-3">
+            <v-card style="height: 44px; width: 208px;" rounded="0">
+              <v-skeleton-loader type="image" color="background" class="ml-n1"/>
+            </v-card>
+          </div>
+          <div class="d-flex justify-center mt-3">
+            <v-card style="height: 44px; width: 100px;" class="rounded-xl mr-2">
+              <v-skeleton-loader type="image" color="background" class="ml-n1"/>
+            </v-card>
+            <v-card style="height: 44px; width: 100px;" class="rounded-xl">
+              <v-skeleton-loader type="image" color="background" class="ml-n1"/>
+            </v-card>
+          </div>
+        </div>
+        <v-row no-gutters>
+          <v-col>            
+            <v-card class="mt-4 rounded-xl">
+              <v-skeleton-loader type="card-avatar" color="background" style="margin-top: -10px;"/>
+              <v-skeleton-loader type="article" color="background"/>
+            </v-card>
+          </v-col>
+        </v-row>
+      </div>
     </v-card>
   </v-dialog>
 </template>
@@ -176,6 +227,12 @@
 </script>
 
 <style scoped>
+  .skeleton-prev-next {
+    height: 96px !important;
+  }
+  .skeleton-artwork {
+    width: 270px !important;
+  }
   .gender-char {
     font-family: 'Franklin Gothic Medium' !important;
     font-size: 5rem !important;

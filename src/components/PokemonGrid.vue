@@ -38,12 +38,9 @@
       </v-card>
     </v-col>
     <v-col v-else v-for="item in 30" :key="item" class="pa-0 mt-9">        
-      <v-card class="skeleton-card rounded-xl" @click.stop height="143.19">
-        <v-skeleton-loader
-          class="skeleton"
-          color="background"
-        ></v-skeleton-loader>
-      </v-card>    
+      <v-card class="rounded-xl" @click.stop height="143.19">
+        <v-skeleton-loader color="background"></v-skeleton-loader>
+      </v-card>
     </v-col>
   </div>
 </template>
@@ -80,12 +77,6 @@
   }
   .pokemon-card:hover {
     cursor: pointer;
-    outline: 3px solid #F44336;
-  }
-  .skeleton:hover {
-    cursor: pointer;
-  }
-  .skeleton-card:hover {
     outline: 3px solid #F44336;
   }
   .entry-text {
