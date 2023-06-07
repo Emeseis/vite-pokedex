@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="visible" width="1244" class="ma-6">
-    <v-card class="pa-6 text-center" color="background" rounded="xl"> 
-      <div>
+    <v-card class="text-center rounded-xl pa-6" color="background" height="820"> 
+      <div v-if="pokemon">
         <v-row no-gutters justify="space-between">
           <v-btn
             v-if="pokemon.pokemonPrev"
@@ -132,6 +132,12 @@
           </v-window>
         </v-card>
       </div>
+      <v-skeleton-loader
+        v-else
+        class="rounded-xl"
+        color="surface"
+        type="table-heading, table-heading, image, image, table-tfoot, list-item-two-line, actions, card-avatar, list-item-two-line"
+      ></v-skeleton-loader>
     </v-card>
   </v-dialog>
 </template>
@@ -139,9 +145,10 @@
 <script setup>
   import TypeChip from '@/components/TypeChip.vue';
   import AboutTab from '@/components/PokemonInfoTabs/AboutTab.vue';
+  import MovesTab from '@/components/PokemonInfoTabs/MovesTab.vue';
   import BaseStatsTab from '@/components/PokemonInfoTabs/BaseStatsTab.vue';
   import EvolutionTab from '@/components/PokemonInfoTabs/EvolutionTab.vue';
-  import MovesTab from '@/components/PokemonInfoTabs/MovesTab.vue';
+  import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader';
   import { computed, reactive, ref, watch } from 'vue';
 
   const emit = defineEmits(['toggleDialog', 'onPokemonClicked', 'onTypeClicked']);
