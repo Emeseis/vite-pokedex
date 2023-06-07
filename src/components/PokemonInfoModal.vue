@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="visible" width="1244" class="ma-6">
-    <v-card class="text-center rounded-xl pa-6" color="background" height="820"> 
+    <v-card class="text-center rounded-xl pa-6" color="background"> 
       <div v-if="pokemon">
         <v-row no-gutters justify="space-between">
           <v-btn
