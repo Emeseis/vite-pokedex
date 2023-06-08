@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="visible" width="1244" class="ma-6">
+  <v-dialog v-model="visible" width="1244">
     <v-card class="text-center rounded-xl pa-6" color="background">      
       <div>
         <v-progress-linear
@@ -67,7 +67,7 @@
             class="invisible"
           ></v-btn>
           <v-img
-            :src="Artwork"
+            :src="artwork"
             height="270"
             width="270"
             class="artwork ma-0"
@@ -82,17 +82,7 @@
             #{{ pokemon.pokemon.entry }}
           </div>
           <div class="text-h4 font-weight-black mt-2">
-            <span v-if="pokemon.pokemon.name.includes('♂')">
-              {{ pokemon.pokemon.name.replace('♂', '') }}
-              <v-icon size="x-small" class="mt-n1 ml-n1">mdi-gender-male</v-icon>
-            </span>
-            <span v-else-if="pokemon.pokemon.name.includes('♀')">
-              {{ pokemon.pokemon.name.replace('♀', '') }}
-              <v-icon size="x-small" class="mt-n1 ml-n1">mdi-gender-female</v-icon>
-            </span>
-            <span v-else>
-              {{ pokemon.pokemon.name }}
-            </span>
+            {{ pokemon.pokemon.name }}
           </div>
           <div class="mt-4">
             <TypeChip
@@ -116,7 +106,7 @@
                 About
               </v-tab>
               <v-tab value="stats" class="font-weight-black">
-                Base Stats
+                Stats
               </v-tab>
               <v-tab value="evolve" class="font-weight-black">
                 Evolution
@@ -131,7 +121,7 @@
               <AboutTab :pokemon="pokemon"/>
             </v-window-item>
             <v-window-item value="stats">
-              <BaseStatsTab :pokemon="pokemon"/>
+              <StatsTab :pokemon="pokemon"/>
             </v-window-item>
             <v-window-item value="evolve">
               <EvolutionTab :pokemon="pokemon"/>
@@ -150,7 +140,7 @@
   import TypeChip from '@/components/TypeChip.vue';
   import AboutTab from '@/components/PokemonInfoTabs/AboutTab.vue';
   import MovesTab from '@/components/PokemonInfoTabs/MovesTab.vue';
-  import BaseStatsTab from '@/components/PokemonInfoTabs/BaseStatsTab.vue';
+  import StatsTab from '@/components/PokemonInfoTabs/StatsTab.vue';
   import EvolutionTab from '@/components/PokemonInfoTabs/EvolutionTab.vue';
   import { computed, reactive, ref, watch } from 'vue';
 
@@ -185,9 +175,9 @@
 
   let showShiny = ref(false);
 
-  const Artwork = computed(() => { 
-    if (showShiny.value) return props.pokemon.pokemonInfo.sprites.other['official-artwork'].front_shiny;
-    else return props.pokemon.pokemonInfo.sprites.other['official-artwork'].front_default;
+  const artwork = computed(() => { 
+    if (showShiny.value) return props.pokemon.info.sprites.other['official-artwork'].front_shiny;
+    else return props.pokemon.info.sprites.other['official-artwork'].front_default;
   });
 
   const state = reactive({ tab: 'about' });

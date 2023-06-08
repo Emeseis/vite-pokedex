@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="visible" width="1244" class="ma-6 v-overlay--scroll-blocked">
+  <v-dialog v-model="visible" width="1244" class="v-overlay--scroll-blocked">
     <v-card class="pa-6" rounded="xl" color="background">
       <div class="text-h4 font-weight-black text-center">
         {{ type }}
