@@ -4,17 +4,17 @@
       v-if="pokemonList.length"
       v-for="(pokemon, index) in pokemonList" :key="index"
       @click="$emit('onPokemonClicked', pokemon)"
-      class="pa-0 mt-n4"
+      class="pa-0 mt-n4 text-center"
     >
-      <v-img 
+      <img
         width="96" 
         height="96" 
         class="sprite mb-n11"
         :src="pokemon.sprite"
-      ></v-img>
+      >
       <v-card
         color="surface"
-        class="text-center rounded-xl elevation-2 pokemon-card pb-3 pt-11"
+        class="rounded-xl elevation-2 pokemon-card pb-3 pt-11"
         @click="$emit('onPokemonClicked', pokemon)"
       >
         <div class="font-weight-bold entry-text">
@@ -60,7 +60,7 @@
     grid-gap: 24px;
   }
   .sprite {
-    margin: 0 auto;
+    position: relative;
     z-index: 2;
   }
   .sprite:hover {
