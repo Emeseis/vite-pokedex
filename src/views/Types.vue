@@ -59,17 +59,20 @@
     grid-template-columns: repeat(auto-fit, minmax(auto, 187.333px));
     grid-gap: 24px;
   }
+  .icon {
+    z-index: 2;
+  }
+  .icon:hover {
+    cursor: pointer;
+  }
+  .icon:hover + .type-card {
+    outline: 3px solid;
+  }
   .type-card {
     z-index: 1 !important;
   }
   .type-card:hover {
     cursor: pointer;
     outline: 3px solid;
-  }
-  .icon {
-    z-index: 2;
-  }
-  .icon:hover {
-    cursor: pointer;
   }
 </style>
