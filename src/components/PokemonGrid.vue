@@ -1,17 +1,17 @@
 <template>  
   <div class="pokemon-grid my-6" v-if="pokemonList">
     <v-col
-      v-if="pokemonList.length"
+      v-show="pokemonList.length"
       v-for="(pokemon, index) in pokemonList" :key="index"
       @click="$emit('onPokemonClicked', pokemon)"
       class="pa-0 mt-n4 text-center"
     >
-      <img
-        width="96" 
-        height="96" 
+      <v-img
+        width="96"
+        height="96"
         class="sprite mb-n11"
         :src="pokemon.sprite"
-      >
+      />
       <v-card
         color="surface"
         class="rounded-xl elevation-2 pokemon-card pb-3 pt-11"
@@ -37,10 +37,12 @@
         </div>
       </v-card>
     </v-col>
-    <v-col v-else v-for="item in 30" :key="item" class="pa-0 mt-9">        
-      <v-card class="rounded-xl" @click.stop height="143.19">
-        <v-skeleton-loader color="background"></v-skeleton-loader>
-      </v-card>
+    <v-col v-show="!pokemonList.length" v-for="item in 30" :key="item" class="pa-0 mt-9">
+      <v-lazy>
+        <v-card class="rounded-xl" @click.stop height="143.19">
+          <v-skeleton-loader color="background"></v-skeleton-loader>
+        </v-card>
+      </v-lazy>
     </v-col>
   </div>
 </template>
@@ -53,7 +55,7 @@
   const emit = defineEmits(['onPokemonClicked','onTypeClicked']);
 </script>
 
-<style scoped> 
+<style scoped>
   .pokemon-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(auto, 187.333px));
@@ -62,6 +64,7 @@
   .sprite {
     position: relative;
     z-index: 2;
+    margin: 0 auto
   }
   .sprite:hover {
     cursor: pointer;

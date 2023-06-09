@@ -165,12 +165,12 @@
 
   const onPokemonPrev = () => {
     isLoading.value = true;
-    emit('onPokemonClicked', props.pokemon.pokemonPrev);
+    emit('onPokemonClicked', props.pokemon.pokemonPrev, 'modal');
   };
 
   const onPokemonNext = () => {
     isLoading.value = true;
-    emit('onPokemonClicked', props.pokemon.pokemonNext);
+    emit('onPokemonClicked', props.pokemon.pokemonNext, 'modal');
   };
 
   let showShiny = ref(false);

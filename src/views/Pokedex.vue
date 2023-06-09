@@ -1,4 +1,7 @@
 <template>
+  <Loader
+    :loading="isLoading"
+  />
   <FilterBar
     @onSearch="onSearch"
   />
@@ -23,6 +26,7 @@
 
 <script setup>
   import { ref, onMounted } from 'vue';
+  import Loader from '@/components/Loader.vue';
   import FilterBar from '@/components/FilterBar.vue'
   import PokemonGrid from '@/components/PokemonGrid.vue';
   import TypeInfoModal from '@/components/TypeInfoModal.vue';
@@ -38,19 +42,25 @@
     else pokemonList.value = null;
   };
 
+  let isLoading = ref(false);
+
   let pokemonClicked = ref(null);
   let isPokemonInfoModal = ref(false);
 
-  const onPokemonClicked = async (pokemon) => {
+  const onPokemonClicked = async (pokemon, place) => {
+    if (place !== 'modal') isLoading.value = true;
     pokemonClicked.value = await fetchPokemon(pokemon);
+    isLoading.value = false;
     isPokemonInfoModal.value = true;
   };
 
   let typeClicked = ref(null);
   let isTypeInfoModal = ref(false);
 
-  const onTypeClicked = (type) => {
+  const onTypeClicked = (type, place) => {
+    if (place !== 'modal') isLoading.value = true;
     typeClicked.value = type;
+    isLoading.value = false;
     isTypeInfoModal.value = true;
   };
 
