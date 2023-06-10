@@ -1,62 +1,100 @@
-<template>  
-  <div class="pokemon-grid my-6" v-if="pokemonList">
-    <v-col
-      v-show="pokemonList.length"
-      v-for="(pokemon, index) in pokemonList" :key="index"
-      @click="$emit('onPokemonClicked', pokemon)"
-      class="pa-0 mt-n4 text-center"
-    >
-      <v-img
-        width="96"
-        height="96"
-        class="sprite mb-n11"
-        :src="pokemon.sprite"
-      />
-      <v-card
-        color="surface"
-        class="rounded-xl elevation-2 pokemon-card pb-3 pt-11"
-        @click="$emit('onPokemonClicked', pokemon)"
-      >
-        <div class="font-weight-bold entry-text">
-          #{{ pokemon.entry }}
-        </div>
-        <div class="font-weight-bold mt-1">
-          {{ pokemon.name }}
-        </div>
-        <div class="mt-2">
-          <TypeChip
-            :type="pokemon.types[0].type.name"
-            @onTypeClicked="$emit('onTypeClicked', pokemon.types[0].type.name)"
-          />
-          <TypeChip
-            v-if="pokemon.types.length == 2"
-            :type="pokemon.types[1].type.name"
-            @onTypeClicked="$emit('onTypeClicked', pokemon.types[1].type.name)"
-            class="ml-1"
-          />
-        </div>
-      </v-card>
-    </v-col>
-    <v-col v-show="!pokemonList.length" v-for="item in 30" :key="item" class="pa-0 mt-9">
-      <v-lazy>
-        <v-card class="rounded-xl" @click.stop height="143.19">
-          <v-skeleton-loader color="background"></v-skeleton-loader>
+<template>
+  <VirtualCollection
+    :cellSizeAndPositionGetter="cellSizeAndPositionGetter"
+    :collection="pokemonList"
+    :height="scrollerHeight"
+    :width="1286"
+    class="virtual-scroll mt-4 pl-1 ml-n1"
+    v-show="!isLoading"
+  >
+    <template v-slot:cell="{ data: pokemon }">
+      <v-col class="pa-0 text-center">
+        <img
+          width="96"
+          height="96"
+          class="sprite mb-n13"
+          :src="pokemon.sprite"
+          @click="$emit('onPokemonClicked', pokemon)"
+        >
+        <v-card
+          color="surface"
+          class="rounded-xl elevation-2 pokemon-card pb-3 pt-13"
+          @click="$emit('onPokemonClicked', pokemon)"
+        >
+          <div class="font-weight-bold entry-text">
+            #{{ pokemon.entry }}
+          </div>
+          <div class="font-weight-bold mt-1">
+            {{ pokemon.name }}
+          </div>
+          <div class="mt-2">
+            <TypeChip
+              :type="pokemon.types[0].type.name"
+              @onTypeClicked="$emit('onTypeClicked', pokemon.types[0].type.name)"
+            />
+            <TypeChip
+              v-if="pokemon.types.length == 2"
+              :type="pokemon.types[1].type.name"
+              @onTypeClicked="$emit('onTypeClicked', pokemon.types[1].type.name)"
+              class="ml-1"
+            />
+          </div>
         </v-card>
-      </v-lazy>
+      </v-col>
+    </template>
+  </VirtualCollection>
+  <div class="loader-grid mt-8">
+    <v-col
+      v-for="item in 30"
+      :key="item"
+      class="pa-0"
+      style="margin-top: 35px;"
+      v-show="isLoading"
+    >
+      <v-card class="rounded-xl" @click.stop height="150">
+        <v-skeleton-loader color="background"></v-skeleton-loader>
+      </v-card>
     </v-col>
   </div>
 </template>
 
 <script setup>
-  import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader';
+  import VirtualCollection from "vue-virtual-collection/src/VirtualCollection.vue";
+  import { VSkeletonLoader } from "vuetify/lib/labs/components.mjs";
   import TypeChip from '@/components/TypeChip.vue';
+  import { ref, onMounted, onUnmounted } from "vue";  
 
-  const props = defineProps({ pokemonList: Array });
+  const props = defineProps({ pokemonList: Array, isLoading: Boolean });
+
   const emit = defineEmits(['onPokemonClicked','onTypeClicked']);
+
+  const cellSizeAndPositionGetter = (item, index) => {
+    const width = 187.333;
+    const height = 201;
+    const columns = 6;
+    return {
+      width: width,
+      height: height,
+      x: (index % columns) * (width + 24),
+      y: parseInt(index / columns) * (height + 8)
+    }
+  };
+  
+  const scrollerHeight = ref(window.innerHeight - 256);
+  
+  const onResize = () => scrollerHeight.value = window.innerHeight - 256;
+
+  onMounted(() => window.addEventListener('resize', onResize));
+
+  onUnmounted(() => window.removeEventListener('resize', onResize));
 </script>
 
 <style scoped>
-  .pokemon-grid {
+  .virtual-scroll {
+    overflow-x: hidden;
+    border-radius: 24px;
+  }
+  .loader-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(auto, 187.333px));
     grid-gap: 24px;
@@ -64,7 +102,6 @@
   .sprite {
     position: relative;
     z-index: 2;
-    margin: 0 auto
   }
   .sprite:hover {
     cursor: pointer;
@@ -83,7 +120,7 @@
     outline: 3px solid #F44336;
   }
   .entry-text {
-    font-size: 0.8rem !important;
+    font-size: 12px !important;
     font-family: "Roboto", sans-serif !important;
     text-transform: uppercase !important;
   }

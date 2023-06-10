@@ -1,135 +1,139 @@
 <template>
   <v-dialog v-model="visible" width="1244">
     <v-card class="text-center rounded-xl pa-6" color="background">
-      <v-progress-linear
-        v-if="isLoading"
-        indeterminate
-        color="red"
-        height="8"
-        class="mt-n6 mb-4"
-        style="width: 1244px;"
-      ></v-progress-linear>
-      <v-row no-gutters justify="space-between">
-        <v-btn
-          v-if="pokemon.pokemonPrev"
-          @click="onPokemonPrev"
-          class="font-weight-black pr-8"
-          prepend-icon="mdi-chevron-left"
-          rounded="xl"
-          size="large"
-          height="96px"
-        >
-          <v-img
-            :src="pokemon.pokemonPrev.sprite"
-            class="mr-2 ml-n2"
-            width="64"
-            height="64"
-          ></v-img>
-          <div>
-            <div class="font-weigth-bold entry-text-btn mb-2">
-              #{{ pokemon.pokemonPrev.entry }}
-            </div>
+      <div class="div-for-scroll">
+        <v-progress-linear
+          v-if="isLoading"
+          indeterminate
+          color="red"
+          height="8"
+          class="mt-n6 mb-4"
+          style="width: 1244px;"
+        ></v-progress-linear>
+        <v-row no-gutters justify="space-between">
+          <v-btn
+            v-if="pokemon.pokemonPrev"
+            @click="onPokemonPrev"
+            class="font-weight-black pr-8"
+            prepend-icon="mdi-chevron-left"
+            rounded="xl"
+            size="large"
+            height="96px"
+            :disabled="isLoading"
+          >
+            <v-img
+              :src="pokemon.pokemonPrev.sprite"
+              class="mr-2 ml-n2"
+              width="64"
+              height="64"
+            ></v-img>
             <div>
-              {{ pokemon.pokemonPrev.name }}
+              <div class="font-weigth-bold entry-text-btn mb-2">
+                #{{ pokemon.pokemonPrev.entry }}
+              </div>
+              <div>
+                {{ pokemon.pokemonPrev.name }}
+              </div>
             </div>
-          </div>
-        </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn
-          v-if="pokemon.pokemonNext"
-          @click="onPokemonNext"
-          class="font-weight-black pl-8"
-          append-icon="mdi-chevron-right"
-          rounded="xl"
-          size="large"
-          height="96px"
-        >
-          <div>
-            <div class="font-weigth-bold entry-text-btn mb-2">
-              #{{ pokemon.pokemonNext.entry }}
-            </div>
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn
+            v-if="pokemon.pokemonNext"
+            @click="onPokemonNext"
+            class="font-weight-black pl-8"
+            append-icon="mdi-chevron-right"
+            rounded="xl"
+            size="large"
+            height="96px"
+            :disabled="isLoading"
+          >
             <div>
-              {{ pokemon.pokemonNext.name }}
+              <div class="font-weigth-bold entry-text-btn mb-2">
+                #{{ pokemon.pokemonNext.entry }}
+              </div>
+              <div>
+                {{ pokemon.pokemonNext.name }}
+              </div>
             </div>
-          </div>
+            <v-img
+              :src="pokemon.pokemonNext.sprite"
+              class="ml-2 mr-n2"
+              width="64"
+              height="64"
+            ></v-img>
+          </v-btn>
+        </v-row>
+        <v-row no-gutters justify="center" style="margin-top: -96px;">
+          <v-btn
+            icon
+            class="invisible"
+          ></v-btn>
           <v-img
-            :src="pokemon.pokemonNext.sprite"
-            class="ml-2 mr-n2"
-            width="64"
-            height="64"
+            :src="artwork"
+            height="270"
+            width="270"
+            class="artwork ma-0"
           ></v-img>
-        </v-btn>
-      </v-row>
-      <v-row no-gutters justify="center" style="margin-top: -96px;">
-        <v-btn 
-          icon 
-          class="invisible"
-        ></v-btn>
-        <v-img
-          :src="artwork"
-          height="270"
-          width="270"
-          class="artwork ma-0"
-        ></v-img>
-        <v-btn
-          :icon="!showShiny ? 'mdi-star' : 'mdi-star-off'"
-          @click="showShiny = !showShiny"
-        ></v-btn>
-      </v-row>
-      <div>
-        <div class="font-weight-black entry-text mt-2">
-          #{{ pokemon.pokemon.entry }}
+          <v-btn
+            :icon="!showShiny ? 'mdi-star' : 'mdi-star-off'"
+            @click="showShiny = !showShiny"
+          ></v-btn>
+        </v-row>
+        <div>
+          <div class="font-weight-black entry-text mt-2">
+            #{{ pokemon.pokemon.entry }}
+          </div>
+          <div class="text-h4 font-weight-black mt-2">
+            {{ pokemon.pokemon.name }}
+          </div>
+          <div class="mt-4">
+            <TypeChip
+              size="x-large"
+              :type="pokemon.pokemon.types[0].type.name"
+              @onTypeClicked="emit('onTypeClicked', pokemon.pokemon.types[0].type.name);"
+            />
+            <TypeChip
+              class="ml-2"
+              size="x-large"
+              v-if="pokemon.pokemon.types[1]"
+              :type="pokemon.pokemon.types[1].type.name"
+              @onTypeClicked="emit('onTypeClicked', pokemon.pokemon.types[1].type.name);"
+            />
+          </div>
         </div>
-        <div class="text-h4 font-weight-black mt-2">
-          {{ pokemon.pokemon.name }}
-        </div>
-        <div class="mt-4">
-          <TypeChip
-            size="x-large"
-            :type="pokemon.pokemon.types[0].type.name"
-            @onTypeClicked="emit('onTypeClicked', pokemon.pokemon.types[0].type.name);"
-          />
-          <TypeChip
-            class="ml-2"
-            size="x-large"
-            v-if="pokemon.pokemon.types[1]"
-            :type="pokemon.pokemon.types[1].type.name"
-            @onTypeClicked="emit('onTypeClicked', pokemon.pokemon.types[1].type.name);"
-          />
-        </div>
+        <v-card class="rounded-xl elevation-2 mt-6">
+          <v-toolbar height="64" floating  show-arrows>
+            <v-tabs v-model="state.tab" grow>
+              <v-tab value="about" class="font-weight-black">
+                About
+              </v-tab>
+              <v-tab value="stats" class="font-weight-black">
+                Stats
+              </v-tab>
+              <v-tab value="evolve" class="font-weight-black">
+                Evolution
+              </v-tab>
+              <v-tab value="moves" class="font-weight-black">
+                Moves
+              </v-tab>
+            </v-tabs>
+          </v-toolbar>
+          <v-window v-model="state.tab" style="height: 280px; margin-top: -7px">
+            <v-window-item value="about">
+              <AboutTab :pokemon="pokemon"/>
+            </v-window-item>
+            <v-window-item value="stats">
+              <StatsTab :pokemon="pokemon"/>
+            </v-window-item>
+            <v-window-item value="evolve">
+              <EvolutionTab :pokemon="pokemon"/>
+            </v-window-item>
+            <v-window-item value="moves">
+              <MovesTab :pokemon="pokemon"/>
+            </v-window-item>
+          </v-window>
+        </v-card>
       </div>
-      <v-card class="rounded-xl elevation-2 mt-6">
-        <v-toolbar height="64" floating  show-arrows>
-          <v-tabs v-model="state.tab" grow>
-            <v-tab value="about" class="font-weight-black">
-              About
-            </v-tab>
-            <v-tab value="stats" class="font-weight-black">
-              Stats
-            </v-tab>
-            <v-tab value="evolve" class="font-weight-black">
-              Evolution
-            </v-tab>
-            <v-tab value="moves" class="font-weight-black">
-              Moves
-            </v-tab>
-          </v-tabs>
-        </v-toolbar>
-        <v-window v-model="state.tab" style="height: 280px; margin-top: -7px">
-          <v-window-item value="about">
-            <AboutTab :pokemon="pokemon"/>
-          </v-window-item>
-          <v-window-item value="stats">
-            <StatsTab :pokemon="pokemon"/>
-          </v-window-item>
-          <v-window-item value="evolve">
-            <EvolutionTab :pokemon="pokemon"/>
-          </v-window-item>
-          <v-window-item value="moves">
-            <MovesTab :pokemon="pokemon"/>
-          </v-window-item>
-        </v-window>
-      </v-card>
     </v-card>
   </v-dialog>
 </template>

@@ -4,9 +4,11 @@
   />
   <FilterBar
     @onSearch="onSearch"
+    @onFilterName="onFilterName"
   />
   <PokemonGrid
-    :pokemonList="pokemonList"
+    :isLoading="searchLoading"
+    :pokemonList="pokemonListFiltered"
     @onPokemonClicked="onPokemonClicked"
     @onTypeClicked="onTypeClicked"
   />
@@ -33,17 +35,38 @@
   import PokemonInfoModal from '@/components/PokemonInfoModal.vue';
   import axios from 'axios';
 
+  let searchLoading = ref(false);
   let pokemonList = ref([]);
+  let pokemonListFiltered = ref([]);
 
   const onSearch = async (params) => {
+    searchLoading.value = true;
     pokemonList.value = [];
+
     const pokemons = await axios.post(`${import.meta.env.VITE_API_URL}/pokemons`, params);
-    if (pokemons.data.pokemons.length) pokemonList.value = pokemons.data.pokemons;
-    else pokemonList.value = null;
+
+    if (pokemons.data.pokemons.length) {
+      const pokemonsMapped = pokemons.data.pokemons.map(item => { return { data: { ...item } } });
+      pokemonList.value = pokemonsMapped;
+    }
+
+    if (params.filterName) onFilterName(params.filterName);
+    else pokemonListFiltered.value = pokemonList.value;
+
+    searchLoading.value = false;
+  };
+
+  const onFilterName = (name) => {
+    if (!name) { 
+      pokemonListFiltered.value = pokemonList.value; 
+      return; 
+    }
+    pokemonListFiltered.value = pokemonList.value.filter(poke => {
+      return poke.data.name.toLowerCase().includes(name.toLowerCase());
+    })
   };
 
   let isLoading = ref(false);
-
   let pokemonClicked = ref(null);
   let isPokemonInfoModal = ref(false);
 
@@ -97,8 +120,8 @@
 
     return pokemonObject;
   };
-
-  onMounted(() => onSearch({ name: '', type: 'All', gen: '1', order: '1'}));
+  
+  onMounted(() => onSearch({ filterName: '', type: 'All', gen: '1', order: '1'}));
 </script>
 
 <style scoped>

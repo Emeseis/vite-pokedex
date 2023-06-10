@@ -23,7 +23,7 @@ export const typeList = reactive([
 ]);
 
 export const genList = reactive([
-  { title: 'All', value: 'All', disabled: true, icon: 'mdi-set-all', subtitle: null },
+  { title: 'All', value: 'All', disabled: false, icon: 'mdi-set-all' },
   { title: 'First', value: '1', disabled: false, icon: 'mdi-roman-numeral-1' },
   { title: 'Second', value: '2', disabled: false, icon: 'mdi-roman-numeral-2' },
   { title: 'Third', value: '3', disabled: false, icon: 'mdi-roman-numeral-3' },
