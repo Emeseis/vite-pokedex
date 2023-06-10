@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="visible" width="1244">
-    <v-card class="text-center rounded-xl pa-6" color="background">      
-      <div>
+    <v-card class="text-center rounded-xl pa-6" color="background">
+      <div class="div-for-scroll">
         <v-progress-linear
           v-if="isLoading"
           indeterminate
@@ -19,6 +19,7 @@
             rounded="xl"
             size="large"
             height="96px"
+            :disabled="isLoading"
           >
             <v-img
               :src="pokemon.pokemonPrev.sprite"
@@ -44,6 +45,7 @@
             rounded="xl"
             size="large"
             height="96px"
+            :disabled="isLoading"
           >
             <div>
               <div class="font-weigth-bold entry-text-btn mb-2">
@@ -62,8 +64,8 @@
           </v-btn>
         </v-row>
         <v-row no-gutters justify="center" style="margin-top: -96px;">
-          <v-btn 
-            icon 
+          <v-btn
+            icon
             class="invisible"
           ></v-btn>
           <v-img
@@ -165,12 +167,12 @@
 
   const onPokemonPrev = () => {
     isLoading.value = true;
-    emit('onPokemonClicked', props.pokemon.pokemonPrev);
+    emit('onPokemonClicked', props.pokemon.pokemonPrev, 'modal');
   };
 
   const onPokemonNext = () => {
     isLoading.value = true;
-    emit('onPokemonClicked', props.pokemon.pokemonNext);
+    emit('onPokemonClicked', props.pokemon.pokemonNext, 'modal');
   };
 
   let showShiny = ref(false);

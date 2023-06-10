@@ -1,9 +1,14 @@
 <template>
+  <Loader
+    :loading="isLoading"
+  />
   <FilterBar
     @onSearch="onSearch"
+    @onFilterName="onFilterName"
   />
   <PokemonGrid
-    :pokemonList="pokemonList"
+    :isLoading="searchLoading"
+    :pokemonList="pokemonListFiltered"
     @onPokemonClicked="onPokemonClicked"
     @onTypeClicked="onTypeClicked"
   />
@@ -23,34 +28,62 @@
 
 <script setup>
   import { ref, onMounted } from 'vue';
+  import Loader from '@/components/Loader.vue';
   import FilterBar from '@/components/FilterBar.vue'
   import PokemonGrid from '@/components/PokemonGrid.vue';
   import TypeInfoModal from '@/components/TypeInfoModal.vue';
   import PokemonInfoModal from '@/components/PokemonInfoModal.vue';
   import axios from 'axios';
 
+  let searchLoading = ref(false);
   let pokemonList = ref([]);
+  let pokemonListFiltered = ref([]);
 
   const onSearch = async (params) => {
+    searchLoading.value = true;
     pokemonList.value = [];
+
     const pokemons = await axios.post(`${import.meta.env.VITE_API_URL}/pokemons`, params);
-    if (pokemons.data.pokemons.length) pokemonList.value = pokemons.data.pokemons;
-    else pokemonList.value = null;
+
+    if (pokemons.data.pokemons.length) {
+      const pokemonsMapped = pokemons.data.pokemons.map(item => { return { data: { ...item } } });
+      pokemonList.value = pokemonsMapped;
+    }
+
+    if (params.filterName) onFilterName(params.filterName);
+    else pokemonListFiltered.value = pokemonList.value;
+
+    searchLoading.value = false;
   };
 
+  const onFilterName = (name) => {
+    if (!name) { 
+      pokemonListFiltered.value = pokemonList.value; 
+      return; 
+    }
+    pokemonListFiltered.value = pokemonList.value.filter(poke => {
+      return poke.data.name.toLowerCase().includes(name.toLowerCase());
+    })
+  };
+
+  let isLoading = ref(false);
   let pokemonClicked = ref(null);
   let isPokemonInfoModal = ref(false);
 
-  const onPokemonClicked = async (pokemon) => {
+  const onPokemonClicked = async (pokemon, place) => {
+    if (place !== 'modal') isLoading.value = true;
     pokemonClicked.value = await fetchPokemon(pokemon);
+    isLoading.value = false;
     isPokemonInfoModal.value = true;
   };
 
   let typeClicked = ref(null);
   let isTypeInfoModal = ref(false);
 
-  const onTypeClicked = (type) => {
+  const onTypeClicked = (type, place) => {
+    if (place !== 'modal') isLoading.value = true;
     typeClicked.value = type;
+    isLoading.value = false;
     isTypeInfoModal.value = true;
   };
 
@@ -87,8 +120,8 @@
 
     return pokemonObject;
   };
-
-  onMounted(() => onSearch({ name: '', type: 'All', gen: '1', order: '1'}));
+  
+  onMounted(() => onSearch({ filterName: '', type: 'All', gen: '1', order: '1'}));
 </script>
 
 <style scoped>
