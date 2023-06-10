@@ -4,7 +4,7 @@
     :collection="pokemonList"
     :height="scrollerHeight"
     :width="1286"
-    class="virtual-scroll mt-4 pl-1 ml-n1"
+    class="virtual-scroll mt-4 pl-1 ml-n1 pb-1 mb-n1"
     v-show="!isLoading"
   >
     <template v-slot:cell="{ data: pokemon }">
@@ -80,9 +80,9 @@
     }
   };
   
-  const scrollerHeight = ref(window.innerHeight - 256);
+  const scrollerHeight = ref(window.innerHeight - 248);
   
-  const onResize = () => scrollerHeight.value = window.innerHeight - 256;
+  const onResize = () => scrollerHeight.value = window.innerHeight - 248;
 
   onMounted(() => window.addEventListener('resize', onResize));
 

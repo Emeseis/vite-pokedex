@@ -121,7 +121,7 @@
     return pokemonObject;
   };
   
-  onMounted(() => onSearch({ filterName: '', type: 'All', gen: '1', order: '1'}));
+  onMounted(() => onSearch({ filterName: '', type: 'All', gen: 'All', order: '1'}));
 </script>
 
 <style scoped>
