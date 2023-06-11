@@ -136,12 +136,12 @@
   const getStatMax = (value) => Math.floor((value*2+99)*1.1);
   
   const getStatColor = (value) => {
-    if (value <= 29) return '#f34444';
-    if (value <= 59) return '#ff7f0f';
-    if (value <= 89) return '#ffdd57';
-    if (value <= 119) return '#a0e515';
-    if (value <= 149) return '#23cd5e';
-    return '#00c2b8';
+    if (value <= 29) return '#f34444b3';
+    if (value <= 59) return '#ff7f0fb3';
+    if (value <= 89) return '#ffdd57b3';
+    if (value <= 119) return '#a0e515b3';
+    if (value <= 149) return '#23cd5eb3';
+    return '#00c2b8b3';
   };
 </script>
 
