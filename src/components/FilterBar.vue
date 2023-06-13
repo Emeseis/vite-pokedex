@@ -8,7 +8,7 @@
           label="Name"
           prependInnerIcon="mdi-text-search"
           v-model="params.filterName"
-          @update:modelValue="emit('onFilterName', params.filterName)"
+          @update:modelValue="emit('onFilterName', params.filterName || '')"
         ></v-text-field>
       </v-card>
     </v-col>
@@ -93,7 +93,7 @@
 <script setup>
   import { typeList, genList, orderList } from '@/composables/lists';
   import { getColor } from '@/composables/functions';
-  import { reactive, ref } from 'vue';
+  import { reactive } from 'vue';
 
   let params = reactive({
     filterName: '',

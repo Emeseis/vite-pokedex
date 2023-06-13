@@ -1,5 +1,5 @@
 <template>
-  <div class="loader-grid rounded-xl mt-6 ml-n1 pl-1" style="
+  <div class="loader-grid rounded-xl mt-6 ml-n1 pl-1 pb-1" style="
     max-height: calc(100vh - 248px);
     width: 1287px;
     overflow: auto;
