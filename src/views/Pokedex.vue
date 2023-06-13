@@ -53,9 +53,10 @@
   };
 
   const onFilterName = (name) => {
-    pokemonListFiltered.value = pokemonList.value.filter(poke => {
+    if (name) pokemonListFiltered.value = pokemonList.value.filter(poke => {
       return poke.name.toLowerCase().includes(name.toLowerCase());
-    })
+    });
+    else pokemonListFiltered.value = pokemonList.value;
   };
 
   let isLoading = ref(false);
