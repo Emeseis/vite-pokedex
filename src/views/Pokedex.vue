@@ -44,11 +44,7 @@
     pokemonList.value = [];
 
     const pokemons = await axios.post(`${import.meta.env.VITE_API_URL}/pokemons`, params);
-
-    if (pokemons.data.pokemons.length) {
-      const pokemonsMapped = pokemons.data.pokemons.map(item => { return { data: { ...item } } });
-      pokemonList.value = pokemonsMapped;
-    }
+    pokemonList.value = pokemons.data.pokemons;
 
     if (params.filterName) onFilterName(params.filterName);
     else pokemonListFiltered.value = pokemonList.value;
@@ -57,12 +53,8 @@
   };
 
   const onFilterName = (name) => {
-    if (!name) { 
-      pokemonListFiltered.value = pokemonList.value; 
-      return; 
-    }
     pokemonListFiltered.value = pokemonList.value.filter(poke => {
-      return poke.data.name.toLowerCase().includes(name.toLowerCase());
+      return poke.name.toLowerCase().includes(name.toLowerCase());
     })
   };
 

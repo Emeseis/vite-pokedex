@@ -3,7 +3,7 @@
     <v-card class="text-center rounded-xl pa-6" color="background">
       <div class="div-for-scroll">
         <v-progress-linear
-          v-if="isLoading"
+          v-show="isLoading"
           indeterminate
           color="red"
           height="8"
