@@ -1,7 +1,5 @@
 <template>  	
   <span
-    elevation="1"
-    variant="elevated"
     v-ripple
     class="font-weight-bold text-black elevation-1"
     @click.stop="$emit('onTypeClicked', type)"
@@ -14,7 +12,6 @@
       display: 'inline-flex',
       alignItems: 'center',
       position: 'relative',
-      zIndex: 4
     }"
   >{{ type }}</span>
 </template>

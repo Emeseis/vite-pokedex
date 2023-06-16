@@ -38,7 +38,7 @@
             v-if="pokemon.types.length == 2"
             :type="pokemon.types[1].type.name"
             @onTypeClicked="$emit('onTypeClicked', pokemon.types[1].type.name)"
-            class="ml-1"
+            style="margin-left: 6px;"
           />
         </div>
       </div>
