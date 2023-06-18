@@ -2,8 +2,15 @@
   <v-card height="280px">
     <v-row class="pa-4">
       <v-col cols="6" class="text-left">
-        <table width="100%" class="customTable py-1">
+        <table width="100%" class="statTable">
           <tbody>
+            <tr>
+              <td class="font-weight-bold">Total</td>
+              <td class="font-weight-bold">{{ totalStat }}</td>
+              <td class="pr-4"></td>
+              <td class="font-weight-bold">Min</td>
+              <td class="font-weight-bold">Max</td>
+            </tr>
             <tr>
               <td width="13%">HP</td>
               <td width="7%">{{ pokemon.info.stats[0].base_stat }}</td>
@@ -94,19 +101,27 @@
               <td>{{ getStatMin(pokemon.info.stats[5].base_stat) }}</td>
               <td>{{ getStatMax(pokemon.info.stats[5].base_stat) }}</td>
             </tr>
-            <tr>
-              <td class="font-weight-bold">Total</td>
-              <td class="font-weight-bold">{{ total_stat }}</td>
-              <td class="pr-4"></td>
-              <td class="font-weight-bold">Min</td>
-              <td class="font-weight-bold">Max</td>
-            </tr>
           </tbody>
         </table>
       </v-col>
       <v-col cols="6" class="text-left">
         <table width="100%" class="customHeader margin-b7">
           <tr><h3>Type Defenses</h3></tr>
+        </table>
+        <table class="customTable">
+          <tr v-for="row in 3">
+            <td 
+              v-for="item in typeList.slice(row*6-5, row*6+1)" 
+              :style="{ padding: row == 2 ? '2px 0' : '0' }" 
+              width="1%"
+            >
+              <TypeDefenseChip
+                @onTypeClicked="onTypeClicked"
+                :effectiveness="props.pokemon.typeDefenses[item.title.toLowerCase()]" 
+                :type="item.title"
+              />
+            </td>
+          </tr>
         </table>
       </v-col>
     </v-row>
@@ -115,10 +130,14 @@
 
 <script setup>
   import { computed } from 'vue';
+  import { typeList } from '@/composables/lists';
+  import TypeDefenseChip from '../TypeDefenseChip.vue';
+
+  const emit = defineEmits(['onTypeClicked']);
 
   const props = defineProps({ pokemon: Object });
 
-  const total_stat = computed(() => {
+  const totalStat = computed(() => {
     return (
       props.pokemon.info.stats[0].base_stat +
       props.pokemon.info.stats[1].base_stat +
@@ -128,6 +147,8 @@
       props.pokemon.info.stats[5].base_stat
     );
   });
+
+  const onTypeClicked = (type) => emit('onTypeClicked', type);
 
   const getStatPercentage = (value) => (value*100)/180;
 
@@ -146,9 +167,18 @@
 </script>
 
 <style scoped>
+  .statTable {
+    border-radius: 24px;
+    padding: 4px 16px;
+    background-color: rgb(var(--v-theme-on-surface-variant));
+  }
+  .statTable tr {
+    line-height: 32px;
+    font-size: 13px;
+  }
   .customTable {
     border-radius: 24px;
-    padding: 0 16px;
+    padding: 6px;
     background-color: rgb(var(--v-theme-on-surface-variant));
   }
   .customTable tr {
