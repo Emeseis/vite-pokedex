@@ -123,7 +123,7 @@
               <AboutTab :pokemon="pokemon"/>
             </v-window-item>
             <v-window-item value="stats">
-              <StatsTab :pokemon="pokemon"/>
+              <StatsTab :pokemon="pokemon" @onTypeClicked="onTypeClicked"/>
             </v-window-item>
             <v-window-item value="evolve">
               <EvolutionTab :pokemon="pokemon"/>
@@ -162,6 +162,8 @@
     isLoading.value = false;
     showShiny.value = false;
   });
+
+  const onTypeClicked = (type) => emit('onTypeClicked', type);
 
   let isLoading = ref(false);
 
