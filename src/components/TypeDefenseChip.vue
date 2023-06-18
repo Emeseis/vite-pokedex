@@ -44,24 +44,23 @@
   const emit = defineEmits(['onTypeClicked']);
 
   const getEffectivenessFont = (effectiveness) => {
-    if (effectiveness == 4.00) return '0.875rem';
-    if (effectiveness == 2.00) return '0.875rem';
-    if (effectiveness == 0.50) return '1.075rem';
-    if (effectiveness == 0.25) return '1.075rem';
-    if (effectiveness == 0.00) return '0.875rem';
+    if (effectiveness == 0) return '0.875rem';
+    else if (effectiveness > 1) return '0.875rem';
+    else if (effectiveness < 1) return '1.075rem';
+    else return '0.875rem';
   };
 
   const getEffectivenessText = (effectiveness) => {
-    if (effectiveness == 4.00) return '4';
-    if (effectiveness == 2.00) return '2';
-    if (effectiveness == 0.50) return '½';
-    if (effectiveness == 0.25) return '¼';
-    if (effectiveness == 0.00) return '0';
+    if (effectiveness == 1) return '';
+    else if (effectiveness == 0.50) return '½';
+    else if (effectiveness == 0.25) return '¼';
+    else return effectiveness;
   };
 
   const getEffectivenessColor = (effectiveness) => {
     if (effectiveness == 4.00) return '#73D216';
     if (effectiveness == 2.00) return '#4E9A06';
+    if (effectiveness == 1.25) return '#4E9A06';
     if (effectiveness == 1.00) return '#424242';
     if (effectiveness == 0.50) return '#A40000';
     if (effectiveness == 0.25) return '#7C0000';
