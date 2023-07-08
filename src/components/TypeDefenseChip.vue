@@ -15,9 +15,9 @@
     <div class="mb-n1">{{ type }}</div>
     <div
       class="font-weight-bold text-black effectiveness-chip"
-      :class="effectiveness != 1 ? 'elevation-1' : 'elevation-n1'"
-      @click.stop
-      v-ripple.stop
+      :class="effectiveness != 1 ? 'elevation-2' : 'elevation-n1'"
+      @click.stop="effectiveness != 1 ? emit('onTypeClicked', type) : ''"
+      v-ripple.stop="effectiveness != 1 ? false : true"
       :style="{
         width: '76px',
         height: '28px',
@@ -78,7 +78,7 @@
       inset 0 1px 1px 0 rgba(0, 0, 0, 0.14),
       inset 0 1px 3px 0 rgba(0, 0, 0, 0.12) !important;
   }
-  .effectiveness-chip:hover {
+  .effectiveness-chip:not(.elevation-2):hover {
     cursor: default;
   }
 </style>
