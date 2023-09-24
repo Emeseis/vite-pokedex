@@ -44,9 +44,7 @@
   const onSearch = async (params) => {
     searchLoading.value = true;
     pokemonList.value = [];
-
-    const pokemons = await axios.post(`${import.meta.env.VITE_API_URL}/pokemons`, params);
-    pokemonList.value = pokemons.data.pokemons;
+    pokemonList.value = (await axios.post(`${import.meta.env.VITE_API_URL}/pokemons`, params)).data.pokemons;
 
     if (params.filterName) onFilterName(params.filterName);
     else pokemonListFiltered.value = pokemonList.value;
@@ -84,35 +82,33 @@
 
   const fetchPokemon = async (pokemon) => {
     const baseUrl = `https://pokeapi.co/api/v2`;
-    const pokemonInfo = await axios.get(`${baseUrl}/pokemon/${pokemon.id}`);
-    const pokemonMoreInfo = await axios.get(`${baseUrl}/pokemon-species/${pokemon.id}`);
-    const typeDefenses = await getMultipliers(pokemon);  
+    const pokemonInfo = (await axios.get(`${baseUrl}/pokemon/${pokemon.id}`)).data;
+    const pokemonMoreInfo = (await axios.get(`${baseUrl}/pokemon-species/${pokemon.id}`)).data;
+    const typeDefenses = (await getMultipliers(pokemon)).data;  
     
-    const flavorText = pokemonMoreInfo.data.flavor_text_entries.filter(item => item.language.name == 'en');
-    pokemonMoreInfo.data.flavor_text_entries = flavorText;
+    const flavorText = pokemonMoreInfo.flavor_text_entries.filter(item => item.language.name == 'en');
+    pokemonMoreInfo.flavor_text_entries = flavorText;
     
-    const speciesName = pokemonMoreInfo.data.genera.filter(item => item.language.name == 'en');    
-    pokemonMoreInfo.data.genera = speciesName;    
+    const speciesName = pokemonMoreInfo.genera.filter(item => item.language.name == 'en');    
+    pokemonMoreInfo.genera = speciesName;    
 
     const pokemonObject = { 
       pokemon,
       pokemonPrev: null,
       pokemonNext: null,
-      info: pokemonInfo.data,
-      moreInfo: pokemonMoreInfo.data,
+      info: pokemonInfo,
+      moreInfo: pokemonMoreInfo,
       typeDefenses
     };
 
     if (pokemon.id != 1) {
       const idPrev = (pokemon.id - 1);
-      const pokemonPrev = await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${idPrev}`);
-      pokemonObject.pokemonPrev = pokemonPrev.data;
+      pokemonObject.pokemonPrev = (await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${idPrev}`)).data;
     }
 
     if (pokemon.id != 1010) {
       const idNext = (pokemon.id + 1);
-      const pokemonNext = await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${idNext}`);
-      pokemonObject.pokemonNext = pokemonNext.data;
+      pokemonObject.pokemonNext = (await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${idNext}`)).data;
     } 
 
     return pokemonObject;
@@ -138,10 +134,9 @@
 
     return defense;
   };
-  
+
   onMounted(async () => {
     onSearch({ filterName: '', type: 'All', gen: 'All', order: '1' });
-    const types = await axios.get(`${import.meta.env.VITE_API_URL}/types`);
-    typeDefenseList.value = types.data;
+    typeDefenseList.value = (await axios.get(`${import.meta.env.VITE_API_URL}/types`)).data;
   });
 </script>
