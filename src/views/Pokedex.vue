@@ -81,35 +81,24 @@
   };
 
   const fetchPokemon = async (pokemon) => {
-    const baseUrl = `https://pokeapi.co/api/v2`;
-    const pokemonInfo = (await axios.get(`${baseUrl}/pokemon/${pokemon.id}`)).data;
-    const pokemonMoreInfo = (await axios.get(`${baseUrl}/pokemon-species/${pokemon.id}`)).data;
-    const typeDefenses = (await getMultipliers(pokemon)).data;  
+    const typeDefenses = await getMultipliers(pokemon);  
+    const pokemonInfo = (await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.id}`)).data;
+    const pokemonSpecies = (await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}`)).data;
     
-    const flavorText = pokemonMoreInfo.flavor_text_entries.filter(item => item.language.name == 'en');
-    pokemonMoreInfo.flavor_text_entries = flavorText;
-    
-    const speciesName = pokemonMoreInfo.genera.filter(item => item.language.name == 'en');    
-    pokemonMoreInfo.genera = speciesName;    
+    pokemonSpecies.flavor_text_entries = pokemonSpecies.flavor_text_entries.filter(item => item.language.name == 'en');
+    pokemonSpecies.genera = pokemonSpecies.genera.filter(item => item.language.name == 'en');
 
     const pokemonObject = { 
       pokemon,
+      pokemonInfo,
+      pokemonSpecies,
       pokemonPrev: null,
       pokemonNext: null,
-      info: pokemonInfo,
-      moreInfo: pokemonMoreInfo,
       typeDefenses
     };
 
-    if (pokemon.id != 1) {
-      const idPrev = (pokemon.id - 1);
-      pokemonObject.pokemonPrev = (await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${idPrev}`)).data;
-    }
-
-    if (pokemon.id != 1010) {
-      const idNext = (pokemon.id + 1);
-      pokemonObject.pokemonNext = (await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${idNext}`)).data;
-    } 
+    if (pokemon.id != 1) pokemonObject.pokemonPrev = (await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${pokemon.id - 1}`)).data;
+    if (pokemon.id != 1010) pokemonObject.pokemonNext = (await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${pokemon.id + 1}`)).data;
 
     return pokemonObject;
   };
