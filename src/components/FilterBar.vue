@@ -22,17 +22,17 @@
           v-model="params.type"
           @update:modelValue="emit('onSearch', params)"
         >
-          <template v-slot:prepend-inner>
+          <template #prepend-inner>
             <v-icon :color="getColor(params.type)">
               {{ typeList[typeList.findIndex(item => item.title == params.type)].icon }}
             </v-icon>
           </template>
-          <template v-slot:item="{ item, props }">
+          <template #item="{ item, props }">
             <v-list-item
               v-bind="props"
               :title="item.raw.title"
             >
-              <template v-slot:prepend>
+              <template #prepend>
                 <v-icon :color="getColor(item.raw.title)">
                   {{ item.raw.icon }}
                 </v-icon>
@@ -54,7 +54,7 @@
           v-model="params.gen"
           @update:modelValue="emit('onSearch', params)"
         >
-          <template v-slot:item="{ item, props }">
+          <template #item="{ item, props }">
             <v-list-item
               v-bind="props"
               :title="item.raw.title"
@@ -77,7 +77,7 @@
           v-model="params.order"
           @update:modelValue="emit('onSearch', params)"
         >
-          <template v-slot:item="{ item, props }">
+          <template #item="{ item, props }">
             <v-list-item
               v-bind="props"
               :title="item.raw.title"
