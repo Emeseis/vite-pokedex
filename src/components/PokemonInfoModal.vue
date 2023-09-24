@@ -180,8 +180,8 @@
   let showShiny = ref(false);
 
   const artwork = computed(() => { 
-    if (showShiny.value) return props.pokemon.info.sprites.other['official-artwork'].front_shiny;
-    else return props.pokemon.info.sprites.other['official-artwork'].front_default;
+    if (showShiny.value) return props.pokemon.pokemonInfo.sprites.other['official-artwork'].front_shiny;
+    else return props.pokemon.pokemonInfo.sprites.other['official-artwork'].front_default;
   });
 
   const state = reactive({ tab: 'about' });

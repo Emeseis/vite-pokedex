@@ -26,7 +26,7 @@
             inset
             hide-details
             v-model="toggleTheme"
-            class="d-flex align-center mr-n16"
+            class="d-flex align-center mr-n16 switch"
           ></v-switch>
         </v-tabs>
       </v-toolbar>
@@ -59,7 +59,14 @@
     z-index: 0;
   }
   .v-tab--selected {
-    font-weight: 900 !important;
+    font-weight: 1000 !important;
+  }
+  :deep(.v-switch) .v-switch__thumb {
+    background-color: rgb(var(--v-theme-switch)) !important;
+    transform: scale(0.9) !important;
+  }
+  :deep(.v-switch) .v-switch__track {
+    background-color: rgb(var(--v-theme-bg_switch)) !important;
   }
 </style>
 

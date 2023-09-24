@@ -13,93 +13,93 @@
             </tr>
             <tr>
               <td width="13%">HP</td>
-              <td width="7%">{{ pokemon.info.stats[0].base_stat }}</td>
+              <td width="7%">{{ pokemon.pokemonInfo.stats[0].base_stat }}</td>
               <td class="pr-4">
                 <v-progress-linear
-                  :model-value="getStatPercentage(pokemon.info.stats[0].base_stat)"
-                  :color="getStatColor(pokemon.info.stats[0].base_stat)"
+                  :model-value="getStatPercentage(pokemon.pokemonInfo.stats[0].base_stat)"
+                  :color="getStatColor(pokemon.pokemonInfo.stats[0].base_stat)"
                   bg-color="white"
                   height="15"
                   rounded
                 ></v-progress-linear>
               </td>
-              <td width="8%" class="text-left">{{ getStatMin(pokemon.info.stats[0].base_stat) }}</td>
-              <td width="5%" class="text-left">{{ getStatMax(pokemon.info.stats[0].base_stat) }}</td>
+              <td width="8%" class="text-left">{{ getStatMin(pokemon.pokemonInfo.stats[0].base_stat) }}</td>
+              <td width="5%" class="text-left">{{ getStatMax(pokemon.pokemonInfo.stats[0].base_stat) }}</td>
             </tr>
             <tr>
               <td>Attack</td>
-              <td>{{ pokemon.info.stats[1].base_stat }}</td>
+              <td>{{ pokemon.pokemonInfo.stats[1].base_stat }}</td>
               <td class="pr-4">
                 <v-progress-linear
-                  :model-value="getStatPercentage(pokemon.info.stats[1].base_stat)"
-                  :color="getStatColor(pokemon.info.stats[1].base_stat)"
+                  :model-value="getStatPercentage(pokemon.pokemonInfo.stats[1].base_stat)"
+                  :color="getStatColor(pokemon.pokemonInfo.stats[1].base_stat)"
                   bg-color="white"
                   height="15"
                   rounded
                 ></v-progress-linear>
               </td>
-              <td>{{ getStatMin(pokemon.info.stats[1].base_stat) }}</td>
-              <td>{{ getStatMax(pokemon.info.stats[1].base_stat) }}</td>
+              <td>{{ getStatMin(pokemon.pokemonInfo.stats[1].base_stat) }}</td>
+              <td>{{ getStatMax(pokemon.pokemonInfo.stats[1].base_stat) }}</td>
             </tr>
             <tr>
               <td>Defense</td>
-              <td>{{ pokemon.info.stats[2].base_stat }}</td>
+              <td>{{ pokemon.pokemonInfo.stats[2].base_stat }}</td>
               <td class="pr-4">
                 <v-progress-linear
-                  :model-value="getStatPercentage(pokemon.info.stats[2].base_stat)"
-                  :color="getStatColor(pokemon.info.stats[2].base_stat)"
+                  :model-value="getStatPercentage(pokemon.pokemonInfo.stats[2].base_stat)"
+                  :color="getStatColor(pokemon.pokemonInfo.stats[2].base_stat)"
                   bg-color="white"
                   height="15"
                   rounded
                 ></v-progress-linear>
               </td>
-              <td>{{ getStatMin(pokemon.info.stats[2].base_stat) }}</td>
-              <td>{{ getStatMax(pokemon.info.stats[2].base_stat) }}</td>
+              <td>{{ getStatMin(pokemon.pokemonInfo.stats[2].base_stat) }}</td>
+              <td>{{ getStatMax(pokemon.pokemonInfo.stats[2].base_stat) }}</td>
             </tr>
             <tr>
               <td>Sp. Atk</td>
-              <td>{{ pokemon.info.stats[3].base_stat }}</td>
+              <td>{{ pokemon.pokemonInfo.stats[3].base_stat }}</td>
               <td class="pr-4">
                 <v-progress-linear
-                  :model-value="getStatPercentage(pokemon.info.stats[3].base_stat)"
-                  :color="getStatColor(pokemon.info.stats[3].base_stat)"
+                  :model-value="getStatPercentage(pokemon.pokemonInfo.stats[3].base_stat)"
+                  :color="getStatColor(pokemon.pokemonInfo.stats[3].base_stat)"
                   bg-color="white"
                   height="15"
                   rounded
                 ></v-progress-linear>
               </td>
-              <td>{{ getStatMin(pokemon.info.stats[3].base_stat) }}</td>
-              <td>{{ getStatMax(pokemon.info.stats[3].base_stat) }}</td>
+              <td>{{ getStatMin(pokemon.pokemonInfo.stats[3].base_stat) }}</td>
+              <td>{{ getStatMax(pokemon.pokemonInfo.stats[3].base_stat) }}</td>
             </tr>
             <tr>
               <td>Sp. Def</td>
-              <td>{{ pokemon.info.stats[4].base_stat }}</td>
+              <td>{{ pokemon.pokemonInfo.stats[4].base_stat }}</td>
               <td class="pr-4">
                 <v-progress-linear
-                  :model-value="getStatPercentage(pokemon.info.stats[4].base_stat)"
-                  :color="getStatColor(pokemon.info.stats[4].base_stat)"
+                  :model-value="getStatPercentage(pokemon.pokemonInfo.stats[4].base_stat)"
+                  :color="getStatColor(pokemon.pokemonInfo.stats[4].base_stat)"
                   bg-color="white"
                   height="15"
                   rounded
                 ></v-progress-linear>
               </td>
-              <td>{{ getStatMin(pokemon.info.stats[4].base_stat) }}</td>
-              <td>{{ getStatMax(pokemon.info.stats[4].base_stat) }}</td>
+              <td>{{ getStatMin(pokemon.pokemonInfo.stats[4].base_stat) }}</td>
+              <td>{{ getStatMax(pokemon.pokemonInfo.stats[4].base_stat) }}</td>
             </tr>
             <tr>
               <td>Speed</td>
-              <td>{{ pokemon.info.stats[5].base_stat }}</td>
+              <td>{{ pokemon.pokemonInfo.stats[5].base_stat }}</td>
               <td class="pr-4">
                 <v-progress-linear
-                  :model-value="getStatPercentage(pokemon.info.stats[5].base_stat)"
-                  :color="getStatColor(pokemon.info.stats[5].base_stat)"
+                  :model-value="getStatPercentage(pokemon.pokemonInfo.stats[5].base_stat)"
+                  :color="getStatColor(pokemon.pokemonInfo.stats[5].base_stat)"
                   bg-color="white"
                   height="15"
                   rounded
                 ></v-progress-linear>
               </td>
-              <td>{{ getStatMin(pokemon.info.stats[5].base_stat) }}</td>
-              <td>{{ getStatMax(pokemon.info.stats[5].base_stat) }}</td>
+              <td>{{ getStatMin(pokemon.pokemonInfo.stats[5].base_stat) }}</td>
+              <td>{{ getStatMax(pokemon.pokemonInfo.stats[5].base_stat) }}</td>
             </tr>
           </tbody>
         </table>
@@ -139,12 +139,12 @@
 
   const totalStat = computed(() => {
     return (
-      props.pokemon.info.stats[0].base_stat +
-      props.pokemon.info.stats[1].base_stat +
-      props.pokemon.info.stats[2].base_stat +
-      props.pokemon.info.stats[3].base_stat +
-      props.pokemon.info.stats[4].base_stat +
-      props.pokemon.info.stats[5].base_stat
+      props.pokemon.pokemonInfo.stats[0].base_stat +
+      props.pokemon.pokemonInfo.stats[1].base_stat +
+      props.pokemon.pokemonInfo.stats[2].base_stat +
+      props.pokemon.pokemonInfo.stats[3].base_stat +
+      props.pokemon.pokemonInfo.stats[4].base_stat +
+      props.pokemon.pokemonInfo.stats[5].base_stat
     );
   });
 
