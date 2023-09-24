@@ -4,55 +4,57 @@
     width: 1287px;
     overflow: auto;
   ">
-    <div 
-      v-if="!isLoading"
-      v-for="pokemon in pokemonList" 
-      :key="pokemon"
-      class="pa-0 text-center" 
-      style="z-index: 1;"
-    >
-      <img
-        width="96"
-        height="96"
-        class="sprite mb-n14"
-        :src="pokemon.sprite"
-        @click="$emit('onPokemonClicked', pokemon)"
+    <div v-show="!isLoading" class="d-contents">
+      <div        
+        v-for="pokemon in pokemonList"
+        :key="pokemon"
+        class="pa-0 text-center"
+        style="z-index: 1;"
       >
-      <div
-        class="pokemon-card rounded-xl elevation-2 pb-3 pt-13"
-        @click="$emit('onPokemonClicked', pokemon)"
-        v-ripple
-      >
-        <div class="font-weight-bold entry-text">
-          #{{ pokemon.entry }}
-        </div>
-        <div class="font-weight-bold mt-1">
-          {{ pokemon.name }}
-        </div>
-        <div class="mt-2">
-          <TypeChip
-            :type="pokemon.types[0].type.name"
-            @onTypeClicked="$emit('onTypeClicked', pokemon.types[0].type.name)"
-          />
-          <TypeChip
-            v-if="pokemon.types.length == 2"
-            :type="pokemon.types[1].type.name"
-            @onTypeClicked="$emit('onTypeClicked', pokemon.types[1].type.name)"
-            style="margin-left: 6px;"
-          />
+        <img
+          width="96"
+          height="96"
+          class="sprite mb-n14"
+          :src="pokemon.sprite"
+          @click="$emit('onPokemonClicked', pokemon)"
+        >
+        <div
+          class="pokemon-card rounded-xl elevation-2 pb-3 pt-13"
+          @click="$emit('onPokemonClicked', pokemon)"
+          v-ripple
+        >
+          <div class="font-weight-bold entry-text">
+            #{{ pokemon.entry }}
+          </div>
+          <div class="font-weight-bold mt-1">
+            {{ pokemon.name }}
+          </div>
+          <div class="mt-2">
+            <TypeChip
+              :type="pokemon.types[0].type.name"
+              @onTypeClicked="$emit('onTypeClicked', pokemon.types[0].type.name)"
+            />
+            <TypeChip
+              v-if="pokemon.types.length == 2"
+              :type="pokemon.types[1].type.name"
+              @onTypeClicked="$emit('onTypeClicked', pokemon.types[1].type.name)"
+              style="margin-left: 6px;"
+            />
+          </div>
         </div>
       </div>
     </div>
-    <div
-      v-if="isLoading"
-      v-for="item in 36"
-      :key="item"
-      class="pa-0"
-      style="margin-top: 47px;"
-    >
-      <v-card class="rounded-xl" @click.stop height="150">
-        <v-skeleton-loader color="background"></v-skeleton-loader>
-      </v-card>
+    <div v-show="isLoading" class="d-contents">
+      <div        
+        v-for="item in 36"
+        :key="item"
+        class="pa-0"
+        style="margin-top: 47px;"
+      >
+        <v-card class="rounded-xl" @click.stop height="150">
+          <v-skeleton-loader color="background"></v-skeleton-loader>
+        </v-card>
+      </div>
     </div>
   </div>
 </template>
