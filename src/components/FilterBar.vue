@@ -111,7 +111,7 @@
   }
 </style>
 
-<style setup>
+<style scoped>
   :deep(.v-field__prepend-inner > .v-icon) {
     opacity: 1;
   }
