@@ -4,7 +4,7 @@
     width: 1287px;
     overflow: auto;
   ">
-    <div v-show="!isLoading" class="d-contents">
+    <div v-show="!isLoading" style="display: contents">
       <div        
         v-for="pokemon in pokemonList"
         :key="pokemon"
@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-    <div v-show="isLoading" class="d-contents">
+    <div v-show="isLoading" style="display: contents">
       <div        
         v-for="item in 36"
         :key="item"
