@@ -16,7 +16,10 @@
           height="96"
           class="sprite mb-n14"
           :src="pokemon.sprite"
-          @click="$emit('onPokemonClicked', pokemon)"
+          @click="$emit('onPokemonClicked', pokemon);"
+          @mousedown="setRipple"
+          @mouseout="remRipple"
+          @mouseup="remRipple"
         >
         <div
           class="pokemon-card rounded-xl elevation-2 pb-3 pt-13"
@@ -65,6 +68,18 @@
 
   const props = defineProps({ pokemonList: Array, isLoading: Boolean });
   const emit = defineEmits(['onPokemonClicked','onTypeClicked']);
+
+  const setRipple = (event) => {
+    let card = event.target.nextElementSibling;
+    let offset = card.getBoundingClientRect();
+    let newEvent = new Event("mousedown");
+    newEvent.clientX = offset.left + offset.width/2;
+    newEvent.clientY = offset.top + offset.height/2;
+    card.dispatchEvent(newEvent);
+  }
+  const remRipple = (event) => {
+    event.target.nextElementSibling.dispatchEvent(new Event("mouseup"));
+  }
 </script>
 
 <style scoped>
