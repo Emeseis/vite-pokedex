@@ -111,7 +111,7 @@
         <table class="customTable">
           <tr v-for="row in 3">
             <td 
-              v-for="item in typeList.slice(row*6-5, row*6+1)" 
+              v-for="item in store.typeList.slice(row*6-5, row*6+1)" 
               :style="{ padding: row == 2 ? '2px 0' : '0' }" 
               width="1%"
             >
@@ -130,8 +130,9 @@
 
 <script setup>
   import { computed } from 'vue';
-  import { typeList } from '@/composables/lists';
   import TypeDefenseChip from '../TypeDefenseChip.vue';
+
+  const store = useStore();
 
   const emit = defineEmits(['onTypeClicked']);
 
