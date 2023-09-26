@@ -91,8 +91,6 @@
 </template>
 
 <script setup>
-  import { getColor } from '@/composables/functions';
-
   const store = useStore();
 
   let params = reactive({

@@ -135,8 +135,6 @@
 </template>
 
 <script setup>
-  import { toFeetInch, capitalizeWord } from '@/composables/functions';
-
   const props = defineProps({ pokemon: Object });
   
   const growth_rate = computed(() => {

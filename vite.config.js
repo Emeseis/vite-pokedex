@@ -30,7 +30,9 @@ export default defineConfig({
         'vue-router',
         'pinia',
         { '@/stores/GlobalStore': ['useStore'] },
-      ]
+      ],
+      dirs: ['src/composables/**'],
+      vueTemplate: true
     })
   ],
   define: { 'process.env': {}, },
