@@ -144,7 +144,6 @@
   import MovesTab from '@/components/PokemonInfoTabs/MovesTab.vue';
   import StatsTab from '@/components/PokemonInfoTabs/StatsTab.vue';
   import EvolutionTab from '@/components/PokemonInfoTabs/EvolutionTab.vue';
-  import { computed, reactive, ref, watch } from 'vue';
 
   const emit = defineEmits(['toggleDialog', 'onPokemonClicked', 'onTypeClicked']);
 

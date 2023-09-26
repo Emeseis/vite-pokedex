@@ -129,7 +129,6 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue';
   import TypeDefenseChip from '../TypeDefenseChip.vue';
 
   const store = useStore();

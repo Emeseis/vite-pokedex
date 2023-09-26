@@ -135,7 +135,6 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue';
   import { toFeetInch, capitalizeWord } from '@/composables/functions';
 
   const props = defineProps({ pokemon: Object });

@@ -37,7 +37,6 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
   import { getColor } from '@/composables/functions';
   import TypeChip from '@/components/TypeChip.vue';
   import TypeInfoModal from '@/components/TypeInfoModal.vue';

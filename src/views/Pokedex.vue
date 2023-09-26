@@ -27,7 +27,6 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue';
   import axios from 'axios';
   import Loader from '@/components/Loader.vue';
   import FilterBar from '@/components/FilterBar.vue'

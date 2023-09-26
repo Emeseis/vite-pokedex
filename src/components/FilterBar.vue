@@ -92,7 +92,6 @@
 
 <script setup>
   import { getColor } from '@/composables/functions';
-  import { reactive } from 'vue';
 
   const store = useStore();
 
