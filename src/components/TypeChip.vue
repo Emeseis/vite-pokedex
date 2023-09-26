@@ -10,8 +10,6 @@
 </template>
 
 <script setup>
-  import { getColor } from '@/composables/functions';
-  
   const props = defineProps({ type: String });
 
   const emit = defineEmits(['onTypeClicked']);

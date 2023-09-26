@@ -37,8 +37,6 @@
 </template>
 
 <script setup>
-  import { getColor } from '@/composables/functions';
-  
   const props = defineProps({ type: String, effectiveness: Number });
 
   const emit = defineEmits(['onTypeClicked']);

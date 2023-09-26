@@ -10,8 +10,6 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue';
-
   const emit = defineEmits(['toggleDialog']);
 
   const props = defineProps({

@@ -18,13 +18,13 @@
           hideDetails
           label="Type"
           :menuProps="{ contentClass: 'v-select-custom-menu' }" 
-          :items="typeList"
+          :items="store.typeList"
           v-model="params.type"
           @update:modelValue="emit('onSearch', params)"
         >
           <template #prepend-inner>
             <v-icon :color="getColor(params.type)">
-              {{ typeList[typeList.findIndex(item => item.title == params.type)].icon }}
+              {{ store.typeList[store.typeList.findIndex(item => item.title == params.type)].icon }}
             </v-icon>
           </template>
           <template #item="{ item, props }">
@@ -47,9 +47,9 @@
         <v-select
           hideDetails
           label="Generation"
-          :prependInnerIcon="genList[genList.findIndex(item => item.value == params.gen)].icon"
+          :prependInnerIcon="store.genList[store.genList.findIndex(item => item.value == params.gen)].icon"
           :menuProps="{ contentClass: 'v-select-custom-menu' }"
-          :items="genList"
+          :items="store.genList"
           item-disabled="disabled"
           v-model="params.gen"
           @update:modelValue="emit('onSearch', params)"
@@ -71,9 +71,9 @@
         <v-select
           hideDetails
           label="Order"
-          :prependInnerIcon="orderList[orderList.findIndex(item => item.value == params.order)].icon"
+          :prependInnerIcon="store.orderList[store.orderList.findIndex(item => item.value == params.order)].icon"
           :menuProps="{ contentClass: 'v-select-custom-menu' }"
-          :items="orderList"
+          :items="store.orderList"
           v-model="params.order"
           @update:modelValue="emit('onSearch', params)"
         >
@@ -91,9 +91,7 @@
 </template>
 
 <script setup>
-  import { typeList, genList, orderList } from '@/composables/lists';
-  import { getColor } from '@/composables/functions';
-  import { reactive } from 'vue';
+  const store = useStore();
 
   let params = reactive({
     filterName: '',

@@ -27,14 +27,14 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue';
-  import { typeList } from '@/composables/lists';
   import axios from 'axios';
   import Loader from '@/components/Loader.vue';
   import FilterBar from '@/components/FilterBar.vue'
   import PokemonGrid from '@/components/PokemonGrid.vue';
   import TypeInfoModal from '@/components/TypeInfoModal.vue';
   import PokemonInfoModal from '@/components/PokemonInfoModal.vue';
+
+  const store = useStore();
 
   let searchLoading = ref(false);
   let pokemonList = ref([]);
@@ -44,7 +44,7 @@
   const onSearch = async (params) => {
     searchLoading.value = true;
     pokemonList.value = [];
-    pokemonList.value = (await axios.post(`${import.meta.env.VITE_API_URL}/pokemons`, params)).data.pokemons;
+    pokemonList.value = (await axios.post(`${store.API_URL}/pokemons`, params)).data.pokemons;
 
     if (params.filterName) onFilterName(params.filterName);
     else pokemonListFiltered.value = pokemonList.value;
@@ -97,8 +97,8 @@
       typeDefenses
     };
 
-    if (pokemon.id != 1) pokemonObject.pokemonPrev = (await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${pokemon.id - 1}`)).data;
-    if (pokemon.id != 1010) pokemonObject.pokemonNext = (await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${pokemon.id + 1}`)).data;
+    if (pokemon.id != 1) pokemonObject.pokemonPrev = (await axios.get(`${store.API_URL}/pokemon?id=${pokemon.id-1}`)).data;
+    if (pokemon.id != 1010) pokemonObject.pokemonNext = (await axios.get(`${store.API_URL}/pokemon?id=${pokemon.id+1}`)).data;
 
     return pokemonObject;
   };
@@ -108,7 +108,7 @@
 
     const pokemonType = pokemon.types.map(type => type.type.name.toLowerCase());
 
-    for await (const type of typeList) defense[type.title.toLowerCase()] = 1;
+    for await (const type of store.typeList) defense[type.title.toLowerCase()] = 1;
 
     for await (const type of pokemonType) {
       let damageRelations = typeDefenseList.value[type];
@@ -126,6 +126,6 @@
 
   onMounted(async () => {
     onSearch({ filterName: '', type: 'All', gen: 'All', order: '1' });
-    typeDefenseList.value = (await axios.get(`${import.meta.env.VITE_API_URL}/types`)).data;
+    typeDefenseList.value = (await axios.get(`${store.API_URL}/types`)).data;
   });
 </script>

@@ -1,7 +1,7 @@
 <template>  
   <div class="type-grid">
     <v-col
-      v-for="(type, index) in types" :key="index"
+      v-for="(type, index) in store.typeList.slice(1)" :key="index"
       @click="onTypeClicked(type.title)"
       class="pa-0 text-center"
       cols="auto"
@@ -37,13 +37,11 @@
 </template>
 
 <script setup>
-  import { computed, ref } from 'vue';
-  import { typeList } from '@/composables/lists';
-  import { getColor } from '@/composables/functions';
   import TypeChip from '@/components/TypeChip.vue';
   import TypeInfoModal from '@/components/TypeInfoModal.vue';
   
-  const types = computed(() => typeList.slice(1));
+  const store = useStore();
+
   const isTypeInfoModal = ref(false);
   const typeClicked = ref(null);
 

@@ -38,8 +38,6 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
-
   const tab = ref(1);
   const toggleTheme = ref(true);
 </script>
