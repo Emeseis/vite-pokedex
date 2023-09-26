@@ -19,6 +19,7 @@ export default defineConfig({
       // styles: { configFile: 'src/styles/variables.scss' }
     }),
     AutoImport({
+      dts: true,
       include: [
         /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
         /\.vue$/, /\.vue\?vue/, // .vue
