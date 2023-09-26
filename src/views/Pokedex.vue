@@ -97,8 +97,8 @@
       typeDefenses
     };
 
-    if (pokemon.id != 1) pokemonObject.pokemonPrev = (await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${pokemon.id - 1}`)).data;
-    if (pokemon.id != 1010) pokemonObject.pokemonNext = (await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${pokemon.id + 1}`)).data;
+    if (pokemon.id != 1) pokemonObject.pokemonPrev = (await axios.get(`${import.meta.env.VITE_API_URL}/pokemon?id=${pokemon.id-1}`)).data;
+    if (pokemon.id != 1010) pokemonObject.pokemonNext = (await axios.get(`${import.meta.env.VITE_API_URL}/pokemon?id=${pokemon.id+1}`)).data;
 
     return pokemonObject;
   };
