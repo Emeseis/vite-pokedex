@@ -1,7 +1,6 @@
 <template>
-  <div class="loader-grid rounded-xl mt-6 ml-n1 pl-1 pb-1" style="
+  <div class="container-grid mt-6 ml-n1 pl-1 pb-1" style="
     max-height: calc(100vh - 248px);
-    width: 1287px;
     overflow: auto;
   ">
     <div v-show="!isLoading" style="display: contents">
@@ -87,9 +86,9 @@
     overflow-x: hidden;
     border-radius: 24px;
   }
-  .loader-grid {
+  .container-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(auto, 187.333px));
+    grid-template-columns: repeat(auto-fit, minmax(auto, 181.333px));
     grid-gap: 8px 24px;
   }
   .sprite {
