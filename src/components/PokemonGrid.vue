@@ -51,7 +51,7 @@
         v-for="item in 36"
         :key="item"
         class="pa-0"
-        style="margin-top: 47px;"
+        style="margin-top: 46.97px;"
       >
         <v-card class="rounded-xl" @click.stop height="150">
           <v-skeleton-loader color="background"></v-skeleton-loader>
@@ -105,6 +105,7 @@
     opacity: calc(var(--v-hover-opacity)*var(--v-theme-overlay-multiplier));
   }
   .pokemon-card {
+    height: 150px;
     background-color: rgba(var(--v-theme-surface));
     z-index: 1;
   }
