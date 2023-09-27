@@ -28,7 +28,10 @@ export default defineConfig({
         'vue',
         'vue-router',
         'pinia',
-        { '@/stores/GlobalStore': ['useStore'] },
+        { 
+          'axios': [['default', 'axios']],
+          '@/stores/GlobalStore': ['useStore'] 
+        },
       ],
       dirs: ['src/composables/**'],
       vueTemplate: true

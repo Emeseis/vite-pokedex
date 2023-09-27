@@ -7,6 +7,7 @@ export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
+  const axios: typeof import('axios')['default']
   const capitalizeWord: typeof import('./src/composables/functions.js')['capitalizeWord']
   const capitalizeWords: typeof import('./src/composables/functions.js')['capitalizeWords']
   const computed: typeof import('vue')['computed']
@@ -93,6 +94,7 @@ declare module 'vue' {
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
+    readonly axios: UnwrapRef<typeof import('axios')['default']>
     readonly capitalizeWord: UnwrapRef<typeof import('./src/composables/functions.js')['capitalizeWord']>
     readonly capitalizeWords: UnwrapRef<typeof import('./src/composables/functions.js')['capitalizeWords']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
@@ -173,6 +175,7 @@ declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
+    readonly axios: UnwrapRef<typeof import('axios')['default']>
     readonly capitalizeWord: UnwrapRef<typeof import('./src/composables/functions.js')['capitalizeWord']>
     readonly capitalizeWords: UnwrapRef<typeof import('./src/composables/functions.js')['capitalizeWords']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
