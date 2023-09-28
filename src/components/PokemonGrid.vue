@@ -73,7 +73,7 @@
     let offset = card.getBoundingClientRect();
     let newEvent = new Event("mousedown");
     newEvent.clientX = offset.left + offset.width/2;
-    newEvent.clientY = offset.top + offset.height/2;
+    newEvent.clientY = offset.top + 10;
     card.dispatchEvent(newEvent);
   }
   const remRipple = (event) => {
