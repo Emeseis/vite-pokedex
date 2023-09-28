@@ -6,36 +6,66 @@
           hideDetails
           clearable
           label="Name"
-          prependInnerIcon="mdi-text-search"
           v-model="params.filterName"
           @update:modelValue="emit('onFilterName', params.filterName || '')"
-        ></v-text-field>
+        >
+          <template #prepend-inner>
+            <v-icon class="mx-2">mdi-text-search</v-icon>
+          </template>
+        </v-text-field>
       </v-card>
     </v-col>
     <v-col cols="3">
       <v-card class="rounded-xl elevation-2">
         <v-select
+          chips
+          multiple
           hideDetails
           label="Type"
           :menuProps="{ contentClass: 'v-select-custom-menu' }" 
           :items="store.typeList"
-          v-model="params.type"
-          @update:modelValue="emit('onSearch', params)"
+          v-model="types"
         >
           <template #prepend-inner>
-            <v-icon :color="getColor(params.type)">
-              {{ store.typeList[store.typeList.findIndex(item => item.title == params.type)].icon }}
+            <v-icon v-if="types.length == 1" :color="getColor(types[0])" class="mx-2">
+              {{ store.typeList[store.typeList.findIndex(item => item.title == types[0])].icon }}
             </v-icon>
+            <div v-else style="display: contents;">
+              <v-icon :color="getColor(types[0])" size="small" class="pb-3">
+                {{ store.typeList[store.typeList.findIndex(item => item.title == types[0])].icon }}
+              </v-icon>
+              <v-icon :color="getColor(types[1])" size="small" class="pt-3 ml-n1 mr-1">
+                {{ store.typeList[store.typeList.findIndex(item => item.title == types[1])].icon }}
+              </v-icon>
+            </div>
+          </template>
+          <template #append-inner>
+            <v-counter active :value="types.length" :max="2" style="width: 28px;"></v-counter>
+          </template>
+          <template #chip="{ item, props }">
+            <span v-if="item.raw.title === 'All'">{{ item.raw.title }}</span>
+            <v-chip v-else v-bind="props" :color="getColor(item.raw.title)" variant="elevated" style="margin-right: 2px;">
+              <span class="text-black font-weight-bold">{{ item.raw.title }}</span>
+            </v-chip>
           </template>
           <template #item="{ item, props }">
-            <v-list-item
-              v-bind="props"
-              :title="item.raw.title"
-            >
+            <v-list-item 
+              v-bind="props" 
+              :title="item.raw.title" 
+              :disabled="(types.length == 2 && !types.includes(item.raw.title) && item.raw.title !== 'All')
+            ">
               <template #prepend>
                 <v-icon :color="getColor(item.raw.title)">
                   {{ item.raw.icon }}
                 </v-icon>
+              </template>
+              <template #append>
+                <v-checkbox 
+                  hideDetails 
+                  density="compact" 
+                  :modelValue="types.includes(item.raw.title)" 
+                  disabled>
+                </v-checkbox>
               </template>
             </v-list-item>
           </template>
@@ -47,13 +77,15 @@
         <v-select
           hideDetails
           label="Generation"
-          :prependInnerIcon="store.genList[store.genList.findIndex(item => item.value == params.gen)].icon"
           :menuProps="{ contentClass: 'v-select-custom-menu' }"
           :items="store.genList"
           item-disabled="disabled"
           v-model="params.gen"
           @update:modelValue="emit('onSearch', params)"
         >
+          <template #prepend-inner>
+            <v-icon class="mx-2">{{ store.genList[store.genList.findIndex(item => item.value == params.gen)].icon }}</v-icon>
+          </template>
           <template #item="{ item, props }">
             <v-list-item
               v-bind="props"
@@ -71,12 +103,14 @@
         <v-select
           hideDetails
           label="Order"
-          :prependInnerIcon="store.orderList[store.orderList.findIndex(item => item.value == params.order)].icon"
           :menuProps="{ contentClass: 'v-select-custom-menu' }"
           :items="store.orderList"
           v-model="params.order"
           @update:modelValue="emit('onSearch', params)"
         >
+          <template #prepend-inner>
+            <v-icon class="mx-2">{{ store.orderList[store.orderList.findIndex(item => item.value == params.order)].icon }}</v-icon>
+          </template>
           <template #item="{ item, props }">
             <v-list-item
               v-bind="props"
@@ -93,12 +127,25 @@
 <script setup>
   const store = useStore();
 
+  let types = ref(['All']);
+
   let params = reactive({
     filterName: '',
-    type: 'All',
+    types: [],
     gen: 'All',
     order: '1'
   });
+
+  const typeChange = (typesChange) => {
+    if (typesChange.length === 0) types.value = ['All'];
+    if (typesChange.length === 2 && typesChange[0] === 'All') types.value = [typesChange[1]];
+    if (typesChange.length >= 2 && typesChange[typesChange.length-1] === 'All') types.value = ['All'];
+    if (typesChange.length === 3) types.value = types.value.slice(0, 2);
+    params.types = toRaw(types.value)
+    emit('onSearch', params);
+  };
+
+  watch(types, newV => typeChange(newV));
 
   const emit = defineEmits(['onSearch','onFilterName']);
 </script>
@@ -114,6 +161,9 @@
     opacity: 1;
   }
   :deep(.v-list-item__prepend > .v-icon) {
+    opacity: 1;
+  }
+  :deep(.v-selection-control--disabled) {
     opacity: 1;
   }
 </style>

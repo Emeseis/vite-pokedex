@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 export const useStore = defineStore('globalStore', {
   state: () => ({
     API_URL: import.meta.env.VITE_API_URL,
+    typeDefenseList: {},
     typeList: [
       { title: 'All', icon: 'mdi-set-all' },
       { title: 'Normal', icon: 'mdi-account' },

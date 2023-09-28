@@ -40,6 +40,8 @@
 <script setup>
   const tab = ref(1);
   const toggleTheme = ref(true);
+  const store = useStore();
+  onMounted(async () => store.typeDefenseList = (await axios.get(`${store.API_URL}/types`)).data)
 </script>
 
 <style scoped>
@@ -80,12 +82,12 @@
     border-radius: 7px;
   }
   ::-webkit-scrollbar-track {
-    background: rgba(222,222,222);
+    background: rgb(var(--v-theme-bg_scroll));
     border-radius: 7px;
   }
   ::-webkit-scrollbar-thumb {
-    background: #444;
-    border: solid 3px rgba(222,222,222);
+    background: rgb(var(--v-theme-scroll));
+    border: solid 3px rgb(var(--v-theme-bg_scroll));
     border-radius: 7px;
   }
 </style>

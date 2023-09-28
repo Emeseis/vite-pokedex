@@ -1,7 +1,6 @@
 <template>
-  <div class="loader-grid rounded-xl mt-6 ml-n1 pl-1 pb-1" style="
+  <div class="container-grid mt-6 ml-n1 pl-1 pb-1" style="
     max-height: calc(100vh - 248px);
-    width: 1287px;
     overflow: auto;
   ">
     <div v-show="!isLoading" style="display: contents">
@@ -52,7 +51,7 @@
         v-for="item in 36"
         :key="item"
         class="pa-0"
-        style="margin-top: 47px;"
+        style="margin-top: 46.97px;"
       >
         <v-card class="rounded-xl" @click.stop height="150">
           <v-skeleton-loader color="background"></v-skeleton-loader>
@@ -74,7 +73,7 @@
     let offset = card.getBoundingClientRect();
     let newEvent = new Event("mousedown");
     newEvent.clientX = offset.left + offset.width/2;
-    newEvent.clientY = offset.top + offset.height/2;
+    newEvent.clientY = offset.top + 10;
     card.dispatchEvent(newEvent);
   }
   const remRipple = (event) => {
@@ -87,9 +86,9 @@
     overflow-x: hidden;
     border-radius: 24px;
   }
-  .loader-grid {
+  .container-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(auto, 187.333px));
+    grid-template-columns: repeat(auto-fit, minmax(auto, 181.333px));
     grid-gap: 8px 24px;
   }
   .sprite {
@@ -106,6 +105,7 @@
     opacity: calc(var(--v-hover-opacity)*var(--v-theme-overlay-multiplier));
   }
   .pokemon-card {
+    height: 150px;
     background-color: rgba(var(--v-theme-surface));
     z-index: 1;
   }

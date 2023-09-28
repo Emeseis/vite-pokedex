@@ -9,7 +9,9 @@ const light = {
     secondary: '#5CBBF6',
     pokeball: '#000000',
     switch: '#ffe600',
-    bg_switch: '#87ceeb'
+    bg_switch: '#87ceeb',
+    scroll: '#aaaaaa',
+    bg_scroll: '#dedede'
   },
 }
 
@@ -21,7 +23,9 @@ const dark = {
     secondary: '#5CBBF6',
     pokeball: '#ffffff',
     switch: '#ffffff',
-    bg_switch: '#a3a3a3'
+    bg_switch: '#a3a3a3',
+    scroll: '#161616',
+    bg_scroll: '#424242'
   }
 }
 

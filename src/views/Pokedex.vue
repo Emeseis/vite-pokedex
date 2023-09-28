@@ -27,7 +27,6 @@
 </template>
 
 <script setup>
-  import axios from 'axios';
   import Loader from '@/components/Loader.vue';
   import FilterBar from '@/components/FilterBar.vue'
   import PokemonGrid from '@/components/PokemonGrid.vue';
@@ -39,9 +38,9 @@
   let searchLoading = ref(false);
   let pokemonList = ref([]);
   let pokemonListFiltered = ref([]);
-  let typeDefenseList = ref({});
 
   const onSearch = async (params) => {
+    console.log(params)
     searchLoading.value = true;
     pokemonList.value = [];
     pokemonList.value = (await axios.post(`${store.API_URL}/pokemons`, params)).data.pokemons;
@@ -111,7 +110,7 @@
     for await (const type of store.typeList) defense[type.title.toLowerCase()] = 1;
 
     for await (const type of pokemonType) {
-      let damageRelations = typeDefenseList.value[type];
+      let damageRelations = store.typeDefenseList[type];
       let noDamage = damageRelations.defense.zero;
       let halfDamage = damageRelations.defense.half;
       let doubleDamage = damageRelations.defense.double;
@@ -125,7 +124,6 @@
   };
 
   onMounted(async () => {
-    onSearch({ filterName: '', type: 'All', gen: 'All', order: '1' });
-    typeDefenseList.value = (await axios.get(`${store.API_URL}/types`)).data;
+    onSearch({ filterName: '', types: ['All'], gen: 'All', order: '1' });
   });
 </script>
