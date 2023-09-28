@@ -40,7 +40,6 @@
   let pokemonListFiltered = ref([]);
 
   const onSearch = async (params) => {
-    console.log(params)
     searchLoading.value = true;
     pokemonList.value = [];
     pokemonList.value = (await axios.post(`${store.API_URL}/pokemons`, params)).data.pokemons;
