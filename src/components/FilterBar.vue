@@ -40,11 +40,11 @@
             </div>
           </template>
           <template #append-inner>
-            <v-counter active :value="types.length" :max="2" style="width: 28px;"></v-counter>
+            <v-counter active :value="types.length" :max="2" style="width: 28px; margin-right: -4px;"></v-counter>
           </template>
           <template #chip="{ item, props }">
             <span v-if="item.raw.title === 'All'">{{ item.raw.title }}</span>
-            <v-chip v-else v-bind="props" :color="getColor(item.raw.title)" variant="elevated" style="margin-right: 2px;">
+            <v-chip v-else v-bind="props" :color="getColor(item.raw.title)" closable variant="elevated">
               <span class="text-black font-weight-bold">{{ item.raw.title }}</span>
             </v-chip>
           </template>
@@ -165,5 +165,14 @@
   }
   :deep(.v-selection-control--disabled) {
     opacity: 1;
+  }
+  :deep(.mdi-close-circle) {
+    color: black !important;
+  }
+  :deep(.v-chip__close) {
+    margin-inline-start: 3.5px !important;
+  }
+  :deep(.v-select .v-select__selection:first-child) {
+    margin-inline-end: 4px !important;
   }
 </style>
