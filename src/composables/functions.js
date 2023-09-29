@@ -1,26 +1,3 @@
-export const getColor = (type) => {
-  switch (type) {
-    case 'Normal': return '#aaaa99';
-    case 'Fire': return '#ff4422';
-    case 'Water': return '#3399ff';
-    case 'Electric': return '#ffcc33';
-    case 'Grass': return '#77cc55';
-    case 'Ice': return '#66ccff';
-    case 'Fighting': return '#bb5544';
-    case 'Poison': return '#aa5599';
-    case 'Ground': return '#ddbb55';
-    case 'Flying': return '#8899ff';
-    case 'Psychic': return '#ff5599';
-    case 'Bug': return '#aabb22';
-    case 'Rock': return '#bbaa66';
-    case 'Ghost': return '#6666bb';
-    case 'Dark': return '#775544';
-    case 'Dragon': return '#7766ee';
-    case 'Steel': return '#aaaabb';
-    case 'Fairy': return '#ee99ee';
-  }
-};
-
 export const toFeetInch = (m) => {
   let cm = m*100;
   let realFeet = ((cm*0.393700) / 12);
