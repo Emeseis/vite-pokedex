@@ -122,7 +122,7 @@
     return defense;
   };
 
-  onMounted(async () => {
+  onMounted(() => {
     onSearch({ filterName: '', types: ['All'], gen: 'All', order: '1' });
   });
 </script>
