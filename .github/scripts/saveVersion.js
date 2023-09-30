@@ -1,7 +1,7 @@
-import * as fs from 'fs';
-import { spawnSync } from 'child_process';
+const fs = require("fs");
+const { spawnSync } = require("child_process");
 
-export const saveVersion = (packageJson) => {
+function saveVersion(packageJson) {
   const { version } = packageJson;
 
   fs.writeFile("./package.json",
@@ -12,6 +12,8 @@ export const saveVersion = (packageJson) => {
       spawnSync("git", ["add", "package.json"]);
       spawnSync("git", ["commit", `-m 'Published version: ${version}'`]);
       return console.log(`Successfully updated and committed package.json to version ${version}`)
-    }
+    },
   );
 };
+
+module.exports = { saveVersion };

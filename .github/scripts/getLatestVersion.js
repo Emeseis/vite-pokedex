@@ -1,11 +1,13 @@
-import { spawnSync } from 'child_process';
+const { spawnSync } = require("child_process");
 
-export const getLatestVersion = (packageJson) => {
+function getLatestVersion(packageJson) {
   let latestVersion;
-  const latestPublishedVersion = spawnSync("npm", ["show",packageJson.name,"version"]);
+  const latestPublishedVersion = spawnSync("npm", ["show", packageJson.name, "version"]);
 
   if (latestPublishedVersion.stderr.toString()) latestVersion = packageJson.version;
-  else latestVersion = latestPublishedVersion.stdout.toString().trim(); 
+  else latestVersion = latestPublishedVersion.stdout.toString().trim();  
 
   return latestVersion;
 };
+
+module.exports = { getLatestVersion };

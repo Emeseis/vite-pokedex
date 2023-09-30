@@ -28,14 +28,14 @@
         >
           <template #prepend-inner>
             <v-icon v-if="types.length == 1" :color="store.typeList.find(i => i.title === types[0]).color" class="mx-2">
-              {{ store.typeList[store.typeList.findIndex(item => item.title == types[0])].icon }}
+              {{ store.typeList.find(i => i.title === types[0]).icon }}
             </v-icon>
             <div v-else style="display: contents;">
               <v-icon :color="store.typeList.find(i => i.title === types[0]).color" size="small" class="pb-3">
-                {{ store.typeList[store.typeList.findIndex(item => item.title == types[0])].icon }}
+                {{ store.typeList.find(i => i.title === types[0]).icon }}
               </v-icon>
               <v-icon :color="store.typeList.find(i => i.title === types[1]).color" size="small" class="pt-3 ml-n1 mr-1">
-                {{ store.typeList[store.typeList.findIndex(item => item.title == types[1])].icon }}
+                {{ store.typeList.find(i => i.title === types[1]).icon }}
               </v-icon>
             </div>
           </template>
@@ -84,7 +84,7 @@
           @update:modelValue="emit('onSearch', params)"
         >
           <template #prepend-inner>
-            <v-icon class="mx-2">{{ store.genList[store.genList.findIndex(item => item.value == params.gen)].icon }}</v-icon>
+            <v-icon class="mx-2">{{ store.genList.find(i => i.value == params.gen).icon }}</v-icon>
           </template>
           <template #item="{ item, props }">
             <v-list-item
@@ -109,7 +109,7 @@
           @update:modelValue="emit('onSearch', params)"
         >
           <template #prepend-inner>
-            <v-icon class="mx-2">{{ store.orderList[store.orderList.findIndex(item => item.value == params.order)].icon }}</v-icon>
+            <v-icon class="mx-2">{{ store.orderList.find(i => i.value == params.order).icon }}</v-icon>
           </template>
           <template #item="{ item, props }">
             <v-list-item
