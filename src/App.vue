@@ -45,6 +45,7 @@
 <style scoped>
   .v-application {
     max-width: 1244px;
+    width: calc(100% - 36px);
     margin: 0 auto;
   }
   #pokeball-watermark {
