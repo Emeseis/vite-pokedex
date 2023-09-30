@@ -8,7 +8,7 @@
       fontSize: '0.875rem',
       padding: '8px 12px',
       borderRadius: '24px',
-      backgroundColor: getColor(type) + 'B3',
+      backgroundColor: store.typeList.find(i => i.title === type).color + 'B3',
       display: 'inline-flex',
       alignItems: 'center',
       position: 'relative',
@@ -18,6 +18,6 @@
 
 <script setup>
   const props = defineProps({ type: String });
-
+  const store = useStore();
   const emit = defineEmits(['onTypeClicked']);
 </script>

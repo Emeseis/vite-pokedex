@@ -12,11 +12,11 @@
         color="surface"
         class="icon mb-n8 elevation-1 mt-1"
       >
-        <v-icon size="x-large" :color="getColor(type.title)" :icon="type.icon"/>
+        <v-icon size="x-large" :color="store.typeList.find(i => i.title === type.title).color" :icon="type.icon"/>
       </v-avatar>
       <v-card 
         v-ripple
-        :color="getColor(type.title)" 
+        :color="store.typeList.find(i => i.title === type.title).color" 
         style="z-index: 1 !important"
         class="type-card text-center rounded-xl pt-12 pb-4"
       >

@@ -27,24 +27,24 @@
           v-model="types"
         >
           <template #prepend-inner>
-            <v-icon v-if="types.length == 1" :color="getColor(types[0])" class="mx-2">
+            <v-icon v-if="types.length == 1" :color="store.typeList.find(i => i.title === types[0]).color" class="mx-2">
               {{ store.typeList[store.typeList.findIndex(item => item.title == types[0])].icon }}
             </v-icon>
             <div v-else style="display: contents;">
-              <v-icon :color="getColor(types[0])" size="small" class="pb-3">
+              <v-icon :color="store.typeList.find(i => i.title === types[0]).color" size="small" class="pb-3">
                 {{ store.typeList[store.typeList.findIndex(item => item.title == types[0])].icon }}
               </v-icon>
-              <v-icon :color="getColor(types[1])" size="small" class="pt-3 ml-n1 mr-1">
+              <v-icon :color="store.typeList.find(i => i.title === types[1]).color" size="small" class="pt-3 ml-n1 mr-1">
                 {{ store.typeList[store.typeList.findIndex(item => item.title == types[1])].icon }}
               </v-icon>
             </div>
           </template>
           <template #append-inner>
-            <v-counter active :value="types.length" :max="2" style="width: 28px;"></v-counter>
+            <v-counter active :value="types.length" :max="2" style="width: 28px; margin-right: -4px;"></v-counter>
           </template>
           <template #chip="{ item, props }">
             <span v-if="item.raw.title === 'All'">{{ item.raw.title }}</span>
-            <v-chip v-else v-bind="props" :color="getColor(item.raw.title)" variant="elevated" style="margin-right: 2px;">
+            <v-chip v-else v-bind="props" :color="store.typeList.find(i => i.title === item.raw.title).color" closable variant="elevated">
               <span class="text-black font-weight-bold">{{ item.raw.title }}</span>
             </v-chip>
           </template>
@@ -55,7 +55,7 @@
               :disabled="(types.length == 2 && !types.includes(item.raw.title) && item.raw.title !== 'All')
             ">
               <template #prepend>
-                <v-icon :color="getColor(item.raw.title)">
+                <v-icon :color="store.typeList.find(i => i.title === item.raw.title).color">
                   {{ item.raw.icon }}
                 </v-icon>
               </template>
@@ -165,5 +165,14 @@
   }
   :deep(.v-selection-control--disabled) {
     opacity: 1;
+  }
+  :deep(.mdi-close-circle) {
+    color: black !important;
+  }
+  :deep(.v-chip__close) {
+    margin-inline-start: 3.5px !important;
+  }
+  :deep(.v-select .v-select__selection:first-child) {
+    margin-inline-end: 4px !important;
   }
 </style>

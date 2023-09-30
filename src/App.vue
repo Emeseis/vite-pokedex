@@ -40,8 +40,6 @@
 <script setup>
   const tab = ref(1);
   const toggleTheme = ref(true);
-  const store = useStore();
-  onMounted(async () => store.typeDefenseList = (await axios.get(`${store.API_URL}/types`)).data)
 </script>
 
 <style scoped>

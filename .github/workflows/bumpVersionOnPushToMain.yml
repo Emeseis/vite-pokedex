@@ -1,0 +1,15 @@
+name: "Update the package version on pushes to main"
+on:
+  push:
+    branches:
+      - main
+jobs:
+  scripts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: chmod +x .github/scripts/incrementMinor.js
+      - run: .github/scripts/incrementMinor.js
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Automated version bump on merge to main"

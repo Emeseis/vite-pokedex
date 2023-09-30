@@ -7,7 +7,7 @@
       height: '62px',
       width: '88px',
       borderRadius: '20px',
-      backgroundColor: getColor(type) + 'B3',
+      backgroundColor: store.typeList.find(i => i.title === type).color + 'B3',
       margin: '0 auto',
       zIndex: '1'
     }"
@@ -40,6 +40,8 @@
   const props = defineProps({ type: String, effectiveness: Number });
 
   const emit = defineEmits(['onTypeClicked']);
+
+  const store = useStore();
 
   const getEffectivenessFont = (effectiveness) => {
     if (effectiveness == 0) return '0.875rem';
