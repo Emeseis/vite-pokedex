@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="visible" width="1244">
+  <v-dialog v-model="visible" class="dialog">
     <v-card class="text-center rounded-xl pa-6" color="background">
       <div class="div-for-scroll">
         <v-progress-linear
@@ -187,6 +187,11 @@
 </script>
 
 <style scoped>
+  .dialog > :deep(.v-overlay__content) {
+    max-height: calc(100% - 36px);
+    max-width: 1244px;
+    width: calc(100% - 36px);
+  }
   .skeleton-prev-next {
     height: 96px !important;
   }
