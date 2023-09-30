@@ -6,7 +6,7 @@ export const useStore = () => {
       API_URL: import.meta.env.VITE_API_URL,
       typeDefenseList: {},
       typeList: [
-        { title: 'All', icon: 'mdi-set-all', color: '#ffffff' },
+        { title: 'All', icon: 'mdi-set-all', color: '' },
         { title: 'Normal', icon: 'mdi-account', color: '#aaaa99' },
         { title: 'Fire', icon: 'mdi-fire', color: '#ff4422' },
         { title: 'Water', icon: 'mdi-water', color: '#3399ff' },
