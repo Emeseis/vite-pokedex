@@ -1,10 +1,10 @@
 <template>
-  <v-theme-provider :theme="toggleTheme ? 'dark': 'light'" with-background>
+  <v-theme-provider :theme="isDark ? 'dark': 'light'" with-background>
     <v-app>
       <img id="pokeball-watermark" src="@/assets/pokeball.svg">
       <v-toolbar class="my-8" rounded="xl" elevation="2" height="84" style="z-index: 1;" floating>
         <v-tabs v-model="tab" grow color="red">
-          <v-tab class="font-weight-bold" :value="1" :ripple="false" to="/">
+          <v-tab class="font-weight-bold" :value="1" @click="tab = 2" :ripple="false" to="/">
             <v-icon start size="36px">mdi-home</v-icon>
             Home
           </v-tab>
@@ -25,7 +25,7 @@
           <v-switch
             inset
             hide-details
-            v-model="toggleTheme"
+            v-model="isDark"
             class="d-flex align-center mr-n16 switch"
           ></v-switch>
         </v-tabs>
@@ -33,13 +33,27 @@
       <v-main>       
         <router-view/>
       </v-main>
-    </v-app>    
+    </v-app>
   </v-theme-provider>
 </template>
 
 <script setup>
+  const route = useRoute();
+
   const tab = ref(1);
-  const toggleTheme = ref(true);
+  const isDark = ref(true);
+
+  watch(() => route.name, () => {
+    if (route.name === "Pokemon") {
+      tab.value = 2;
+      document.querySelectorAll('a[value="2"]')[0].style.color = '#F44336';
+    } else document.querySelectorAll('a[value="2"]')[0].style.color = 'white';
+  });
+
+  watch(() => isDark.value, () => {
+    document.documentElement.style.setProperty('--v-theme-scroll', isDark.value ? '22,22,22' : '155,155,155');
+    document.documentElement.style.setProperty('--v-theme-bg-scroll', isDark.value ? '66,66,66' : '222,222,222');
+  })
 </script>
 
 <style scoped>
@@ -65,28 +79,40 @@
     transform: scale(0.9) !important;
   }
   :deep(.v-switch) .v-switch__track {
-    background-color: rgb(var(--v-theme-bg_switch)) !important;
+    background-color: rgb(var(--v-theme-bg-switch)) !important;
   }
 </style>
 
 <style>
+  :root {
+    --v-theme-scroll: 22,22,22;
+    --v-theme-bg-scroll: 66,66,66;
+  }
   html {
-    overflow: hidden !important;
+    overflow-y: scroll !important;
   }
   .v-tab__slider {
     height: 3px !important;
+  }
+  html > ::-webkit-scrollbar-track {
+    background: rgb(var(--v-theme-bg-scroll)) !important; 
+    border-radius: 0px !important;
+  }
+  html > ::-webkit-scrollbar-thumb {
+    background: rgb(var(--v-theme-scroll)) !important;
+    border: solid 3px rgb(var(--v-theme-bg-scroll)) !important;
   }
   ::-webkit-scrollbar {
     width: 15px;
     border-radius: 7px;
   }
   ::-webkit-scrollbar-track {
-    background: rgb(var(--v-theme-bg_scroll));
+    background: rgb(var(--v-theme-bg-scroll));
     border-radius: 7px;
   }
   ::-webkit-scrollbar-thumb {
     background: rgb(var(--v-theme-scroll));
-    border: solid 3px rgb(var(--v-theme-bg_scroll));
+    border: solid 3px rgb(var(--v-theme-bg-scroll));
     border-radius: 7px;
   }
 </style>

@@ -13,6 +13,11 @@ const routes = [
     component: () => import('@/views/Pokedex.vue'),
   },
   {
+    path: '/pokedex/:name',
+    name: 'Pokemon',
+    component: () => import('@/views/PokemonInfo.vue'),
+  },
+  {
     path: '/types',
     name: 'Types',
     component: () => import('@/views/Types.vue'),
@@ -22,11 +27,36 @@ const routes = [
     name: 'Moves',
     component: () => import('@/views/Moves.vue'),
   },
+  {
+    path: '/notfound',
+    name: 'NotFound',
+    component: () => import('@/views/NotFound.vue'),
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
 })
+ 
+router.beforeEach(async (to, from, next) => {
+  const store = useStore();
+  
+  if (to.name === 'Pokemon') {
+    const pokemonExists = store.pokemonObjects[to.params.name];
+
+    if (pokemonExists !== undefined) store.pokemonObjectClicked = pokemonExists;
+    else try {
+      const pokemon = (await axios.get(`${store.API_URL}/pokemon?name=${to.params.name}`)).data;
+      store.pokemonClicked = pokemon;
+      store.fetchPokemonInfo();
+    } catch (err) {
+      console.error(err);
+      return next('/notfound');
+    }
+  }
+  next();
+})
 
 export default router
+

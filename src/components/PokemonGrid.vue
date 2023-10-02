@@ -88,7 +88,7 @@
 <style scoped>
   .container-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(auto, 181.333px));
+    grid-template-columns: repeat(auto-fit, minmax(auto, 180px));
     grid-gap: 8px 24px;
   }
   .sprite {

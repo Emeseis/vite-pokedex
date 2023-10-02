@@ -1,10 +1,9 @@
-import { defineStore } from "pinia";
+import { defineStore, acceptHMRUpdate } from "pinia";
 
 export const useStore = () => {
   const store = defineStore('globalStore', {
     state: () => ({
       API_URL: import.meta.env.VITE_API_URL,
-      typeDefenseList: {},
       typeList: [
         { title: 'All', icon: 'mdi-set-all', color: '' },
         { title: 'Normal', icon: 'mdi-account', color: '#aaaa99' },
@@ -41,11 +40,40 @@ export const useStore = () => {
       orderList: [
         { title: 'Ascending', value: '1', icon: 'mdi-sort-numeric-ascending' },
         { title: 'Descending', value: '-1', icon: 'mdi-sort-numeric-descending' },
-      ]
+      ],
+      typeDefenseList: {},
+      pokemonListAll: [],
+      pokemonClicked: {},
+      pokemonObjects: {},
+      pokemonObjectClicked: {},
     }),
     actions: {
       async getTypeDefenseList() {
         this.typeDefenseList = (await axios.get(`${this.API_URL}/types`)).data;
+      },
+      async fetchPokemonInfo() {
+        const pokemon = this.pokemonClicked;
+        const pokemonInfo = (await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.id}`)).data;
+        const pokemonSpecies = (await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}`)).data;
+        const typeDefenses = await getPokemonMultipliers(pokemon, this.typeList, this.typeDefenseList);
+        
+        pokemonSpecies.flavor_text_entries = pokemonSpecies.flavor_text_entries.filter(item => item.language.name == 'en');
+        pokemonSpecies.genera = pokemonSpecies.genera.filter(item => item.language.name == 'en');
+    
+        const pokemonObject = { 
+          pokemon,
+          pokemonInfo,
+          pokemonSpecies,
+          pokemonPrev: null,
+          pokemonNext: null,
+          typeDefenses
+        };
+    
+        if (pokemon.id != 1) pokemonObject.pokemonPrev = await (await axios.get(`${this.API_URL}/pokemon?id=${pokemon.id-1}`)).data;
+        if (pokemon.id != 1010) pokemonObject.pokemonNext = await (await axios.get(`${this.API_URL}/pokemon?id=${pokemon.id+1}`)).data;
+        
+        this.pokemonObjects[pokemon.name.toLowerCase()] = pokemonObject;
+        this.pokemonObjectClicked = pokemonObject;
       }
     }
   })();
@@ -54,3 +82,7 @@ export const useStore = () => {
 
   return store;
 };
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useStore, import.meta.hot))
+}

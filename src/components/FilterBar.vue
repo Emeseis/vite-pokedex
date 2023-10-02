@@ -131,7 +131,7 @@
 
   let params = reactive({
     filterName: '',
-    types: [],
+    types: ['All'],
     gen: 'All',
     order: '1'
   });
