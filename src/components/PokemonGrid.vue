@@ -1,8 +1,5 @@
 <template>
-  <div class="container-grid mt-6 ml-n1 pl-1 pb-1" style="
-    max-height: calc(100vh - 248px);
-    overflow: auto;
-  ">
+  <div class="container-grid mt-6 ml-n1 pl-1 pb-1" style="max-height: calc(100vh - 248px); overflow: auto;">
     <div v-show="!isLoading" style="display: contents">
       <div        
         v-for="pokemon in pokemonList"
@@ -17,8 +14,8 @@
           :src="pokemon.sprite"
           @click="$emit('onPokemonClicked', pokemon);"
           @mousedown="setRipple"
-          @mouseout="remRipple"
-          @mouseup="remRipple"
+          @mouseup="removeRipple"
+          @mouseout="removeRipple"
         >
         <div
           class="pokemon-card rounded-xl elevation-2 pb-3 pt-13"
@@ -48,11 +45,17 @@
     </div>
     <div v-show="isLoading" style="display: contents">
       <div        
-        v-for="item in 36"
+        v-for="item in 42"
         :key="item"
         class="pa-0"
-        style="margin-top: 46.97px;"
       >
+        <img
+          width="96"
+          height="96"
+          class="mb-n14"
+          src="@/assets/hidden.png"
+          style="visibility: hidden"
+        >
         <v-card class="rounded-xl" @click.stop height="150">
           <v-skeleton-loader color="background"></v-skeleton-loader>
         </v-card>
@@ -76,19 +79,16 @@
     newEvent.clientY = offset.top + 10;
     card.dispatchEvent(newEvent);
   }
-  const remRipple = (event) => {
+  
+  const removeRipple = (event) => {
     event.target.nextElementSibling.dispatchEvent(new Event("mouseup"));
   }
 </script>
 
 <style scoped>
-  .virtual-scroll {
-    overflow-x: hidden;
-    border-radius: 24px;
-  }
   .container-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(auto, 181.333px));
+    grid-template-columns: repeat(auto-fit, minmax(auto, 180px));
     grid-gap: 8px 24px;
   }
   .sprite {
@@ -100,9 +100,6 @@
   }
   .sprite:hover + .pokemon-card {
     outline: 3px solid #F44336;
-  }
-  .sprite:hover + .pokemon-card :deep(.v-card__overlay) {
-    opacity: calc(var(--v-hover-opacity)*var(--v-theme-overlay-multiplier));
   }
   .pokemon-card {
     height: 150px;
