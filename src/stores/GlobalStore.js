@@ -41,6 +41,12 @@ export const useStore = () => {
         { title: 'Ascending', value: '1', icon: 'mdi-sort-numeric-ascending' },
         { title: 'Descending', value: '-1', icon: 'mdi-sort-numeric-descending' },
       ],
+      initialParams: { 
+        filterName: '', 
+        types: ['All'], 
+        gen: 'All', 
+        order: '1' 
+      },
       searchParams: { 
         filterName: '', 
         types: ['All'], 
@@ -48,6 +54,8 @@ export const useStore = () => {
         order: '1' 
       },
       pokemonList: [],
+      pokemonListAll: [],
+      pokemonListFiltered: [],
       pokemonClicked: {},
       pokemonObjects: {},
       pokemonObjectClicked: {},
@@ -56,6 +64,9 @@ export const useStore = () => {
     actions: {
       async getTypeDefenseList() {
         this.typeDefenseList = (await axios.get(`${this.API_URL}/types`)).data;
+      },
+      async getAllPokemons() {
+        this.pokemonListAll = (await axios.post(`${store.API_URL}/pokemons`, this.initialParams)).data.pokemons;
       },
       async fetchPokemonInfo() {
         const pokemon = this.pokemonClicked;

@@ -8,7 +8,7 @@
   />
   <PokemonGrid
     :isLoading="searchLoading"
-    :pokemonList="pokemonListFiltered"
+    :pokemonList="store.pokemonListFiltered"
     @onPokemonClicked="onPokemonClicked"
     @onTypeClicked="onTypeClicked"
   />
@@ -37,25 +37,31 @@
   const router = useRouter();
 
   let searchLoading = ref(false);
-  let pokemonListFiltered = ref([]);
 
-  const onSearch = async (params) => {
+  const onSearch = async () => {
     searchLoading.value = true;
 
-    if (!store.pokemonList.length) 
-      store.pokemonList = (await axios.post(`${store.API_URL}/pokemons`, params)).data.pokemons;
+    if (!store.pokemonListAll.length) await store.getAllPokemons();
 
-    if (params.filterName) onFilterName(params.filterName);
-    else pokemonListFiltered.value = store.pokemonList;
+    if (!store.pokemonList.length) store.pokemonList = store.pokemonListAll;
+
+    if (JSON.stringify(store.searchParams) === JSON.stringify(store.initialParams)) {
+      store.pokemonListFiltered = store.pokemonListAll;
+      searchLoading.value = false;
+      return;
+    } else store.pokemonList = (await axios.post(`${store.API_URL}/pokemons`, store.searchParams)).data.pokemons;
+    
+    if (store.searchParams.filterName) onFilterName(store.searchParams.filterName);
+    else store.pokemonListFiltered = store.pokemonList; 
 
     searchLoading.value = false;
   };
 
   const onFilterName = (name) => {
-    if (name) pokemonListFiltered.value = store.pokemonList.filter(poke => {
+    if (name) store.pokemonListFiltered = store.pokemonList.filter(poke => {
       return poke.name.toLowerCase().includes(name.toLowerCase());
     });
-    else pokemonListFiltered.value = store.pokemonList;
+    else store.pokemonListFiltered = store.pokemonList;
   };
 
   let isLoading = ref(false);
@@ -76,7 +82,5 @@
     isTypeInfoModal.value = true;
   };
 
-  onMounted(() => {
-    onSearch(store.searchParams);
-  });
+  onSearch();
 </script>
