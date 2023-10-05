@@ -1,4 +1,5 @@
-<template>  
+<template>
+  <CurtainTop top="148"/>
   <div class="type-grid">
     <v-col
       v-for="(type, index) in store.typeList.slice(1)" :key="index"
@@ -38,6 +39,7 @@
 
 <script setup>
   import TypeChip from '@/components/TypeChip.vue';
+  import CurtainTop from '@/components/CurtainTop.vue';
   import TypeInfoModal from '@/components/TypeInfoModal.vue';
   
   const store = useStore();
@@ -64,13 +66,13 @@
     cursor: pointer;
   }
   .icon:hover + .type-card {
-    outline: 3px solid;
+    outline: 3px solid rgb(var(--v-theme-pokeball));
   }
   .type-card {
     z-index: 1 !important;
   }
   .type-card:hover {
     cursor: pointer;
-    outline: 3px solid;
+    outline: 3px solid rgb(var(--v-theme-pokeball));
   }
 </style>

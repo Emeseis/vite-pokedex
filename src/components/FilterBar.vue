@@ -1,6 +1,6 @@
 <template>
-  <v-row class="justify-center">
-    <v-col cols="3">
+  <v-row class="filter-bar justify-center">
+    <v-col cols="3" class="pb-0">
       <v-card class="rounded-xl elevation-2">
         <v-text-field
           hideDetails
@@ -15,7 +15,7 @@
         </v-text-field>
       </v-card>
     </v-col>
-    <v-col cols="3">
+    <v-col cols="3" class="pb-0">
       <v-card class="rounded-xl elevation-2">
         <v-select
           chips
@@ -72,7 +72,7 @@
         </v-select>
       </v-card>
     </v-col>
-    <v-col cols="3">
+    <v-col cols="3" class="pb-0">
       <v-card class="rounded-xl elevation-2">
         <v-select
           hideDetails
@@ -98,7 +98,7 @@
         </v-select>
       </v-card>
     </v-col>
-    <v-col cols="3">
+    <v-col cols="3" class="pb-0">
       <v-card class="rounded-xl elevation-2">
         <v-select
           hideDetails
@@ -157,6 +157,12 @@
 </style>
 
 <style scoped>
+  .filter-bar {
+    background-color: rgb(var(--v-theme-background));
+    position: sticky;
+    z-index: 3;
+    top: 148px;
+  }
   :deep(.v-field__prepend-inner > .v-icon) {
     opacity: 1;
   }
