@@ -166,11 +166,11 @@
   :deep(.v-selection-control--disabled) {
     opacity: 1;
   }
-  :deep(.mdi-close-circle) {
-    color: black !important;
-  }
   :deep(.v-chip__close) {
     margin-inline-start: 3.5px !important;
+  }
+  :deep(.v-chip__close .mdi-close-circle) {
+    color: black !important;
   }
   :deep(.v-select .v-select__selection:first-child) {
     margin-inline-end: 4px !important;
