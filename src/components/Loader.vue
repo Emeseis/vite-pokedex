@@ -1,6 +1,6 @@
 <template>
   <v-overlay v-model="props.loading" persistent class="align-center justify-center">    
-    <v-card height="72" width="720" class="card-center px-8 rounded-xl">
+    <v-card height="72" width="720" class="px-8 rounded-xl" style="margin: 0 auto;">
       <v-progress-linear
         rounded
         indeterminate
@@ -15,9 +15,3 @@
 <script setup>
   const props = defineProps({ loading: Boolean })
 </script>
-
-<style>
-  .card-center {
-    margin: 0 auto;
-  }
-</style>
