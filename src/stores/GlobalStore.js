@@ -41,11 +41,17 @@ export const useStore = () => {
         { title: 'Ascending', value: '1', icon: 'mdi-sort-numeric-ascending' },
         { title: 'Descending', value: '-1', icon: 'mdi-sort-numeric-descending' },
       ],
-      typeDefenseList: {},
-      pokemonListAll: [],
+      searchParams: { 
+        filterName: '', 
+        types: ['All'], 
+        gen: 'All', 
+        order: '1' 
+      },
+      pokemonList: [],
       pokemonClicked: {},
       pokemonObjects: {},
       pokemonObjectClicked: {},
+      typeDefenseList: {},
     }),
     actions: {
       async getTypeDefenseList() {
@@ -69,8 +75,8 @@ export const useStore = () => {
           typeDefenses
         };
     
-        if (pokemon.id != 1) pokemonObject.pokemonPrev = await (await axios.get(`${this.API_URL}/pokemon?id=${pokemon.id-1}`)).data;
-        if (pokemon.id != 1010) pokemonObject.pokemonNext = await (await axios.get(`${this.API_URL}/pokemon?id=${pokemon.id+1}`)).data;
+        if (pokemon.id != 1) pokemonObject.pokemonPrev = (await axios.get(`${this.API_URL}/pokemon?id=${pokemon.id-1}`)).data;
+        if (pokemon.id != 1010) pokemonObject.pokemonNext = (await axios.get(`${this.API_URL}/pokemon?id=${pokemon.id+1}`)).data;
         
         this.pokemonObjects[pokemon.name.toLowerCase()] = pokemonObject;
         this.pokemonObjectClicked = pokemonObject;
