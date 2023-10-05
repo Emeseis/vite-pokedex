@@ -151,10 +151,8 @@
 
   const tab = ref('about');
 
-  watch(() => store.pokemonObjectClicked, () => { 
-    isLoading.value = false;
-    showShiny.value = false;
-  });
+  onMounted(() => Object.keys(store.pokemonObjectClicked).length > 0 ? isLoading.value = false : isLoading.value = true);
+  watch(() => store.pokemonObjectClicked, () => isLoading.value = false);
 
   const onTypeClicked = (type) => { 
     console.log(type);
