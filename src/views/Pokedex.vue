@@ -37,25 +37,25 @@
   const router = useRouter();
 
   let searchLoading = ref(false);
-  let pokemonList = ref([]);
   let pokemonListFiltered = ref([]);
 
   const onSearch = async (params) => {
     searchLoading.value = true;
-    pokemonList.value = [];
-    pokemonList.value = (await axios.post(`${store.API_URL}/pokemons`, params)).data.pokemons;
+
+    if (!store.pokemonList.length) 
+      store.pokemonList = (await axios.post(`${store.API_URL}/pokemons`, params)).data.pokemons;
 
     if (params.filterName) onFilterName(params.filterName);
-    else pokemonListFiltered.value = pokemonList.value;
+    else pokemonListFiltered.value = store.pokemonList;
 
     searchLoading.value = false;
   };
 
   const onFilterName = (name) => {
-    if (name) pokemonListFiltered.value = pokemonList.value.filter(poke => {
+    if (name) pokemonListFiltered.value = store.pokemonList.filter(poke => {
       return poke.name.toLowerCase().includes(name.toLowerCase());
     });
-    else pokemonListFiltered.value = pokemonList.value;
+    else pokemonListFiltered.value = store.pokemonList;
   };
 
   let isLoading = ref(false);
@@ -77,6 +77,6 @@
   };
 
   onMounted(() => {
-    onSearch({ filterName: '', types: ['All'], gen: 'All', order: '1' });
+    onSearch(store.searchParams);
   });
 </script>
