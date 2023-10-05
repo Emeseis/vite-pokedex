@@ -1,13 +1,13 @@
 <template>
-  <v-row class="justify-center">
-    <v-col cols="3">
+  <v-row class="filter-bar justify-center">
+    <v-col cols="3" class="pb-0">
       <v-card class="rounded-xl elevation-2">
         <v-text-field
           hideDetails
           clearable
           label="Name"
-          v-model="params.filterName"
-          @update:modelValue="emit('onFilterName', params.filterName || '')"
+          v-model="store.searchParams.filterName"
+          @update:modelValue="emit('onFilterName', store.searchParams.filterName || '')"
         >
           <template #prepend-inner>
             <v-icon class="mx-2">mdi-text-search</v-icon>
@@ -15,7 +15,7 @@
         </v-text-field>
       </v-card>
     </v-col>
-    <v-col cols="3">
+    <v-col cols="3" class="pb-0">
       <v-card class="rounded-xl elevation-2">
         <v-select
           chips
@@ -72,7 +72,7 @@
         </v-select>
       </v-card>
     </v-col>
-    <v-col cols="3">
+    <v-col cols="3" class="pb-0">
       <v-card class="rounded-xl elevation-2">
         <v-select
           hideDetails
@@ -80,11 +80,11 @@
           :menuProps="{ contentClass: 'v-select-custom-menu' }"
           :items="store.genList"
           item-disabled="disabled"
-          v-model="params.gen"
-          @update:modelValue="emit('onSearch', params)"
+          v-model="store.searchParams.gen"
+          @update:modelValue="emit('onSearch', store.searchParams)"
         >
           <template #prepend-inner>
-            <v-icon class="mx-2">{{ store.genList.find(i => i.value == params.gen).icon }}</v-icon>
+            <v-icon class="mx-2">{{ store.genList.find(i => i.value == store.searchParams.gen).icon }}</v-icon>
           </template>
           <template #item="{ item, props }">
             <v-list-item
@@ -98,18 +98,18 @@
         </v-select>
       </v-card>
     </v-col>
-    <v-col cols="3">
+    <v-col cols="3" class="pb-0">
       <v-card class="rounded-xl elevation-2">
         <v-select
           hideDetails
           label="Order"
           :menuProps="{ contentClass: 'v-select-custom-menu' }"
           :items="store.orderList"
-          v-model="params.order"
-          @update:modelValue="emit('onSearch', params)"
+          v-model="store.searchParams.order"
+          @update:modelValue="emit('onSearch', store.searchParams)"
         >
           <template #prepend-inner>
-            <v-icon class="mx-2">{{ store.orderList.find(i => i.value == params.order).icon }}</v-icon>
+            <v-icon class="mx-2">{{ store.orderList.find(i => i.value == store.searchParams.order).icon }}</v-icon>
           </template>
           <template #item="{ item, props }">
             <v-list-item
@@ -129,20 +129,13 @@
 
   let types = ref(['All']);
 
-  let params = reactive({
-    filterName: '',
-    types: ['All'],
-    gen: 'All',
-    order: '1'
-  });
-
   const typeChange = (typesChange) => {
     if (typesChange.length === 0) types.value = ['All'];
     if (typesChange.length === 2 && typesChange[0] === 'All') types.value = [typesChange[1]];
     if (typesChange.length >= 2 && typesChange[typesChange.length-1] === 'All') types.value = ['All'];
     if (typesChange.length === 3) types.value = types.value.slice(0, 2);
-    params.types = toRaw(types.value)
-    emit('onSearch', params);
+    store.searchParams.types = toRaw(types.value);
+    emit('onSearch');
   };
 
   watch(types, newV => typeChange(newV));
@@ -157,6 +150,12 @@
 </style>
 
 <style scoped>
+  .filter-bar {
+    background-color: rgb(var(--v-theme-background));
+    position: sticky;
+    z-index: 3;
+    top: 148px;
+  }
   :deep(.v-field__prepend-inner > .v-icon) {
     opacity: 1;
   }

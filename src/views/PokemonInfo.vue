@@ -153,6 +153,7 @@
 
   onMounted(() => Object.keys(store.pokemonObjectClicked).length > 0 ? isLoading.value = false : isLoading.value = true);
   watch(() => store.pokemonObjectClicked, () => isLoading.value = false);
+  onUnmounted(() => store.pokemonObjectClicked = {});
 
   const onTypeClicked = (type) => { 
     console.log(type);

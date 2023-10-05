@@ -2,37 +2,40 @@
   <v-theme-provider :theme="isDark ? 'dark': 'light'" with-background>
     <v-app>
       <img id="pokeball-watermark" src="@/assets/pokeball.svg">
-      <v-toolbar class="my-8" rounded="xl" elevation="2" height="84" style="z-index: 1;" floating>
-        <v-tabs v-model="tab" grow color="red">
-          <v-tab class="font-weight-bold" :value="1" @click="tab = 2" :ripple="false" to="/">
-            <v-icon start size="36px">mdi-home</v-icon>
-            Home
-          </v-tab>
-          <v-tab class="font-weight-bold" :value="2" :ripple="false" to="/pokedex">
-            <v-icon start size="36px">mdi-pokeball</v-icon>
-            Pokédex
-          </v-tab>
-          <v-tab class="font-weight-bold" :value="3" :ripple="false" to="/types">
-            <v-icon start size="36px">mdi-atom</v-icon>
-            Types
-          </v-tab>
-          <v-tab class="font-weight-bold" :value="4" :ripple="false" to="/moves">
-            <v-icon start size="36px">mdi-arrow-all</v-icon>
-            Moves
-          </v-tab>
-          <v-tab class="font-weight-bold" :value="5" :ripple="false" disabled>
-          </v-tab>
-          <v-switch
-            inset
-            hide-details
-            v-model="isDark"
-            class="d-flex align-center mr-n16 switch"
-          ></v-switch>
-        </v-tabs>
-      </v-toolbar>
+      <div class="header mx-n1 px-1">
+        <v-toolbar class="my-8" rounded="xl" elevation="2" height="84" floating>
+          <v-tabs v-model="tab" grow color="red">
+            <v-tab class="font-weight-bold" :value="1" @click="tab = 2" :ripple="false" to="/">
+              <v-icon start size="36px">mdi-home</v-icon>
+              Home
+            </v-tab>
+            <v-tab class="font-weight-bold" :value="2" :ripple="false" to="/pokedex">
+              <v-icon start size="36px">mdi-pokeball</v-icon>
+              Pokédex
+            </v-tab>
+            <v-tab class="font-weight-bold" :value="3" :ripple="false" to="/types">
+              <v-icon start size="36px">mdi-atom</v-icon>
+              Types
+            </v-tab>
+            <v-tab class="font-weight-bold" :value="4" :ripple="false" to="/moves">
+              <v-icon start size="36px">mdi-arrow-all</v-icon>
+              Moves
+            </v-tab>
+            <v-tab class="font-weight-bold" :value="5" :ripple="false" disabled>
+            </v-tab>
+            <v-switch
+              inset
+              hide-details
+              v-model="isDark"
+              class="d-flex align-center mr-n16 switch"
+            ></v-switch>
+          </v-tabs>
+        </v-toolbar>
+      </div>
       <v-main>       
         <router-view/>
       </v-main>
+      <div class="curtain-bottom mx-n1 px-1"></div>
     </v-app>
   </v-theme-provider>
 </template>
@@ -47,10 +50,11 @@
     if (route.name === "Pokemon") {
       tab.value = 2;
       document.querySelectorAll('a[value="2"]')[0].style.color = '#F44336';
-    } else document.querySelectorAll('a[value="2"]')[0].style.color = 'white';
+    } else document.querySelectorAll('a[value="2"]')[0].style.color = isDark.value ? 'white' : 'black';
   });
 
   watch(() => isDark.value, () => {
+    document.querySelectorAll('a[value="2"]')[0].style.color = isDark.value ? 'white' : 'black';
     document.documentElement.style.setProperty('--v-theme-scroll', isDark.value ? '22,22,22' : '155,155,155');
     document.documentElement.style.setProperty('--v-theme-bg-scroll', isDark.value ? '66,66,66' : '222,222,222');
   })
@@ -61,13 +65,27 @@
     max-width: 1244px;
     width: calc(100% - 36px);
     margin: 0 auto;
+  }  
+  .header {
+    background-color: rgb(var(--v-theme-background)); 
+    position: sticky; 
+    z-index: 999; 
+    top: 0;
+  }
+  .curtain-bottom {
+    z-index: 3;
+    bottom: 0;
+    margin-top: -24px;
+    height: 32px;
+    position: sticky; 
+    background: linear-gradient(transparent, rgb(var(--v-theme-background)) 70%);
   }
   #pokeball-watermark {
+    --width: 1252px;
     position: fixed;
-    top: -10vw; 
-    left: -10vw;
-    width: 50vw;
-    height: 50vw;
+    top: calc(50% - calc(calc(var(--width) - 228px) / 2)); 
+    left: calc(50% - calc(var(--width) / 2));
+    width: var(--width);
     opacity: 0.1;
     z-index: 0;
   }

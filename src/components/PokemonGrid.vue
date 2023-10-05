@@ -1,5 +1,6 @@
 <template>
-  <div class="container-grid mt-6 ml-n1 pl-1 pb-1" style="max-height: calc(100vh - 248px); overflow: auto;">
+  <CurtainTop top="216"/>
+  <div class="container-grid mx-n1 px-1 my-6 justify-center">
     <div v-show="!isLoading" style="display: contents">
       <div        
         v-for="pokemon in pokemonList"
@@ -67,6 +68,7 @@
 <script setup>
   import { VSkeletonLoader } from "vuetify/lib/labs/components.mjs";
   import TypeChip from '@/components/TypeChipLighter.vue';
+  import CurtainTop from '@/components/CurtainTop.vue'
 
   const props = defineProps({ pokemonList: Array, isLoading: Boolean });
   const emit = defineEmits(['onPokemonClicked','onTypeClicked']);
@@ -88,12 +90,12 @@
 <style scoped>
   .container-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(auto, 180px));
+    grid-template-columns: repeat(auto-fit, minmax(auto, 187.333px));
     grid-gap: 8px 24px;
   }
   .sprite {
     position: relative;
-    z-index: 2;
+    z-index: 3;
   }
   .sprite:hover {
     cursor: pointer;
@@ -104,7 +106,7 @@
   .pokemon-card {
     height: 150px;
     background-color: rgba(var(--v-theme-surface));
-    z-index: 1;
+    z-index: 2;
   }
   .pokemon-card:hover {
     cursor: pointer;
