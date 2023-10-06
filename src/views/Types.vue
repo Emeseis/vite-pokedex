@@ -1,5 +1,5 @@
 <template>
-  <CurtainTop top="148"/>
+  <CurtainTop top="148" height="16"/>
   <div class="type-grid">
     <v-col
       v-for="(type, index) in store.typeList.slice(1)" :key="index"

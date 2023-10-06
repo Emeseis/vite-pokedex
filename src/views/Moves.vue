@@ -1,5 +1,5 @@
 <template>
-  <CurtainTop top="148"/>
+  <CurtainTop top="148" height="16"/>
   <v-row class="justify-center">
     <v-col cols="4">
     </v-col>
