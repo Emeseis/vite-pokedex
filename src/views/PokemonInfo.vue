@@ -1,5 +1,5 @@
 <template>
-  <Loader :loading="isLoading"/>
+  <CurtainTop top="148" height="16"/>
   <div class="text-center" v-if="!isLoading">
     <v-progress-linear
       v-show="isLoading"
@@ -133,11 +133,13 @@
       </v-window>
     </v-card>
   </div>
+  <Loader :loading="isLoading"/>
 </template>
 
 <script setup>
   import Loader from '@/components/Loader.vue';
   import TypeChip from '@/components/TypeChip.vue';
+  import CurtainTop from '@/components/CurtainTop.vue';
   import AboutTab from '@/components/PokemonInfoTabs/AboutTab.vue';
   import MovesTab from '@/components/PokemonInfoTabs/MovesTab.vue';
   import StatsTab from '@/components/PokemonInfoTabs/StatsTab.vue';
