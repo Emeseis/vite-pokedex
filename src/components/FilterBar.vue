@@ -7,8 +7,11 @@
           clearable
           label="Name"
           v-model="store.searchParams.filterName"
-          @update:modelValue="emit('onFilterName', store.searchParams.filterName || '')"
+          @update:modelValue="emit('onFilterName', store.searchParams.filterName)"
         >
+          <template #clear>
+            <v-icon @click="onClear">mdi-close-circle</v-icon>
+          </template>
           <template #prepend-inner>
             <v-icon class="mx-2">mdi-text-search</v-icon>
           </template>
@@ -129,18 +132,27 @@
 
   let types = ref(['All']);
 
+  const onClear = () => {
+    store.searchParams.filterName = '';
+    emit('onFilterName');
+  }
+
   const typeChange = (typesChange) => {
     if (typesChange.length === 0) types.value = ['All'];
     if (typesChange.length === 2 && typesChange[0] === 'All') types.value = [typesChange[1]];
     if (typesChange.length >= 2 && typesChange[typesChange.length-1] === 'All') types.value = ['All'];
     if (typesChange.length === 3) types.value = types.value.slice(0, 2);
-    store.searchParams.types = toRaw(types.value);
-    emit('onSearch');
+    if (toRaw(types.value) !== toRaw(store.searchParams.types)) {
+      store.searchParams.types = toRaw(types.value);
+      emit('onSearch');
+    }
   };
 
   watch(types, newV => typeChange(newV));
 
   const emit = defineEmits(['onSearch','onFilterName']);
+  
+  onMounted(() => types.value = store.searchParams.types);
 </script>
 
 <style>
