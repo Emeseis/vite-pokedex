@@ -51,7 +51,7 @@
       return;
     } else store.pokemonList = (await axios.post(`${store.API_URL}/pokemons`, store.searchParams)).data.pokemons;
     
-    if (store.searchParams.filterName) onFilterName(store.searchParams.filterName);
+    if (store.searchParams.filterName.length) onFilterName(store.searchParams.filterName);
     else store.pokemonListFiltered = store.pokemonList; 
 
     searchLoading.value = false;
@@ -59,7 +59,7 @@
 
   const onFilterName = (name) => {
     if (name) store.pokemonListFiltered = store.pokemonList.filter(poke => {
-      return poke.name.toLowerCase().includes(name.toLowerCase());
+      return poke.name.toLowerCase().includes(name.trim().toLowerCase());
     });
     else store.pokemonListFiltered = store.pokemonList;
   };
