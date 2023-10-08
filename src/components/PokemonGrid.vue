@@ -1,5 +1,5 @@
 <template>
-  <CurtainTop top="216"/>
+  <CurtainTop top="216" height="32"/>
   <div class="container-grid mx-n1 px-1 my-6 justify-center">
     <div v-show="!isLoading" style="display: contents">
       <div        

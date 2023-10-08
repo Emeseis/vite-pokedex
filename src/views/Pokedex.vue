@@ -45,14 +45,11 @@
 
     if (!store.pokemonList.length) store.pokemonList = store.pokemonListAll;
 
-    if (JSON.stringify(store.searchParams) === JSON.stringify(store.initialParams)) {
-      store.pokemonListFiltered = store.pokemonListAll;
-      searchLoading.value = false;
-      return;
-    } else store.pokemonList = (await axios.post(`${store.API_URL}/pokemons`, store.searchParams)).data.pokemons;
+    if (JSON.stringify(store.searchParams) === JSON.stringify(store.initialParams)) store.pokemonList = store.pokemonListAll;
+    else store.pokemonList = (await axios.post(`${store.API_URL}/pokemons`, store.searchParams)).data.pokemons;
     
     if (store.searchParams.filterName.length) onFilterName(store.searchParams.filterName);
-    else store.pokemonListFiltered = store.pokemonList; 
+    else store.pokemonListFiltered = store.pokemonList;
 
     searchLoading.value = false;
   };
