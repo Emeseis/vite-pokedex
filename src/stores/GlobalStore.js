@@ -56,8 +56,8 @@ export const useStore = () => {
       pokemonList: [],
       pokemonListAll: [],
       pokemonListFiltered: [],
+      pokemonMaps: new Map(),
       pokemonClicked: {},
-      pokemonObjects: {},
       pokemonObjectClicked: {},
       typeDefenseList: {},
     }),
@@ -89,7 +89,7 @@ export const useStore = () => {
         if (pokemon.id != 1) pokemonObject.pokemonPrev = (await axios.get(`${this.API_URL}/pokemon?id=${pokemon.id-1}`)).data;
         if (pokemon.id != 1010) pokemonObject.pokemonNext = (await axios.get(`${this.API_URL}/pokemon?id=${pokemon.id+1}`)).data;
         
-        this.pokemonObjects[pokemon.name.toLowerCase()] = pokemonObject;
+        this.pokemonMaps.set(pokemon.name.toLowerCase(), pokemonObject);
         this.pokemonObjectClicked = pokemonObject;
       }
     }
@@ -97,9 +97,7 @@ export const useStore = () => {
 
   if (!Object.keys(store.typeDefenseList).length) store.getTypeDefenseList();
 
+  if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(store, import.meta.hot));
+
   return store;
 };
-
-if (import.meta.hot) {
-  import.meta.hot.accept(acceptHMRUpdate(useStore, import.meta.hot))
-}

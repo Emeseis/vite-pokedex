@@ -117,7 +117,7 @@
             >
               <TypeDefenseChip
                 @onTypeClicked="onTypeClicked"
-                :effectiveness="props.pokemon.typeDefenses[item.title.toLowerCase()]" 
+                :effectiveness="props.pokemon.typeDefenses.get(item.title.toLowerCase())" 
                 :type="item.title"
               />
             </td>

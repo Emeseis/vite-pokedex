@@ -30,11 +30,11 @@ export const zerofyInch = (value) => {
 };
   
 export const getPokemonMultipliers = async (pokemon, typeList, typeDefenseList) => {
-  let defense = {};
+  let defense = new Map();
 
   const pokemonType = pokemon.types.map(type => type.type.name.toLowerCase());
 
-  for await (const type of typeList) defense[type.title.toLowerCase()] = 1;
+  for await (const type of typeList) defense.set(type.title.toLowerCase(), 1);
 
   for await (const type of pokemonType) {
     let damageRelations = typeDefenseList[type];
@@ -42,9 +42,9 @@ export const getPokemonMultipliers = async (pokemon, typeList, typeDefenseList) 
     let halfDamage = damageRelations.defense.half;
     let doubleDamage = damageRelations.defense.double;
 
-    noDamage.forEach(item => { if (defense.hasOwnProperty(item)) defense[item] = defense[item] * 0.0 });
-    halfDamage.forEach(item => { if (defense.hasOwnProperty(item)) defense[item] = defense[item] * 0.5 });
-    doubleDamage.forEach(item => { if (defense.hasOwnProperty(item)) defense[item] = defense[item] * 2.0 });
+    noDamage.forEach(item => { if (defense.has(item)) defense.set(item, defense.get(item) * 0.0) });
+    halfDamage.forEach(item => { if (defense.has(item)) defense.set(item, defense.get(item) * 0.5) });
+    doubleDamage.forEach(item => { if (defense.has(item)) defense.set(item, defense.get(item) * 2.0) });
   }
 
   return defense;
