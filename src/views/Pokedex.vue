@@ -56,7 +56,7 @@
 
   const onFilterName = (name) => {
     if (name) store.pokemonListFiltered = store.pokemonList.filter(poke => {
-      return poke.name.toLowerCase().includes(name.trim().toLowerCase());
+      return poke.name.includes(name.trim().toLowerCase());
     });
     else store.pokemonListFiltered = store.pokemonList;
   };
@@ -66,7 +66,7 @@
   let isPokemonInfoModal = ref(false);
 
   const onPokemonClicked = async (pokemon) => {
-    router.push(`/pokedex/${pokemon.name.toLowerCase()}`);
+    router.push(`/pokedex/${pokemon.name}`);
   };
 
   let typeClicked = ref(null);

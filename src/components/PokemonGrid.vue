@@ -27,7 +27,7 @@
             #{{ pokemon.entry }}
           </div>
           <div class="font-weight-bold mt-1">
-            {{ pokemon.name }}
+            {{ pokemon.label }}
           </div>
           <div class="mt-2">
             <TypeChip
