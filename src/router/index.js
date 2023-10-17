@@ -43,12 +43,10 @@ router.beforeEach(async (to, from, next) => {
   const store = useStore();
   
   if (to.name === 'Pokemon') {
-    const pokemonExists = store.pokemonObjects[to.params.name];
-
-    if (pokemonExists !== undefined) store.pokemonObjectClicked = pokemonExists;
+    const pokemonExists = store.pokemonMaps.has(to.params.name);
+    if (pokemonExists) store.pokemonObjectClicked = store.pokemonMaps.get(to.params.name);
     else try {
-      const pokemon = (await axios.get(`${store.API_URL}/pokemon?name=${to.params.name}`)).data;
-      store.pokemonClicked = pokemon;
+      store.pokemonClicked = (await axios.get(`${store.API_URL}/pokemon?name=${to.params.name}`)).data;
       store.fetchPokemonInfo();
     } catch (err) {
       console.error(err);

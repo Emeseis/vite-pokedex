@@ -9,7 +9,7 @@
       class="mt-n6 mb-4"
       style="width: 1244px;"
     ></v-progress-linear>
-    <v-row no-gutters justify="space-between">
+    <v-row no-gutters justify="space-between" style="position: sticky; top: 164px;">
       <v-btn
         v-if="store.pokemonObjectClicked.pokemonPrev"
         @click="onPokemonNavigate(store.pokemonObjectClicked.pokemonPrev)"
@@ -148,10 +148,9 @@
   const store = useStore();
   const router = useRouter();
 
+  let tab = ref('about');
   let isLoading = ref(true);
   let showShiny = ref(false);
-
-  const tab = ref('about');
 
   onMounted(() => Object.keys(store.pokemonObjectClicked).length > 0 ? isLoading.value = false : isLoading.value = true);
   watch(() => store.pokemonObjectClicked, () => isLoading.value = false);
