@@ -89,7 +89,7 @@ export const useStore = () => {
         if (pokemon.id != 1) pokemonObject.pokemonPrev = (await axios.get(`${this.API_URL}/pokemon?id=${pokemon.id-1}`)).data;
         if (pokemon.id != 1010) pokemonObject.pokemonNext = (await axios.get(`${this.API_URL}/pokemon?id=${pokemon.id+1}`)).data;
         
-        this.pokemonMaps.set(pokemon.name.toLowerCase(), pokemonObject);
+        this.pokemonMaps.set(pokemon.name, pokemonObject);
         this.pokemonObjectClicked = pokemonObject;
       }
     }
