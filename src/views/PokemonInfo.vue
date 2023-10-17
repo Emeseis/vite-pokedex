@@ -31,7 +31,7 @@
             #{{ store.pokemonObjectClicked.pokemonPrev.entry }}
           </div>
           <div>
-            {{ store.pokemonObjectClicked.pokemonPrev.name }}
+            {{ store.pokemonObjectClicked.pokemonPrev.label }}
           </div>
         </div>
       </v-btn>
@@ -51,7 +51,7 @@
             #{{ store.pokemonObjectClicked.pokemonNext.entry }}
           </div>
           <div>
-            {{ store.pokemonObjectClicked.pokemonNext.name }}
+            {{ store.pokemonObjectClicked.pokemonNext.label }}
           </div>
         </div>
         <v-img
@@ -83,7 +83,7 @@
         #{{ store.pokemonObjectClicked.pokemon.entry }}
       </div>
       <div class="text-h4 font-weight-black mt-2">
-        {{ store.pokemonObjectClicked.pokemon.name }}
+        {{ store.pokemonObjectClicked.pokemon.label }}
       </div>
       <div class="mt-4">
         <TypeChip
@@ -162,7 +162,7 @@
 
   const onPokemonNavigate = (pokemon) => {
     isLoading.value = true;
-    router.push(`/pokedex/${pokemon.name.toLowerCase()}`);
+    router.push(`/pokedex/${pokemon.name}`);
   };
 
   const artwork = computed(() => { 
