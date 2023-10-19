@@ -37,7 +37,7 @@ export const getPokemonMultipliers = async (pokemon, typeList, typeDefenseList) 
   for await (const type of typeList) defense.set(type.title.toLowerCase(), 1);
 
   for await (const type of pokemonType) {
-    let damageRelations = typeDefenseList[type];
+    let damageRelations = typeDefenseList.get(type);
     let noDamage = damageRelations.defense.zero;
     let halfDamage = damageRelations.defense.half;
     let doubleDamage = damageRelations.defense.double;

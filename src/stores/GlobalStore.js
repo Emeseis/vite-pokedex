@@ -41,6 +41,27 @@ export const useStore = () => {
         { title: 'Ascending', value: '1', icon: 'mdi-sort-numeric-ascending' },
         { title: 'Descending', value: '-1', icon: 'mdi-sort-numeric-descending' },
       ],
+      abilityDefenseList: new Map([
+        ['fluffy', [{ type: 'fire', value: 2 }]],
+        ['purifying_salt', [{ type: 'ghost', value: 0.5 }]],
+        ['heatproof', [{ type: 'fire', value: 0.5 }]],
+        ['water_bubble', [{ type: 'fire', value: 0.5 }]],
+        ['thick_fat', [{ type: 'fire', value: 0.5 }, { type: 'ice', value: 0.5 }]],
+        ['earth_eater', [{ type: 'ground', value: 0 }]],
+        ['levitate', [{ type: 'ground', value: 0 }]],
+        ['flash_fire', [{ type: 'fire', value: 0 }]],
+        ['well_baked_body', [{ type: 'fire', value: 0 }]],
+        ['dry_skin', [{ type: 'fire', value: 1.25 }, { type: 'water', value: 0 }]],
+        ['storm_drain', [{ type: 'water', value: 0 }]],
+        ['water_absorb', [{ type: 'water', value: 0 }]],
+        ['sap_sipper', [{ type: 'grass', value: 0 }]],
+        ['lightning_rod', [{ type: 'electric', value: 0 }]],
+        ['motor_drive', [{ type: 'electric', value: 0 }]],
+        ['volt_absorb', [{ type: 'electric', value: 0 }]],
+        ['wonder_guard', [{ value: 'só leva dano de super efeitvo o resto é 0' }]],
+        ['delta_stream', [{ value: 'habilidade do mega rayquaza' }]]
+      ]),      
+      typeDefenseList: new Map(),
       initialParams: { 
         filterName: '', 
         types: ['All'], 
@@ -53,17 +74,17 @@ export const useStore = () => {
         gen: 'All', 
         order: '1' 
       },
+      pokemonMaps: new Map(),
+      pokemonClicked: {},
       pokemonList: [],
       pokemonListAll: [],
       pokemonListFiltered: [],
-      pokemonMaps: new Map(),
-      pokemonClicked: {},
       pokemonObjectClicked: {},
-      typeDefenseList: {},
     }),
     actions: {
       async getTypeDefenseList() {
-        this.typeDefenseList = (await axios.get(`${this.API_URL}/types`)).data;
+        this.typeDefenseList = new Map(Object.entries((await axios.get(`${this.API_URL}/types`)).data));
+        console.log((await axios.get(`${this.API_URL}/types`)).data)
       },
       async getAllPokemons() {
         this.pokemonListAll = (await axios.post(`${store.API_URL}/pokemons`, this.initialParams)).data.pokemons;
@@ -95,7 +116,7 @@ export const useStore = () => {
     }
   })();
 
-  if (!Object.keys(store.typeDefenseList).length) store.getTypeDefenseList();
+  if (!store.typeDefenseList.size) store.getTypeDefenseList();
 
   if (import.meta.hot) import.meta.hot.accept(acceptHMRUpdate(store, import.meta.hot));
 

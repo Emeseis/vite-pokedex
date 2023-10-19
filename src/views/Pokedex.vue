@@ -17,13 +17,6 @@
     :type="typeClicked" 
     @toggleDialog="isTypeInfoModal = false"
   />
-  <PokemonInfoModal
-    :showDialog="isPokemonInfoModal"
-    :pokemon="pokemonClicked"
-    @toggleDialog="isPokemonInfoModal = false"
-    @onPokemonClicked="onPokemonClicked"
-    @onTypeClicked="onTypeClicked"
-  />
 </template>
 
 <script setup>
@@ -31,7 +24,6 @@
   import FilterBar from '@/components/FilterBar.vue'
   import PokemonGrid from '@/components/PokemonGrid.vue';
   import TypeInfoModal from '@/components/TypeInfoModal.vue';
-  import PokemonInfoModal from '@/components/PokemonInfoModal.vue';
 
   const store = useStore();
   const router = useRouter();
@@ -62,8 +54,6 @@
   };
 
   let isLoading = ref(false);
-  let pokemonClicked = ref(null);
-  let isPokemonInfoModal = ref(false);
 
   const onPokemonClicked = async (pokemon) => {
     router.push(`/pokedex/${pokemon.name}`);
