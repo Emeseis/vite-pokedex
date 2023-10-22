@@ -12,18 +12,12 @@
     @onPokemonClicked="onPokemonClicked"
     @onTypeClicked="onTypeClicked"
   />
-  <TypeInfoModal
-    :showDialog="isTypeInfoModal"
-    :type="typeClicked" 
-    @toggleDialog="isTypeInfoModal = false"
-  />
 </template>
 
 <script setup>
   import Loader from '@/components/Loader.vue';
   import FilterBar from '@/components/FilterBar.vue'
   import PokemonGrid from '@/components/PokemonGrid.vue';
-  import TypeInfoModal from '@/components/TypeInfoModal.vue';
 
   const store = useStore();
   const router = useRouter();
@@ -34,15 +28,14 @@
     searchLoading.value = true;
 
     if (!store.pokemonListAll.length) await store.getAllPokemons();
-
     if (!store.pokemonList.length) store.pokemonList = store.pokemonListAll;
 
     if (JSON.stringify(store.searchParams) === JSON.stringify(store.initialParams)) store.pokemonList = store.pokemonListAll;
-    else store.pokemonList = (await axios.post(`${store.API_URL}/pokemons`, store.searchParams)).data.pokemons;
-    
+    else store.pokemonList = (await axios.post(`${store.API_URL}/getPokemons`, store.searchParams)).data.pokemons;
+
     if (store.searchParams.filterName.length) onFilterName(store.searchParams.filterName);
     else store.pokemonListFiltered = store.pokemonList;
-
+    
     searchLoading.value = false;
   };
 
@@ -59,14 +52,8 @@
     router.push(`/pokedex/${pokemon.name}`);
   };
 
-  let typeClicked = ref(null);
-  let isTypeInfoModal = ref(false);
-
-  const onTypeClicked = (type, place) => {
-    if (place !== 'modal') isLoading.value = true;
-    typeClicked.value = type;
-    isLoading.value = false;
-    isTypeInfoModal.value = true;
+  const onTypeClicked = (type) => {
+    console.log(type);
   };
 
   onSearch();

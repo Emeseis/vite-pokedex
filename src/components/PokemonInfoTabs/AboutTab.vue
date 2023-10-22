@@ -10,7 +10,7 @@
             <tr>
               <td width="25%">Species</td>
               <td>
-                {{ pokemon.pokemonSpecies.genera[0] ? pokemon.pokemonSpecies.genera[0].genus : 'None' }}
+                {{ pokemon.pokemonInfo.genera[0] ? pokemon.pokemonInfo.genera[0].genus : 'None' }}
               </td>
             </tr>
             <tr>
@@ -45,10 +45,10 @@
             <tr>
               <td>Base Friendship</td>
               <td>
-                {{ pokemon.pokemonSpecies.base_happiness }}
-                <span v-if="pokemon.pokemonSpecies.base_happiness <  50">(lower than normal)</span>
-                <span v-if="pokemon.pokemonSpecies.base_happiness == 50">(normal)</span>
-                <span v-if="pokemon.pokemonSpecies.base_happiness >  50">(higher than normal)</span>
+                {{ pokemon.pokemonInfo.base_happiness }}
+                <span v-if="pokemon.pokemonInfo.base_happiness <  50">(lower than normal)</span>
+                <span v-if="pokemon.pokemonInfo.base_happiness == 50">(normal)</span>
+                <span v-if="pokemon.pokemonInfo.base_happiness >  50">(higher than normal)</span>
               </td>
             </tr>
             <tr>
@@ -67,8 +67,8 @@
             <tr>
               <td width="25%">Catch Rate</td>
               <td>
-                {{ pokemon.pokemonSpecies.capture_rate }}
-                ({{ Math.round((pokemon.pokemonSpecies.capture_rate*0.130719)*10)/10 }}% with PokéBall, full HP)                
+                {{ pokemon.pokemonInfo.capture_rate }}
+                ({{ Math.round((pokemon.pokemonInfo.capture_rate*0.130719)*10)/10 }}% with PokéBall, full HP)                
               </td>
             </tr>
             <tr>
@@ -91,19 +91,19 @@
               <td>Gender</td>
               <td>                
                 <v-chip 
-                  v-if="pokemon.pokemonSpecies.gender_rate != -1" 
+                  v-if="pokemon.pokemonInfo.gender_rate != -1" 
                   color="blue-lighten-2"
                   size="small"
                   class="mr-1"
                 >
-                  {{ (8-pokemon.pokemonSpecies.gender_rate)*12.5 }}% male
+                  {{ (8-pokemon.pokemonInfo.gender_rate)*12.5 }}% male
                 </v-chip>
                 <v-chip 
-                  v-if="pokemon.pokemonSpecies.gender_rate != -1" 
+                  v-if="pokemon.pokemonInfo.gender_rate != -1" 
                   color="pink-lighten-2"
                   size="small"
                 > 
-                  {{ pokemon.pokemonSpecies.gender_rate*12.5 }}% female
+                  {{ pokemon.pokemonInfo.gender_rate*12.5 }}% female
                 </v-chip>
                 <v-chip v-else color="white" size="small">Genderless</v-chip>
               </td>
@@ -112,19 +112,19 @@
               <td>Egg Groups</td>
               <td>
                 <v-chip size="small" class="mr-1">
-                  {{ capitalizeWord(pokemon.pokemonSpecies.egg_groups[0].name) }}
+                  {{ capitalizeWord(pokemon.pokemonInfo.egg_groups[0].name) }}
                 </v-chip>
-                <v-chip v-if="pokemon.pokemonSpecies.egg_groups[1]" size="small">
-                  {{ capitalizeWord(pokemon.pokemonSpecies.egg_groups[1].name) }}
+                <v-chip v-if="pokemon.pokemonInfo.egg_groups[1]" size="small">
+                  {{ capitalizeWord(pokemon.pokemonInfo.egg_groups[1].name) }}
                 </v-chip>
               </td>
             </tr>
             <tr>
               <td>Egg Cycles</td>
               <td>
-                {{ pokemon.pokemonSpecies.hatch_counter }}
-                ({{ (pokemon.pokemonSpecies.hatch_counter*257-256).toLocaleString('en') }} –
-                {{ (pokemon.pokemonSpecies.hatch_counter*257).toLocaleString('en') }} steps)
+                {{ pokemon.pokemonInfo.hatch_counter }}
+                ({{ (pokemon.pokemonInfo.hatch_counter*257-256).toLocaleString('en') }} –
+                {{ (pokemon.pokemonInfo.hatch_counter*257).toLocaleString('en') }} steps)
               </td>
             </tr>
           </tbody>
@@ -138,7 +138,7 @@
   const props = defineProps({ pokemon: Object });
   
   const growth_rate = computed(() => {
-    switch (props.pokemon.pokemonSpecies.growth_rate.name) {
+    switch (props.pokemon.pokemonInfo.growth_rate.name) {
       case 'slow': return 'Slow';
       case 'slow-then-very-fast': return 'Erratic';
       case 'medium': return 'Medium';

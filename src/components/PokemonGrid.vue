@@ -1,5 +1,4 @@
 <template>
-  <CurtainTop top="216" height="32"/>
   <div class="container-grid mx-n1 px-1 my-6 justify-center">
     <div v-show="!isLoading" style="display: contents">
       <div        
@@ -68,10 +67,9 @@
 <script setup>
   import { VSkeletonLoader } from "vuetify/lib/labs/components.mjs";
   import TypeChip from '@/components/TypeChipLighter.vue';
-  import CurtainTop from '@/components/CurtainTop.vue'
 
   const props = defineProps({ pokemonList: Array, isLoading: Boolean });
-  const emit = defineEmits(['onPokemonClicked','onTypeClicked']);
+  const emit = defineEmits(['onPokemonClicked', 'onTypeClicked']);
 
   const setRipple = (event) => {
     let card = event.target.nextElementSibling;
@@ -80,11 +78,11 @@
     newEvent.clientX = offset.left + offset.width/2;
     newEvent.clientY = offset.top + 10;
     card.dispatchEvent(newEvent);
-  }
+  };
   
   const removeRipple = (event) => {
     event.target.nextElementSibling.dispatchEvent(new Event("mouseup"));
-  }
+  };
 </script>
 
 <style scoped>
@@ -96,21 +94,24 @@
   .sprite {
     position: relative;
     z-index: 3;
+    transition: filter 250ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   .sprite:hover {
     cursor: pointer;
   }
   .sprite:hover + .pokemon-card {
     outline: 3px solid #F44336;
+    filter: brightness(var(--v-theme-light));
   }
   .pokemon-card {
     height: 150px;
     background-color: rgba(var(--v-theme-surface));
-    z-index: 2;
+    transition: filter 250ms cubic-bezier(0.4, 0, 0.2, 1);
   }
   .pokemon-card:hover {
     cursor: pointer;
     outline: 3px solid #F44336;
+    filter: brightness(var(--v-theme-light));
   }
   .entry-text {
     font-size: 12px !important;

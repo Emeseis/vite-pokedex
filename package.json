@@ -11,16 +11,16 @@
     "axios": "^1.5.1",
     "pinia": "^2.1.7",
     "roboto-fontface": "^0.10.0",
-    "vue": "^3.3.4",
+    "vue": "^3.3.6",
     "vue-router": "^4.2.5",
-    "vuetify": "^3.3.21",
+    "vuetify": "^3.3.22",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.4.0",
-    "sass": "^1.69.3",
+    "sass": "^1.69.4",
     "unplugin-auto-import": "^0.16.6",
-    "vite": "^4.4.11",
+    "vite": "^4.5.0",
     "vite-plugin-vuetify": "^1.0.2"
   }
 }

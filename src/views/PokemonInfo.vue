@@ -1,5 +1,4 @@
 <template>
-  <CurtainTop top="148" height="16"/>
   <div class="text-center" v-if="!isLoading">
     <v-progress-linear
       v-show="isLoading"
@@ -73,10 +72,11 @@
         width="270"
         class="artwork ma-0"
       ></v-img>
-      <v-btn
-        :icon="!showShiny ? 'mdi-star' : 'mdi-star-off'"
-        @click="showShiny = !showShiny"
-      ></v-btn>
+      <v-btn icon @click="showShiny = !showShiny">
+        <template #default>
+          <v-icon class="ml-n1" :color="showShiny ? 'yellow' : 'white'">mdi-creation</v-icon>
+        </template>
+      </v-btn>
     </v-row>
     <div>
       <div class="font-weight-black entry-text mt-2">
@@ -139,7 +139,6 @@
 <script setup>
   import Loader from '@/components/Loader.vue';
   import TypeChip from '@/components/TypeChip.vue';
-  import CurtainTop from '@/components/CurtainTop.vue';
   import AboutTab from '@/components/PokemonInfoTabs/AboutTab.vue';
   import MovesTab from '@/components/PokemonInfoTabs/MovesTab.vue';
   import StatsTab from '@/components/PokemonInfoTabs/StatsTab.vue';
@@ -156,7 +155,7 @@
   watch(() => store.pokemonObjectClicked, () => isLoading.value = false);
   onUnmounted(() => store.pokemonObjectClicked = {});
 
-  const onTypeClicked = (type) => { 
+  const onTypeClicked = (type) => {
     console.log(type);
   };
 

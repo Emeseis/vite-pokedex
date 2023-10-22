@@ -1,7 +1,6 @@
 <template>
   <v-theme-provider :theme="isDark ? 'dark': 'light'" with-background>
     <v-app>
-      <img id="pokeball-watermark" src="@/assets/pokeball.svg">
       <div class="header mx-n1 px-1">
         <v-toolbar class="my-8" rounded="xl" elevation="2" height="84" floating>
           <v-tabs v-model="tab" grow color="red">
@@ -35,7 +34,6 @@
       <v-main>       
         <router-view/>
       </v-main>
-      <div class="curtain-bottom mx-n1 px-1"></div>
     </v-app>
   </v-theme-provider>
 </template>
@@ -55,9 +53,10 @@
 
   watch(() => isDark.value, () => {
     document.querySelectorAll('a[value="2"]')[0].style.color = isDark.value ? 'white' : 'black';
+    document.documentElement.style.setProperty('--v-theme-light', isDark.value ? 1.2 : 0.95);
     document.documentElement.style.setProperty('--v-theme-scroll', isDark.value ? '22,22,22' : '155,155,155');
     document.documentElement.style.setProperty('--v-theme-bg-scroll', isDark.value ? '66,66,66' : '222,222,222');
-  })
+  });
 </script>
 
 <style scoped>
@@ -71,23 +70,6 @@
     position: sticky; 
     z-index: 999; 
     top: 0;
-  }
-  .curtain-bottom {
-    z-index: 3;
-    bottom: 0;
-    margin-top: -24px;
-    height: 32px;
-    position: sticky; 
-    background: linear-gradient(transparent, rgb(var(--v-theme-background)) 70%);
-  }
-  #pokeball-watermark {
-    --width: 1252px;
-    position: fixed;
-    top: calc(50% - calc(calc(var(--width) - 228px) / 2)); 
-    left: calc(50% - calc(var(--width) / 2));
-    width: var(--width);
-    opacity: 0.1;
-    z-index: 0;
   }
   .v-tab--selected {
     font-weight: 1000 !important;
@@ -103,6 +85,7 @@
 
 <style>
   :root {
+    --v-theme-light: 1.2;
     --v-theme-scroll: 22,22,22;
     --v-theme-bg-scroll: 66,66,66;
   }
