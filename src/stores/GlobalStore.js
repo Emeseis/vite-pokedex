@@ -41,6 +41,27 @@ export const useStore = () => {
         { title: 'Ascending', value: '1', icon: 'mdi-sort-numeric-ascending' },
         { title: 'Descending', value: '-1', icon: 'mdi-sort-numeric-descending' },
       ],
+      abilityDefenseList: {
+        fluffy: [{ type: 'fire', value: 2 }],
+        purifying_salt: [{ type: 'ghost', value: 0.5 }],
+        heatproof: [{ type: 'fire', value: 0.5 }],
+        water_bubble: [{ type: 'fire', value: 0.5 }],
+        thick_fat: [{ type: 'fire', value: 0.5 }, { type: 'ice', value: 0.5 }],
+        earth_eater: [{ type: 'ground', value: 0 }],
+        levitate: [{ type: 'ground', value: 0 }],
+        flash_fire: [{ type: 'fire', value: 0 }],
+        well_baked_body: [{ type: 'fire', value: 0 }],
+        dry_skin: [{ type: 'fire', value: 1.25 }, { type: 'water', value: 0 }],
+        storm_drain: [{ type: 'water', value: 0 }],
+        water_absorb: [{ type: 'water', value: 0 }],
+        sap_sipper: [{ type: 'grass', value: 0 }],
+        lightning_rod: [{ type: 'electric', value: 0 }],
+        motor_drive: [{ type: 'electric', value: 0 }],
+        volt_absorb: [{ type: 'electric', value: 0 }],
+        wonder_guard: [{}],
+        delta_stream: [{}]
+      },     
+      typeDefenseList: {},
       initialParams: { 
         filterName: '', 
         types: ['All'], 
@@ -53,44 +74,24 @@ export const useStore = () => {
         gen: 'All', 
         order: '1' 
       },
+      pokemonMaps: new Map(),
+      pokemonClicked: {},
       pokemonList: [],
       pokemonListAll: [],
       pokemonListFiltered: [],
-      pokemonMaps: new Map(),
-      pokemonClicked: {},
       pokemonObjectClicked: {},
-      typeDefenseList: {},
     }),
     actions: {
       async getTypeDefenseList() {
-        this.typeDefenseList = (await axios.get(`${this.API_URL}/types`)).data;
+        this.typeDefenseList = (await axios.get(`${this.API_URL}/getTypes`)).data;
       },
       async getAllPokemons() {
-        this.pokemonListAll = (await axios.post(`${store.API_URL}/pokemons`, this.initialParams)).data.pokemons;
+        this.pokemonListAll = (await axios.post(`${store.API_URL}/getPokemons`, this.initialParams)).data.pokemons;
       },
       async fetchPokemonInfo() {
-        const pokemon = this.pokemonClicked;
-        const pokemonInfo = (await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemon.id}`)).data;
-        const pokemonSpecies = (await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}`)).data;
-        const typeDefenses = await getPokemonMultipliers(pokemon, this.typeList, this.typeDefenseList);
-        
-        pokemonSpecies.flavor_text_entries = pokemonSpecies.flavor_text_entries.filter(item => item.language.name == 'en');
-        pokemonSpecies.genera = pokemonSpecies.genera.filter(item => item.language.name == 'en');
-    
-        const pokemonObject = { 
-          pokemon,
-          pokemonInfo,
-          pokemonSpecies,
-          pokemonPrev: null,
-          pokemonNext: null,
-          typeDefenses
-        };
-    
-        if (pokemon.id != 1) pokemonObject.pokemonPrev = (await axios.get(`${this.API_URL}/pokemon?id=${pokemon.id-1}`)).data;
-        if (pokemon.id != 1010) pokemonObject.pokemonNext = (await axios.get(`${this.API_URL}/pokemon?id=${pokemon.id+1}`)).data;
-        
-        this.pokemonMaps.set(pokemon.name, pokemonObject);
-        this.pokemonObjectClicked = pokemonObject;
+        const pokemon = (await axios.get(`${this.API_URL}/getPokemonInfo?id=${this.pokemonClicked.id}`)).data;
+        this.pokemonMaps.set(pokemon.name, pokemon);
+        this.pokemonObjectClicked = pokemon;
       }
     }
   })();

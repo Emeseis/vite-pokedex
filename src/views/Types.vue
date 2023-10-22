@@ -1,5 +1,4 @@
 <template>
-  <CurtainTop top="148" height="16"/>
   <div class="type-grid">
     <v-col
       v-for="(type, index) in store.typeList.slice(1)" :key="index"
@@ -30,26 +29,15 @@
       </v-card>
     </v-col>
   </div>
-  <TypeInfoModal
-    :showDialog="isTypeInfoModal"
-    :type="typeClicked" 
-    @toggleDialog="isTypeInfoModal = false"
-  />
 </template>
 
 <script setup>
   import TypeChip from '@/components/TypeChip.vue';
-  import CurtainTop from '@/components/CurtainTop.vue';
-  import TypeInfoModal from '@/components/TypeInfoModal.vue';
   
   const store = useStore();
 
-  const isTypeInfoModal = ref(false);
-  const typeClicked = ref(null);
-
   const onTypeClicked = (type) => {
-    typeClicked.value = type;
-    isTypeInfoModal.value = true;
+    console.log(type);
   };
 </script>
 

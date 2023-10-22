@@ -1,5 +1,5 @@
 // Composables
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
   {
@@ -32,12 +32,12 @@ const routes = [
     name: 'NotFound',
     component: () => import('@/views/NotFound.vue'),
   },
-]
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
-})
+});
  
 router.beforeEach(async (to, from, next) => {
   const store = useStore();
@@ -46,15 +46,14 @@ router.beforeEach(async (to, from, next) => {
     const pokemonExists = store.pokemonMaps.has(to.params.name);
     if (pokemonExists) store.pokemonObjectClicked = store.pokemonMaps.get(to.params.name);
     else try {
-      store.pokemonClicked = (await axios.get(`${store.API_URL}/pokemon?name=${to.params.name}`)).data;
-      store.fetchPokemonInfo();
+      store.pokemonClicked = (await axios.get(`${store.API_URL}/getPokemon?name=${to.params.name}`)).data;
+      await store.fetchPokemonInfo();
     } catch (err) {
       console.error(err);
       return next('/notfound');
     }
   }
   next();
-})
+});
 
-export default router
-
+export default router;

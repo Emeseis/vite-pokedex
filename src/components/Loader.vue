@@ -13,5 +13,5 @@
 </template>
 
 <script setup>
-  const props = defineProps({ loading: Boolean })
+  const props = defineProps({ loading: Boolean });
 </script>

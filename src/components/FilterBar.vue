@@ -1,6 +1,6 @@
 <template>
   <v-row class="filter-bar justify-center">
-    <v-col cols="3" class="pb-0">
+    <v-col cols="3" class="pt-0 pb-5">
       <v-card class="rounded-xl elevation-2">
         <v-text-field
           hideDetails
@@ -18,7 +18,7 @@
         </v-text-field>
       </v-card>
     </v-col>
-    <v-col cols="3" class="pb-0">
+    <v-col cols="3" class="pt-0 pb-5">
       <v-card class="rounded-xl elevation-2">
         <v-select
           chips
@@ -75,7 +75,7 @@
         </v-select>
       </v-card>
     </v-col>
-    <v-col cols="3" class="pb-0">
+    <v-col cols="3" class="pt-0 pb-5">
       <v-card class="rounded-xl elevation-2">
         <v-select
           hideDetails
@@ -101,7 +101,7 @@
         </v-select>
       </v-card>
     </v-col>
-    <v-col cols="3" class="pb-0">
+    <v-col cols="3" class="pt-0 pb-5">
       <v-card class="rounded-xl elevation-2">
         <v-select
           hideDetails
@@ -135,7 +135,7 @@
   const onClear = () => {
     store.searchParams.filterName = '';
     emit('onFilterName');
-  }
+  };
 
   const typeChange = (typesChange) => {
     if (typesChange.length === 0) types.value = ['All'];

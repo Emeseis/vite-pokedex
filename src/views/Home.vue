@@ -3,7 +3,6 @@
     <v-col class="">
       <v-card class="pa-4 fill-height color-variant" rounded="xl">
         <v-row class="fill-height" no-gutters>
-          <!-- <v-col cols="12"><v-card height="100" rounded="xl"></v-card></v-col> -->
           <v-col>
             <v-card 
               @click="$router.push('/pokedex')"

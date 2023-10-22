@@ -28,24 +28,3 @@ export const zerofyInch = (value) => {
   let zeroes = new Array(3).join("0");
   return (zeroes + value).slice(-2);
 };
-  
-export const getPokemonMultipliers = async (pokemon, typeList, typeDefenseList) => {
-  let defense = new Map();
-
-  const pokemonType = pokemon.types.map(type => type.type.name.toLowerCase());
-
-  for await (const type of typeList) defense.set(type.title.toLowerCase(), 1);
-
-  for await (const type of pokemonType) {
-    let damageRelations = typeDefenseList[type];
-    let noDamage = damageRelations.defense.zero;
-    let halfDamage = damageRelations.defense.half;
-    let doubleDamage = damageRelations.defense.double;
-
-    noDamage.forEach(item => { if (defense.has(item)) defense.set(item, defense.get(item) * 0.0) });
-    halfDamage.forEach(item => { if (defense.has(item)) defense.set(item, defense.get(item) * 0.5) });
-    doubleDamage.forEach(item => { if (defense.has(item)) defense.set(item, defense.get(item) * 2.0) });
-  }
-
-  return defense;
-};
