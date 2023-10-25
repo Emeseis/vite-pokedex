@@ -139,10 +139,10 @@
 <script setup>
   import Loader from '@/components/Loader.vue';
   import TypeChip from '@/components/TypeChip.vue';
-  import AboutTab from '@/components/PokemonInfoTabs/AboutTab.vue';
-  import MovesTab from '@/components/PokemonInfoTabs/MovesTab.vue';
-  import StatsTab from '@/components/PokemonInfoTabs/StatsTab.vue';
-  import EvolutionTab from '@/components/PokemonInfoTabs/EvolutionTab.vue';
+  import AboutTab from '@/components/PokemonInfo/AboutTab.vue';
+  import MovesTab from '@/components/PokemonInfo/MovesTab.vue';
+  import StatsTab from '@/components/PokemonInfo/StatsTab.vue';
+  import EvolutionTab from '@/components/PokemonInfo/EvolutionTab.vue';
 
   const store = useStore();
   const router = useRouter();
