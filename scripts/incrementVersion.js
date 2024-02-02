@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
-import getLatestVersion from './getLatestVersion';
-import saveVersion from './saveVersion';
+import getLatestVersion from './getLatestVersion.js';
+import saveVersion from './saveVersion.js';
 
 export default function incrementVersion(incrementer) {
   const rawPackage = readFileSync('./package.json');
