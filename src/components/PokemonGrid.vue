@@ -48,7 +48,7 @@
           style="visibility: hidden"
         >
         <v-card class="rounded-xl" @click.stop height="150">
-          <v-skeleton-loader color="background"></v-skeleton-loader>
+          <v-skeleton-loader type="card" color="background"></v-skeleton-loader>
         </v-card>
       </div>
     </div>
@@ -56,7 +56,6 @@
 </template>
 
 <script setup>
-  import { VSkeletonLoader } from "vuetify/lib/labs/components.mjs";
   import TypeChip from '@/components/TypeChipLighter.vue';
 
   const props = defineProps({ pokemonList: Array, isLoading: Boolean });
