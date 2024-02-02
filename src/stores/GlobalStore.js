@@ -62,7 +62,7 @@ export const useStore = () => {
         delta_stream: [{}]
       },     
       typeDefenseList: {},
-      defaultSearchParms: { 
+      defaultSearchParams: { 
         filterName: '', 
         types: ['All'], 
         gen: 'All', 
@@ -74,11 +74,11 @@ export const useStore = () => {
         gen: 'All', 
         order: 'asc' 
       },
-      pokemonMaps: new Map(),
-      pokemonClicked: {},
+      pokemonMapList: new Map(),
       pokemonList: [],
-      pokemonListAll: [],
       pokemonListFiltered: [],
+      allPokemonsList: [],
+      pokemonClicked: {},
       pokemonObjectClicked: {},
     }),
     actions: {
@@ -86,11 +86,11 @@ export const useStore = () => {
         this.typeDefenseList = (await axios.get(`${this.API_URL}/getTypes`)).data;
       },
       async getAllPokemons() {
-        this.pokemonListAll = (await axios.post(`${store.API_URL}/getPokemons`, this.defaultSearchParms)).data.pokemons;
+        this.allPokemonsList = (await axios.post(`${store.API_URL}/getPokemons`, this.defaultSearchParams)).data.pokemons;
       },
       async fetchPokemonInfo() {
         const pokemon = (await axios.get(`${this.API_URL}/getPokemonInfo?id=${this.pokemonClicked.id}`)).data;
-        this.pokemonMaps.set(pokemon.pokemon.name, pokemon);
+        this.pokemonMapList.set(pokemon.pokemon.name, pokemon);
         this.pokemonObjectClicked = pokemon;
       }
     }
