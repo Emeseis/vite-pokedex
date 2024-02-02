@@ -1,14 +1,12 @@
-const fs = require('fs');
-const { getLatestVersion } = require('./getLatestVersion');
-const { saveVersion } = require('./saveVersion');
+import { readFileSync } from 'fs';
+import getLatestVersion from './getLatestVersion';
+import saveVersion from './saveVersion';
 
-function incrementVersion(incrementer) {
-  const rawPackage = fs.readFileSync('./package.json');
+export default function incrementVersion(incrementer) {
+  const rawPackage = readFileSync('./package.json');
   const parsedPackage = JSON.parse(rawPackage);
   const latestVersion = getLatestVersion(parsedPackage);
   const nextVersion = incrementer(latestVersion);
   parsedPackage.version = nextVersion;
   saveVersion(parsedPackage);
 }
-
-module.exports = { incrementVersion };

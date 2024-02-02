@@ -1,10 +1,10 @@
-const fs = require('fs');
-const { spawnSync } = require('child_process');
+import { writeFile } from 'fs';
+import { spawnSync } from 'child_process';
 
-function saveVersion(packageJson) {
+export default function saveVersion(packageJson) {
   const { version } = packageJson;
 
-  fs.writeFile('./package.json',
+  writeFile('./package.json',
     Buffer.from(JSON.stringify(packageJson, null, 2)),
     { encoding: 'utf8' },
     (err) => {
@@ -15,5 +15,3 @@ function saveVersion(packageJson) {
     }
   );
 }
-
-module.exports = { saveVersion };

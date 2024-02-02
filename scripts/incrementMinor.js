@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const { incrementVersion } = require('./incrementVersion');
+import incrementVersion from "./incrementVersion";
 
 function incMinorVersion(version) {
   const [major, minor, patch] = version.split('.');
