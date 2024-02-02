@@ -62,7 +62,7 @@ export const useStore = () => {
         delta_stream: [{}]
       },     
       typeDefenseList: {},
-      initialParams: { 
+      defaultSearchParms: { 
         filterName: '', 
         types: ['All'], 
         gen: 'All', 
@@ -86,7 +86,7 @@ export const useStore = () => {
         this.typeDefenseList = (await axios.get(`${this.API_URL}/getTypes`)).data;
       },
       async getAllPokemons() {
-        this.pokemonListAll = (await axios.post(`${store.API_URL}/getPokemons`, this.initialParams)).data.pokemons;
+        this.pokemonListAll = (await axios.post(`${store.API_URL}/getPokemons`, this.defaultSearchParms)).data.pokemons;
       },
       async fetchPokemonInfo() {
         const pokemon = (await axios.get(`${this.API_URL}/getPokemonInfo?id=${this.pokemonClicked.id}`)).data;

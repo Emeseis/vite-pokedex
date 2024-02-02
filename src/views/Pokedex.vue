@@ -30,7 +30,7 @@
     if (!store.pokemonListAll.length) await store.getAllPokemons();
     if (!store.pokemonList.length) store.pokemonList = store.pokemonListAll;
 
-    if (JSON.stringify(store.searchParams) === JSON.stringify(store.initialParams)) store.pokemonList = store.pokemonListAll;
+    if (JSON.stringify(store.searchParams) === JSON.stringify(store.defaultSearchParms)) store.pokemonList = store.pokemonListAll;
     else store.pokemonList = (await axios.post(`${store.API_URL}/getPokemons`, store.searchParams)).data.pokemons;
 
     if (store.searchParams.filterName.length) onFilterName(store.searchParams.filterName);
