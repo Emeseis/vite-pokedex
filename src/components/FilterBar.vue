@@ -128,6 +128,8 @@
 </template>
 
 <script setup>
+  const emit = defineEmits(['onSearch','onFilterName']);
+  
   const store = useStore();
 
   let types = ref(['All']);
@@ -149,8 +151,6 @@
   };
 
   watch(types, newV => typeChange(newV));
-
-  const emit = defineEmits(['onSearch','onFilterName']);
   
   onMounted(() => types.value = store.searchParams.types);
 </script>

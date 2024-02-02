@@ -60,6 +60,7 @@
   import TypeChip from '@/components/TypeChipLighter.vue';
 
   const props = defineProps({ pokemonList: Array, isLoading: Boolean });
+  
   const emit = defineEmits(['onPokemonClicked', 'onTypeClicked']);
 
   const setRipple = (event) => {
