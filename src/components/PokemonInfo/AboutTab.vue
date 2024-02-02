@@ -138,15 +138,14 @@
   const props = defineProps({ pokemon: Object });
   
   const growth_rate = computed(() => {
-    switch (props.pokemon.pokemonInfo.growth_rate.name) {
-      case 'slow': return 'Slow';
-      case 'slow-then-very-fast': return 'Erratic';
-      case 'medium': return 'Medium';
-      case 'medium-slow': return 'Medium Slow';
-      case 'fast': return 'Fast';
-      case 'fast-then-very-slow': return 'Fluctuating';
-      default: return 'None';
-    }
+    let rate = props.pokemon.pokemonInfo.growth_rate.name;
+    if (rate == 'slow') return 'Slow';
+    else if (rate == 'slow-then-very-fast') return 'Erratic';
+    else if (rate == 'medium') return 'Medium';
+    else if (rate == 'medium-slow') return 'Medium Slow';
+    else if (rate == 'fast') return 'Fast';
+    else if (rate == 'fast-then-very-slow') return 'Fluctuating';
+    else return 'None';
   });
 
   const ev_yield = computed(() => {

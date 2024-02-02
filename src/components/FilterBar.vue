@@ -43,12 +43,12 @@
             </div>
           </template>
           <template #append-inner>
-            <v-counter active :value="types.length" :max="2" style="width: 28px; margin-right: -4px;"></v-counter>
+            <v-counter v-if="types[0] != 'All'" active :value="types.length" :max="2" style="width: 28px; margin-right: -4px;"></v-counter>
           </template>
           <template #chip="{ item, props }">
             <span v-if="item.raw.title === 'All'">{{ item.raw.title }}</span>
             <v-chip v-else v-bind="props" :color="store.typeList.find(i => i.title === item.raw.title).color" closable variant="elevated">
-              <span class="text-black font-weight-bold">{{ item.raw.title }}</span>
+              <span class="text-black font-weight-bold" style="margin-bottom: 1px;">{{ item.raw.title }}</span>
             </v-chip>
           </template>
           <template #item="{ item, props }">
@@ -128,6 +128,8 @@
 </template>
 
 <script setup>
+  const emit = defineEmits(['onSearch','onFilterName']);
+  
   const store = useStore();
 
   let types = ref(['All']);
@@ -149,8 +151,6 @@
   };
 
   watch(types, newV => typeChange(newV));
-
-  const emit = defineEmits(['onSearch','onFilterName']);
   
   onMounted(() => types.value = store.searchParams.types);
 </script>
@@ -178,7 +178,7 @@
     opacity: 1;
   }
   :deep(.v-chip__close) {
-    margin-inline-start: 3.5px !important;
+    margin-inline-start: 1.5px !important;
   }
   :deep(.v-chip__close .mdi-close-circle) {
     color: black !important;

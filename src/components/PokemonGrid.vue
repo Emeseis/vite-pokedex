@@ -1,12 +1,7 @@
 <template>
   <div class="container-grid mx-n1 px-1 my-6 justify-center">
     <div v-show="!isLoading" style="display: contents">
-      <div        
-        v-for="pokemon in pokemonList"
-        :key="pokemon"
-        class="pa-0 text-center"
-        style="z-index: 1;"
-      >
+      <div v-for="pokemon in pokemonList" :key="pokemon" class="pa-0 text-center" style="z-index: 1;">
         <img
           width="96"
           height="96"
@@ -44,11 +39,7 @@
       </div>
     </div>
     <div v-show="isLoading" style="display: contents">
-      <div        
-        v-for="item in 42"
-        :key="item"
-        class="pa-0"
-      >
+      <div v-for="item in 42" :key="item" class="pa-0">
         <img
           width="96"
           height="96"
@@ -57,7 +48,7 @@
           style="visibility: hidden"
         >
         <v-card class="rounded-xl" @click.stop height="150">
-          <v-skeleton-loader color="background"></v-skeleton-loader>
+          <v-skeleton-loader type="card" color="background"></v-skeleton-loader>
         </v-card>
       </div>
     </div>
@@ -65,10 +56,10 @@
 </template>
 
 <script setup>
-  import { VSkeletonLoader } from "vuetify/lib/labs/components.mjs";
   import TypeChip from '@/components/TypeChipLighter.vue';
 
   const props = defineProps({ pokemonList: Array, isLoading: Boolean });
+  
   const emit = defineEmits(['onPokemonClicked', 'onTypeClicked']);
 
   const setRipple = (event) => {

@@ -18,6 +18,8 @@
 
 <script setup>
   const props = defineProps({ type: String });
-  const store = useStore();
+
   const emit = defineEmits(['onTypeClicked']);
+  
+  const store = useStore();
 </script>

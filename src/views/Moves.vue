@@ -5,7 +5,7 @@
   </v-row>
 </template>
 
-<script setup>f
+<script setup>
 </script>
 
 <style scoped>

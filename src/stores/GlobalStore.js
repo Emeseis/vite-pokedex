@@ -90,7 +90,7 @@ export const useStore = () => {
       },
       async fetchPokemonInfo() {
         const pokemon = (await axios.get(`${this.API_URL}/getPokemonInfo?id=${this.pokemonClicked.id}`)).data;
-        this.pokemonMaps.set(pokemon.name, pokemon);
+        this.pokemonMaps.set(pokemon.pokemon.name, pokemon);
         this.pokemonObjectClicked = pokemon;
       }
     }
