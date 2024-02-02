@@ -38,8 +38,8 @@ export const useStore = () => {
         { title: 'Ninth', value: '9', disabled: false, icon: 'mdi-roman-numeral-9' },
       ],
       orderList: [
-        { title: 'Ascending', value: '1', icon: 'mdi-sort-numeric-ascending' },
-        { title: 'Descending', value: '-1', icon: 'mdi-sort-numeric-descending' },
+        { title: 'Ascending', value: 'asc', icon: 'mdi-sort-numeric-ascending' },
+        { title: 'Descending', value: 'desc', icon: 'mdi-sort-numeric-descending' },
       ],
       abilityDefenseList: {
         fluffy: [{ type: 'fire', value: 2 }],
@@ -66,13 +66,13 @@ export const useStore = () => {
         filterName: '', 
         types: ['All'], 
         gen: 'All', 
-        order: '1' 
+        order: 'asc' 
       },
       searchParams: { 
         filterName: '', 
         types: ['All'], 
         gen: 'All', 
-        order: '1' 
+        order: 'asc' 
       },
       pokemonMaps: new Map(),
       pokemonClicked: {},
