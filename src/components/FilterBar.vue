@@ -1,5 +1,5 @@
 <template>
-  <v-row class="filter-bar elevation-2 justify-center py-4 rounded-xl" no-gutters>
+  <v-row class="filter-bar justify-center rounded-b-xl elevation-2 py-4 mt-n6" no-gutters>
     <v-col cols="3" class="pl-4 pr-2">
       <v-card class="rounded-xl elevation-2">
         <v-text-field
@@ -78,6 +78,13 @@
         </v-select>
       </v-card>
     </v-col>
+    <v-btn 
+      class="mt-12"
+      size="small" 
+      :icon="isSticky ? 'mdi-menu-swap' : 'mdi-lock'" 
+      style="position: absolute;"
+      @click="toggleToolbar"
+    ></v-btn>
     <v-col cols="3" class="px-2">
       <v-card class="rounded-xl elevation-2">
         <v-select
@@ -141,6 +148,15 @@
 
   let types = ref(['All']);
 
+  const filterBar = document.getElementsByClassName('filter-bar');
+  let isSticky = ref(false);
+
+  const toggleToolbar = () => {
+    if (isSticky.value) filterBar[0].style.top = '84px';    
+    else filterBar[0].style.top = '0px';
+    isSticky.value = !isSticky.value;
+  };
+
   const onClear = () => {
     store.searchParams.filterName = '';
     emit('onFilterName');
@@ -177,8 +193,12 @@
   .filter-bar {
     background-color: rgb(var(--v-theme-on-surface-variant));
     position: sticky;
+    transition: top .5s;
     z-index: 3;
-    top: 148px;
+    height: 84px;
+    top: 84px;
+    left: 18px;
+    right: 18px;
   }
   :deep(.v-field--variant-filled) {
     --v-input-control-height: 52px !important;

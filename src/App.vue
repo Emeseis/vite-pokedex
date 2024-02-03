@@ -1,8 +1,8 @@
 <template>
   <v-theme-provider :theme="isDark ? 'dark': 'light'" with-background>
     <v-app>
-      <div class="header mx-n1 px-1">
-        <v-toolbar class="my-8 toolbar" rounded="xl" elevation="2" height="84" floating>
+      <div class="header mb-6">
+        <v-toolbar elevation="2" height="84">
           <v-tabs v-model="tab" grow color="red">
             <v-tab class="font-weight-bold" :value="1" @click="tab = 2" :ripple="false" to="/">
               <v-icon start size="36px">mdi-home</v-icon>
@@ -61,20 +61,15 @@
 </script>
 
 <style scoped>
-  .v-application {
+  .v-application main {
     max-width: 1244px;
     width: calc(100% - 36px);
     margin: 0 auto;
   }  
   .header {
-    background-color: transparent;
-    pointer-events: none;
     position: sticky; 
     z-index: 999; 
     top: 0;
-  }
-  .toolbar {
-    pointer-events: auto;
   }
   .v-tab--selected {
     font-weight: 1000 !important;
