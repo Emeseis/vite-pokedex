@@ -20,10 +20,10 @@
         :disabled="isLoading"
       >
         <v-img
-          :src="store.pokemonObjectClicked.pokemonPrev.sprite"
-          class="mr-2 ml-n2"
           width="64"
           height="64"
+          class="mr-2 ml-n2"
+          :src="`/pokemon-sprites/${store.pokemonObjectClicked.pokemonPrev.id}.png`"
         ></v-img>
         <div>
           <div class="font-weigth-bold entry-text-btn mb-2">
@@ -54,27 +54,26 @@
           </div>
         </div>
         <v-img
-          :src="store.pokemonObjectClicked.pokemonNext.sprite"
-          class="ml-2 mr-n2"
           width="64"
           height="64"
+          class="ml-2 mr-n2"
+          :src="`/pokemon-sprites/${store.pokemonObjectClicked.pokemonNext.id}.png`"
         ></v-img>
       </v-btn>
     </v-row>
     <v-row no-gutters justify="center" style="margin-top: -96px;">
-      <v-btn
-        icon
-        class="invisible"
-      ></v-btn>
+      <v-btn icon class="invisible"></v-btn>
       <v-img
-        :src="artwork"
-        height="270"
         width="270"
+        height="270"
         class="artwork ma-0"
+        :src="artwork"
       ></v-img>
       <v-btn icon @click="showShiny = !showShiny">
         <template #default>
-          <v-icon class="ml-n1" :color="showShiny ? 'yellow' : 'white'">mdi-creation</v-icon>
+          <v-icon class="ml-n1" :color="showShiny ? 'yellow-darken-1' : 'on-surface'">
+            {{ showShiny ? 'mdi-creation' : 'mdi-creation-outline' }}
+          </v-icon>
         </template>
       </v-btn>
     </v-row>
@@ -100,7 +99,7 @@
         />
       </div>
     </div>
-    <v-card class="rounded-xl elevation-2 mt-6">
+    <v-card class="rounded-xl elevation-2 my-6">
       <v-toolbar height="64" floating  show-arrows>
         <v-tabs v-model="tab" grow>
           <v-tab value="about" class="font-weight-black">

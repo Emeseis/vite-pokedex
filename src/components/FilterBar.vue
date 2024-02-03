@@ -1,7 +1,7 @@
 <template>
   <v-row class="filter-bar justify-center">
     <v-col cols="3" class="pt-0 pb-5">
-      <v-card class="rounded-xl elevation-2">
+      <v-card class="rounded-xl elevation-2 custom-field">
         <v-text-field
           hideDetails
           clearable
@@ -19,7 +19,7 @@
       </v-card>
     </v-col>
     <v-col cols="3" class="pt-0 pb-5">
-      <v-card class="rounded-xl elevation-2">
+      <v-card class="rounded-xl elevation-2 custom-field">
         <v-select
           chips
           multiple
@@ -76,7 +76,7 @@
       </v-card>
     </v-col>
     <v-col cols="3" class="pt-0 pb-5">
-      <v-card class="rounded-xl elevation-2">
+      <v-card class="rounded-xl elevation-2 custom-field">
         <v-select
           hideDetails
           label="Generation"
@@ -102,7 +102,7 @@
       </v-card>
     </v-col>
     <v-col cols="3" class="pt-0 pb-5">
-      <v-card class="rounded-xl elevation-2">
+      <v-card class="rounded-xl elevation-2 custom-field">
         <v-select
           hideDetails
           label="Order"
@@ -163,10 +163,14 @@
 
 <style scoped>
   .filter-bar {
-    background-color: rgb(var(--v-theme-background));
+    background-color: transparent;
+    pointer-events: none;
     position: sticky;
     z-index: 3;
     top: 148px;
+  }
+  .custom-field {
+    pointer-events: auto;
   }
   :deep(.v-field__prepend-inner > .v-icon) {
     opacity: 1;
