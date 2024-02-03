@@ -6,7 +6,7 @@
           width="96"
           height="96"
           class="sprite mb-n14"
-          :src="pokemon.sprite"
+          :src="`/pokemon-sprites/${pokemon.id}.png`"
           @click="$emit('onPokemonClicked', pokemon);"
           @mousedown="setRipple"
           @mouseup="removeRipple"
@@ -56,7 +56,7 @@
 </template>
 
 <script setup>
-  import VLazyImage from "v-lazy-image";
+  import VLazyImage from 'v-lazy-image';
   import TypeChip from '@/components/TypeChipLighter.vue';
 
   const props = defineProps({ pokemonList: Array, isLoading: Boolean });

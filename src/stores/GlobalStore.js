@@ -38,8 +38,8 @@ export const useStore = () => {
         { title: 'Ninth', value: '9', disabled: false, icon: 'mdi-roman-numeral-9' },
       ],
       orderList: [
-        { title: 'Ascending', value: '1', icon: 'mdi-sort-numeric-ascending' },
-        { title: 'Descending', value: '-1', icon: 'mdi-sort-numeric-descending' },
+        { title: 'Ascending', value: 'asc', icon: 'mdi-sort-numeric-ascending' },
+        { title: 'Descending', value: 'desc', icon: 'mdi-sort-numeric-descending' },
       ],
       abilityDefenseList: {
         fluffy: [{ type: 'fire', value: 2 }],
@@ -62,23 +62,23 @@ export const useStore = () => {
         delta_stream: [{}]
       },     
       typeDefenseList: {},
-      initialParams: { 
+      defaultSearchParams: { 
         filterName: '', 
         types: ['All'], 
         gen: 'All', 
-        order: '1' 
+        order: 'asc' 
       },
       searchParams: { 
         filterName: '', 
         types: ['All'], 
         gen: 'All', 
-        order: '1' 
+        order: 'asc' 
       },
-      pokemonMaps: new Map(),
-      pokemonClicked: {},
+      pokemonMapList: new Map(),
       pokemonList: [],
-      pokemonListAll: [],
       pokemonListFiltered: [],
+      allPokemonsList: [],
+      pokemonClicked: {},
       pokemonObjectClicked: {},
     }),
     actions: {
@@ -86,11 +86,11 @@ export const useStore = () => {
         this.typeDefenseList = (await axios.get(`${this.API_URL}/getTypes`)).data;
       },
       async getAllPokemons() {
-        this.pokemonListAll = (await axios.post(`${store.API_URL}/getPokemons`, this.initialParams)).data.pokemons;
+        this.allPokemonsList = (await axios.post(`${store.API_URL}/getPokemons`, this.defaultSearchParams)).data.pokemons;
       },
       async fetchPokemonInfo() {
         const pokemon = (await axios.get(`${this.API_URL}/getPokemonInfo?id=${this.pokemonClicked.id}`)).data;
-        this.pokemonMaps.set(pokemon.pokemon.name, pokemon);
+        this.pokemonMapList.set(pokemon.pokemon.name, pokemon);
         this.pokemonObjectClicked = pokemon;
       }
     }
