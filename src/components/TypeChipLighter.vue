@@ -2,7 +2,7 @@
   <span
     v-ripple
     class="font-weight-bold text-black elevation-1"
-    @click.stop="$emit('onTypeClicked', type)"
+    @click.stop="emit('onTypeClicked', type)"
     :style="{
       height: '32px',
       fontSize: '0.875rem',
