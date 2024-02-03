@@ -1,5 +1,5 @@
 <template>
-  <div class="container-grid mx-n1 px-1 my-6 justify-center">
+  <div class="container-grid mx-n1 px-1 mt-4 mb-6 justify-center">
     <div v-show="!isLoading" style="display: contents">
       <div v-for="pokemon in pokemonList" :key="pokemon" class="pa-0 text-center" style="z-index: 1;">
         <v-lazy-image
