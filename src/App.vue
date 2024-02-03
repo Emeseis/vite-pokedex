@@ -52,7 +52,8 @@
   });
 
   watch(() => isDark.value, () => {
-    document.querySelectorAll('a[value="2"]')[0].style.color = isDark.value ? 'white' : 'black';
+    if (route.name === "Pokemon") document.querySelectorAll('a[value="2"]')[0].style.color = '#F44336';
+    else document.querySelectorAll('a[value="2"]')[0].style.color = isDark.value ? 'white' : 'black';
     document.documentElement.style.setProperty('--v-theme-light', isDark.value ? 1.2 : 0.95);
     document.documentElement.style.setProperty('--v-theme-scroll', isDark.value ? '22,22,22' : '155,155,155');
     document.documentElement.style.setProperty('--v-theme-bg-scroll', isDark.value ? '66,66,66' : '222,222,222');
