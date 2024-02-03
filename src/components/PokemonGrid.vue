@@ -2,7 +2,7 @@
   <div class="container-grid mx-n1 px-1 my-6 justify-center">
     <div v-show="!isLoading" style="display: contents">
       <div v-for="pokemon in pokemonList" :key="pokemon" class="pa-0 text-center" style="z-index: 1;">
-        <img
+        <v-lazy-image
           width="96"
           height="96"
           class="sprite mb-n14"
@@ -11,7 +11,7 @@
           @mousedown="setRipple"
           @mouseup="removeRipple"
           @mouseout="removeRipple"
-        >
+        ></v-lazy-image>
         <div
           class="pokemon-card rounded-xl elevation-2 pb-3 pt-13"
           @click="$emit('onPokemonClicked', pokemon)"
@@ -56,6 +56,7 @@
 </template>
 
 <script setup>
+  import VLazyImage from 'v-lazy-image';
   import TypeChip from '@/components/TypeChipLighter.vue';
 
   const props = defineProps({ pokemonList: Array, isLoading: Boolean });
