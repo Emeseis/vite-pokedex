@@ -100,7 +100,7 @@
         />
       </div>
     </div>
-    <v-card class="rounded-xl elevation-2 mt-6">
+    <v-card class="rounded-xl elevation-2 my-6">
       <v-toolbar height="64" floating  show-arrows>
         <v-tabs v-model="tab" grow>
           <v-tab value="about" class="font-weight-black">
