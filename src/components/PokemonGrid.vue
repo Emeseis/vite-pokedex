@@ -6,7 +6,7 @@
           width="96"
           height="96"
           class="sprite mb-n14"
-          :src="resolvePath(pokemon.id)"
+          :src="`/pokemon-sprites/${pokemon.id}.png`"
           @click="$emit('onPokemonClicked', pokemon);"
           @mousedown="setRipple"
           @mouseup="removeRipple"
@@ -61,10 +61,6 @@
   const props = defineProps({ pokemonList: Array, isLoading: Boolean });
   
   const emit = defineEmits(['onPokemonClicked', 'onTypeClicked']);
-
-  const resolvePath = (id) => {
-    return new URL(`../assets/pokemon-sprites/${id}.png`, import.meta.url).href
-  };
 
   const setRipple = (event) => {
     let card = event.target.nextElementSibling;
