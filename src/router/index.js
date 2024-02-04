@@ -28,7 +28,7 @@ const routes = [
     component: () => import('@/views/Moves.vue'),
   },
   {
-    path: '/notfound',
+    path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/views/NotFound.vue'),
   },
@@ -51,7 +51,7 @@ router.beforeEach(async (to, from, next) => {
       await store.fetchPokemonInfo();
     } catch (err) {
       console.error(err);
-      return next('/notfound');
+      return next({ name: 'NotFound' });
     }
   }
   next();

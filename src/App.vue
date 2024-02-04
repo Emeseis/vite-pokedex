@@ -40,7 +40,7 @@
 <script setup>
   const route = useRoute();
 
-  const tab = ref(0);
+  const tab = ref(undefined);
   const isDark = ref(true);
 
   watch(() => route.name, () => {
