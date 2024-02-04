@@ -4,6 +4,7 @@ export const useStore = () => {
   const store = defineStore('globalStore', {
     state: () => ({
       API_URL: import.meta.env.VITE_API_URL,
+      isLoading: false,
       typeList: [
         { title: 'All', icon: 'mdi-set-all', color: '' },
         { title: 'Normal', icon: 'mdi-account', color: '#aaaa99' },
@@ -86,7 +87,7 @@ export const useStore = () => {
         this.typeDefenseList = (await axios.get(`${this.API_URL}/getTypes`)).data;
       },
       async getAllPokemons() {
-        this.allPokemonsList = (await axios.post(`${store.API_URL}/getPokemons`, this.defaultSearchParams)).data.pokemons;
+        this.allPokemonsList = (await axios.post(`${this.API_URL}/getPokemons`, this.defaultSearchParams)).data.pokemons;
       },
       async fetchPokemonInfo() {
         const pokemon = (await axios.get(`${this.API_URL}/getPokemonInfo?id=${this.pokemonClicked.id}`)).data;

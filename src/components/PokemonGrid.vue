@@ -1,6 +1,6 @@
 <template>
   <div class="container-grid mx-n1 px-1 mt-4 mb-6 justify-center">
-    <div v-show="!isLoading" style="display: contents">
+    <div v-show="!isLoadingGrid" style="display: contents">
       <div v-for="pokemon in pokemonList" :key="pokemon" class="pa-0 text-center" style="z-index: 1;">
         <v-lazy-image
           width="96"
@@ -38,7 +38,7 @@
         </div>
       </div>
     </div>
-    <div v-show="isLoading" style="display: contents">
+    <div v-show="isLoadingGrid" style="display: contents">
       <div v-for="item in 42" :key="item" class="pa-0">
         <img
           width="96"
@@ -59,7 +59,7 @@
   import VLazyImage from 'v-lazy-image';
   import TypeChip from '@/components/TypeChipLighter.vue';
 
-  const props = defineProps({ pokemonList: Array, isLoading: Boolean });
+  const props = defineProps({ pokemonList: Array, isLoadingGrid: Boolean });
   
   const emit = defineEmits(['onPokemonClicked', 'onTypeClicked']);
 

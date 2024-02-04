@@ -1,6 +1,7 @@
 <template>
   <v-theme-provider :theme="isDark ? 'dark': 'light'" with-background>
-    <v-app>
+    <v-app>      
+      <Loader :loading="store.isLoading"/>
       <div class="header mb-6 elevation-2">
         <v-btn-toggle v-model="tab" mandatory style="height: 84px;" class="rounded-0">
           <v-btn size="x-large" stacked class="header-btn" @click="$router.push('/')">
@@ -38,9 +39,12 @@
 </template>
 
 <script setup>
+  import Loader from './components/Loader.vue';
+
+  const store = useStore();
   const route = useRoute();
 
-  const tab = ref(0);
+  const tab = ref(undefined);
   const isDark = ref(true);
 
   watch(() => route.name, () => {

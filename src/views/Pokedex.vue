@@ -1,13 +1,10 @@
 <template>
-  <Loader
-    :loading="isLoading"
-  />
   <FilterBar
     @onSearch="onSearch"
     @onFilterName="onFilterName"
   />
   <PokemonGrid
-    :isLoading="searchLoading"
+    :isLoadingGrid="searchLoading"
     :pokemonList="store.pokemonListFiltered"
     @onPokemonClicked="onPokemonClicked"
     @onTypeClicked="onTypeClicked"
@@ -15,7 +12,6 @@
 </template>
 
 <script setup>
-  import Loader from '@/components/Loader.vue';
   import FilterBar from '@/components/FilterBar.vue'
   import PokemonGrid from '@/components/PokemonGrid.vue';
 
@@ -45,8 +41,6 @@
     });
     else store.pokemonListFiltered = store.pokemonList;
   };
-
-  let isLoading = ref(false);
 
   const onPokemonClicked = async (pokemon) => {
     router.push(`/pokedex/${pokemon.name}`);
