@@ -4,6 +4,7 @@ export const useStore = () => {
   const store = defineStore('globalStore', {
     state: () => ({
       API_URL: import.meta.env.VITE_API_URL,
+      isLoading: false,
       typeList: [
         { title: 'All', icon: 'mdi-set-all', color: '' },
         { title: 'Normal', icon: 'mdi-account', color: '#aaaa99' },

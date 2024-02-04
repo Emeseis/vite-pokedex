@@ -1,7 +1,7 @@
 <template>
-  <div class="text-center" v-if="!isLoading">
+  <div class="text-center" v-if="!store.isLoading">
     <v-progress-linear
-      v-show="isLoading"
+      v-show="store.isLoading"
       indeterminate
       color="red"
       height="8"
@@ -17,7 +17,7 @@
         rounded="xl"
         size="large"
         height="96px"
-        :disabled="isLoading"
+        :disabled="store.isLoading"
       >
         <v-img
           width="64"
@@ -43,7 +43,7 @@
         rounded="xl"
         size="large"
         height="96px"
-        :disabled="isLoading"
+        :disabled="store.isLoading"
       >
         <div>
           <div class="font-weigth-bold entry-text-btn mb-2">
@@ -132,11 +132,9 @@
       </v-window>
     </v-card>
   </div>
-  <Loader :loading="isLoading"/>
 </template>
 
 <script setup>
-  import Loader from '@/components/Loader.vue';
   import TypeChip from '@/components/TypeChip.vue';
   import AboutTab from '@/components/PokemonInfo/AboutTab.vue';
   import MovesTab from '@/components/PokemonInfo/MovesTab.vue';
@@ -147,11 +145,10 @@
   const router = useRouter();
 
   let tab = ref('about');
-  let isLoading = ref(true);
   let showShiny = ref(false);
 
-  onMounted(() => Object.keys(store.pokemonObjectClicked).length > 0 ? isLoading.value = false : isLoading.value = true);
-  watch(() => store.pokemonObjectClicked, () => isLoading.value = false);
+  onMounted(() => Object.keys(store.pokemonObjectClicked).length > 0 ? store.isLoading = false : store.isLoading = true);
+  watch(() => store.pokemonObjectClicked, () => store.isLoading = false);
   onUnmounted(() => store.pokemonObjectClicked = {});
 
   const onTypeClicked = (type) => {
@@ -159,7 +156,7 @@
   };
 
   const onPokemonNavigate = (pokemon) => {
-    isLoading.value = true;
+    store.isLoading = true;
     router.push(`/pokedex/${pokemon.name}`);
   };
 
