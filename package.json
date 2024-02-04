@@ -1,6 +1,6 @@
 {
   "name": "vite-pokedex",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_OPTIONS='--no-warnings=ExperimentalWarning' vite",
