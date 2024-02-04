@@ -1,5 +1,5 @@
 <template>
-  <v-row class="filter-bar justify-center rounded-b-xl elevation-2 py-4 mt-n6" no-gutters>
+  <v-row ref="filterBar" class="filter-bar justify-center rounded-b-xl elevation-2 py-4 mt-n6" no-gutters>
     <v-col cols="3" class="pl-4 pr-2">
       <v-card class="rounded-xl elevation-2">
         <v-text-field
@@ -148,12 +148,13 @@
 
   let types = ref(['All']);
 
-  const filterBar = document.getElementsByClassName('filter-bar');
   let isSticky = ref(true);
-
+  
+  const filterBar = ref(null);
+  
   const toggleToolbar = () => {
-    if (isSticky.value) filterBar[0].style.top = '84px';    
-    else filterBar[0].style.top = '0px';
+    if (isSticky.value) filterBar.value.$el.style.top = '84px';    
+    else filterBar.value.$el.style.top = '0px';
     isSticky.value = !isSticky.value;
   };
 
