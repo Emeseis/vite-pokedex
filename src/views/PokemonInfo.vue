@@ -8,7 +8,7 @@
       class="mt-n6 mb-4"
       style="width: 1244px;"
     ></v-progress-linear>
-    <v-row no-gutters justify="space-between" style="position: sticky; top: 164px;">
+    <v-row no-gutters justify="space-between">
       <v-btn
         v-if="store.pokemonObjectClicked.pokemonPrev"
         @click="onPokemonNavigate(store.pokemonObjectClicked.pokemonPrev)"

@@ -1,5 +1,5 @@
 <template>
-  <div class="container-grid mx-n1 px-1 my-6 justify-center">
+  <div class="container-grid mx-n1 px-1 mt-4 mb-6 justify-center">
     <div v-show="!isLoading" style="display: contents">
       <div v-for="pokemon in pokemonList" :key="pokemon" class="pa-0 text-center" style="z-index: 1;">
         <v-lazy-image
@@ -7,14 +7,14 @@
           height="96"
           class="sprite mb-n14"
           :src="`/pokemon-sprites/${pokemon.id}.png`"
-          @click="$emit('onPokemonClicked', pokemon);"
+          @click="emit('onPokemonClicked', pokemon);"
           @mousedown="setRipple"
           @mouseup="removeRipple"
           @mouseout="removeRipple"
         ></v-lazy-image>
         <div
           class="pokemon-card rounded-xl elevation-2 pb-3 pt-13"
-          @click="$emit('onPokemonClicked', pokemon)"
+          @click="emit('onPokemonClicked', pokemon)"
           v-ripple
         >
           <div class="font-weight-bold entry-text">
@@ -26,12 +26,12 @@
           <div class="mt-2">
             <TypeChip
               :type="pokemon.types[0].type.name"
-              @onTypeClicked="$emit('onTypeClicked', pokemon.types[0].type.name)"
+              @onTypeClicked="emit('onTypeClicked', pokemon.types[0].type.name)"
             />
             <TypeChip
               v-if="pokemon.types.length == 2"
               :type="pokemon.types[1].type.name"
-              @onTypeClicked="$emit('onTypeClicked', pokemon.types[1].type.name)"
+              @onTypeClicked="emit('onTypeClicked', pokemon.types[1].type.name)"
               style="margin-left: 6px;"
             />
           </div>
@@ -92,7 +92,7 @@
     cursor: pointer;
   }
   .sprite:hover + .pokemon-card {
-    outline: 3px solid #F44336;
+    outline: 3px solid rgb(var(--v-theme-tertiary));
     filter: brightness(var(--v-theme-light));
   }
   .pokemon-card {
@@ -102,7 +102,7 @@
   }
   .pokemon-card:hover {
     cursor: pointer;
-    outline: 3px solid #F44336;
+    outline: 3px solid rgb(var(--v-theme-tertiary));
     filter: brightness(var(--v-theme-light));
   }
   .entry-text {

@@ -11,8 +11,8 @@
               v-ripple
             >
               <div>
-                <v-icon size="192">mdi-pokeball</v-icon>
-                <div class="title text-button my-16 text-center">Pokédex</div>
+                <v-icon size="192" class="mb-8 mt-n4">mdi-pokeball</v-icon>
+                <div class="title text-button text-center">Pokédex</div>
               </div>
             </v-card>
           </v-col>
@@ -24,8 +24,8 @@
               v-ripple
             >
               <div>
-                <v-icon size="192">mdi-atom</v-icon>
-                <div class="title text-button my-16 text-center">Types</div>
+                <v-icon size="192" class="mb-8 mt-n4">mdi-atom</v-icon>
+                <div class="title text-button text-center">Types</div>
               </div>
             </v-card>
           </v-col>
@@ -37,8 +37,8 @@
               v-ripple
             >
               <div>
-                <v-icon size="192">mdi-arrow-all</v-icon>
-                <div class="title text-button my-16 text-center">Moves</div>
+                <v-icon size="192" class="mb-8 mt-n4">mdi-arrow-all</v-icon>
+                <div class="title text-button text-center">Moves</div>
               </div>
             </v-card>
           </v-col>
@@ -56,7 +56,7 @@
     background-color: rgb(var(--v-theme-on-surface-variant));
   }
   .cards:hover {
-    outline: 3px solid #F44336;
+    outline: 3px solid rgb(var(--v-theme-tertiary));
     cursor: pointer;
   }
   .title {

@@ -1,9 +1,10 @@
 <template>
-  <v-row class="filter-bar justify-center">
-    <v-col cols="3" class="pt-0 pb-5">
-      <v-card class="rounded-xl elevation-2 custom-field">
+  <v-row ref="filterBar" class="filter-bar justify-center rounded-b-xl elevation-2 py-4 mt-n6" no-gutters>
+    <v-col cols="3" class="pl-4 pr-2">
+      <v-card class="rounded-xl elevation-2">
         <v-text-field
-          hideDetails
+          class="custom-input"
+          hide-details
           clearable
           label="Name"
           v-model="store.searchParams.filterName"
@@ -18,14 +19,15 @@
         </v-text-field>
       </v-card>
     </v-col>
-    <v-col cols="3" class="pt-0 pb-5">
-      <v-card class="rounded-xl elevation-2 custom-field">
+    <v-col cols="3" class="px-2">
+      <v-card class="rounded-xl elevation-2">
         <v-select
-          chips
+          class="custom-input"
+          hide-details
           multiple
-          hideDetails
+          chips
           label="Type"
-          :menuProps="{ contentClass: 'v-select-custom-menu' }" 
+          :menuProps="{ contentClass: 'v-select-custom-list-menu' }" 
           :items="store.typeList"
           v-model="types"
         >
@@ -47,13 +49,14 @@
           </template>
           <template #chip="{ item, props }">
             <span v-if="item.raw.title === 'All'">{{ item.raw.title }}</span>
-            <v-chip v-else v-bind="props" :color="store.typeList.find(i => i.title === item.raw.title).color" closable variant="elevated">
-              <span class="text-black font-weight-bold" style="margin-bottom: 1px;">{{ item.raw.title }}</span>
+            <v-chip v-else v-bind="props" style="height: 22px;" :color="store.typeList.find(i => i.title === item.raw.title).color" closable variant="elevated">
+              <span class="text-black font-weight-bold">{{ item.raw.title }}</span>
             </v-chip>
           </template>
           <template #item="{ item, props }">
-            <v-list-item 
-              v-bind="props" 
+            <v-list-item
+              class="v-select-custom-list-item"
+              v-bind="props"
               :title="item.raw.title" 
               :disabled="(types.length == 2 && !types.includes(item.raw.title) && item.raw.title !== 'All')
             ">
@@ -64,7 +67,7 @@
               </template>
               <template #append>
                 <v-checkbox 
-                  hideDetails 
+                  hide-details 
                   density="compact" 
                   :modelValue="types.includes(item.raw.title)" 
                   disabled>
@@ -75,12 +78,20 @@
         </v-select>
       </v-card>
     </v-col>
-    <v-col cols="3" class="pt-0 pb-5">
-      <v-card class="rounded-xl elevation-2 custom-field">
+    <v-btn 
+      class="mt-12"
+      size="small" 
+      :icon="isSticky ? 'mdi-menu-swap' : 'mdi-lock'" 
+      style="position: absolute;"
+      @click="toggleToolbar"
+    ></v-btn>
+    <v-col cols="3" class="px-2">
+      <v-card class="rounded-xl elevation-2">
         <v-select
-          hideDetails
+          class="custom-input"
+          hide-details
           label="Generation"
-          :menuProps="{ contentClass: 'v-select-custom-menu' }"
+          :menuProps="{ contentClass: 'v-select-custom-list-menu' }"
           :items="store.genList"
           item-disabled="disabled"
           v-model="store.searchParams.gen"
@@ -91,6 +102,7 @@
           </template>
           <template #item="{ item, props }">
             <v-list-item
+              class="v-select-custom-list-item"
               v-bind="props"
               :title="item.raw.title"
               :prependIcon="item.raw.icon"
@@ -101,12 +113,13 @@
         </v-select>
       </v-card>
     </v-col>
-    <v-col cols="3" class="pt-0 pb-5">
-      <v-card class="rounded-xl elevation-2 custom-field">
+    <v-col cols="3" class="pr-4 pl-2">
+      <v-card class="rounded-xl elevation-2">
         <v-select
-          hideDetails
+          class="custom-input"
+          hide-details
           label="Order"
-          :menuProps="{ contentClass: 'v-select-custom-menu' }"
+          :menuProps="{ contentClass: 'v-select-custom-list-menu' }"
           :items="store.orderList"
           v-model="store.searchParams.order"
           @update:modelValue="emit('onSearch', store.searchParams)"
@@ -116,6 +129,7 @@
           </template>
           <template #item="{ item, props }">
             <v-list-item
+              class="v-select-custom-list-item"
               v-bind="props"
               :title="item.raw.title"
               :prependIcon="item.raw.icon"
@@ -133,6 +147,16 @@
   const store = useStore();
 
   let types = ref(['All']);
+
+  let isSticky = ref(true);
+  
+  const filterBar = ref(null);
+  
+  const toggleToolbar = () => {
+    if (isSticky.value) filterBar.value.$el.style.top = '84px';    
+    else filterBar.value.$el.style.top = '0px';
+    isSticky.value = !isSticky.value;
+  };
 
   const onClear = () => {
     store.searchParams.filterName = '';
@@ -156,21 +180,29 @@
 </script>
 
 <style>
-  .v-select-custom-menu {
+  .v-select-custom-list-menu {
     border-radius: 24px !important;
+    min-height: 336px;
+  }
+  .v-select-custom-list-item {
+    padding: 0 12px !important;
+    min-height: 40px !important;
   }
 </style>
 
 <style scoped>
   .filter-bar {
-    background-color: transparent;
-    pointer-events: none;
+    background-color: rgb(var(--v-theme-on-surface-variant));
     position: sticky;
+    transition: top .5s;
     z-index: 3;
-    top: 148px;
+    height: 84px;
+    top: 0px;
+    left: 18px;
+    right: 18px;
   }
-  .custom-field {
-    pointer-events: auto;
+  :deep(.v-field--variant-filled) {
+    --v-input-control-height: 52px !important;
   }
   :deep(.v-field__prepend-inner > .v-icon) {
     opacity: 1;

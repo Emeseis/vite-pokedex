@@ -56,15 +56,12 @@
     else if (effectiveness == 0.25) return '¼';
     else return effectiveness;
   };
-  
-  const theme = document.getElementsByClassName('v-theme-provider')[0];
-  const color = getComputedStyle(theme).getPropertyValue('--v-theme-on-surface-variant');
 
   const getEffectivenessColor = (effectiveness) => {
     if (effectiveness == 4.00) return '#73D216';
     if (effectiveness == 2.00) return '#4E9A06';
     if (effectiveness == 1.25) return '#4E9A06';
-    if (effectiveness == 1.00) return `rgb(${color})`;
+    if (effectiveness == 1.00) return 'rgb(var(--v-theme-on-surface-variant))';
     if (effectiveness == 0.50) return '#A40000';
     if (effectiveness == 0.25) return '#7C0000';
     if (effectiveness == 0.00) return '#2E3436';
