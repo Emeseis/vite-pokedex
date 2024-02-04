@@ -7,7 +7,7 @@ const light = {
     'background': '#f6f8fc',
     'primary': '#1867C0',
     'secondary': '#5CBBF6',
-    'pokeball': '#000000',
+    'tertiary': '#000000',
     'switch': '#ffe600',
     'bg-switch': '#87ceeb'
   },
@@ -19,7 +19,7 @@ const dark = {
     'background': '#121212',
     'primary': '#1867C0',
     'secondary': '#5CBBF6',
-    'pokeball': '#ffffff',
+    'tertiary': '#ffffff',
     'switch': '#ffffff',
     'bg-switch': '#a3a3a3'
   }

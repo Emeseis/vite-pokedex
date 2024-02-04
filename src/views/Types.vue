@@ -54,13 +54,13 @@
     cursor: pointer;
   }
   .icon:hover + .type-card {
-    outline: 3px solid rgb(var(--v-theme-pokeball));
+    outline: 3px solid rgb(var(--v-theme-tertiary));
   }
   .type-card {
     z-index: 1 !important;
   }
   .type-card:hover {
     cursor: pointer;
-    outline: 3px solid rgb(var(--v-theme-pokeball));
+    outline: 3px solid rgb(var(--v-theme-tertiary));
   }
 </style>

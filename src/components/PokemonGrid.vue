@@ -92,7 +92,7 @@
     cursor: pointer;
   }
   .sprite:hover + .pokemon-card {
-    outline: 3px solid #F44336;
+    outline: 3px solid rgb(var(--v-theme-tertiary));
     filter: brightness(var(--v-theme-light));
   }
   .pokemon-card {
@@ -102,7 +102,7 @@
   }
   .pokemon-card:hover {
     cursor: pointer;
-    outline: 3px solid #F44336;
+    outline: 3px solid rgb(var(--v-theme-tertiary));
     filter: brightness(var(--v-theme-light));
   }
   .entry-text {

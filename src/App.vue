@@ -1,35 +1,34 @@
 <template>
   <v-theme-provider :theme="isDark ? 'dark': 'light'" with-background>
     <v-app>
-      <div class="header mb-6">
-        <v-toolbar elevation="2" height="84">
-          <v-tabs v-model="tab" grow color="red">
-            <v-tab class="font-weight-bold" :value="1" @click="tab = 2" :ripple="false" to="/">
-              <v-icon start size="36px">mdi-home</v-icon>
-              Home
-            </v-tab>
-            <v-tab class="font-weight-bold" :value="2" :ripple="false" to="/pokedex">
-              <v-icon start size="36px">mdi-pokeball</v-icon>
-              Pokédex
-            </v-tab>
-            <v-tab class="font-weight-bold" :value="3" :ripple="false" to="/types">
-              <v-icon start size="36px">mdi-atom</v-icon>
-              Types
-            </v-tab>
-            <v-tab class="font-weight-bold" :value="4" :ripple="false" to="/moves">
-              <v-icon start size="36px">mdi-arrow-all</v-icon>
-              Moves
-            </v-tab>
-            <v-tab class="font-weight-bold" :value="5" :ripple="false" disabled>
-            </v-tab>
+      <div class="header mb-6 elevation-2">
+        <v-btn-toggle v-model="tab" mandatory style="height: 84px;" class="rounded-0">
+          <v-btn size="x-large" stacked class="header-btn" @click="$router.push('/')">
+            <v-icon>mdi-home</v-icon>
+            <span>Home</span>
+          </v-btn>
+          <v-btn size="x-large" stacked class="header-btn" @click="$router.push('/pokedex')">
+            <v-icon>mdi-pokeball</v-icon>
+            <span>Pokedex</span>
+          </v-btn>
+          <v-btn size="x-large" stacked class="header-btn" @click="$router.push('/types')">
+            <v-icon>mdi-atom</v-icon>
+            <span>Types</span>
+          </v-btn>
+          <v-btn size="x-large" stacked class="header-btn" @click="$router.push('/moves')">
+            <v-icon>mdi-arrow-all</v-icon>
+            <span>Moves</span>
+          </v-btn>
+        </v-btn-toggle>
+        <div class="header-btn d-flex align-center justify-center">
+          <div class="text-center">
             <v-switch
               inset
               hide-details
               v-model="isDark"
-              class="d-flex align-center mr-n16 switch"
             ></v-switch>
-          </v-tabs>
-        </v-toolbar>
+          </div>
+        </div>
       </div>
       <v-main>       
         <router-view/>
@@ -41,19 +40,18 @@
 <script setup>
   const route = useRoute();
 
-  const tab = ref(1);
+  const tab = ref(0);
   const isDark = ref(true);
 
   watch(() => route.name, () => {
-    if (route.name === "Pokemon") {
-      tab.value = 2;
-      document.querySelectorAll('a[value="2"]')[0].style.color = '#F44336';
-    } else document.querySelectorAll('a[value="2"]')[0].style.color = isDark.value ? 'white' : 'black';
+    if (route.name == 'Home') tab.value = 0;
+    if (route.name == 'Pokedex') tab.value = 1;
+    if (route.name == 'Pokemon') tab.value = 1;
+    if (route.name == 'Types') tab.value = 2;
+    if (route.name == 'Moves') tab.value = 3;
   });
 
   watch(() => isDark.value, () => {
-    if (route.name === "Pokemon") document.querySelectorAll('a[value="2"]')[0].style.color = '#F44336';
-    else document.querySelectorAll('a[value="2"]')[0].style.color = isDark.value ? 'white' : 'black';
     document.documentElement.style.setProperty('--v-theme-light', isDark.value ? 1.2 : 0.95);
     document.documentElement.style.setProperty('--v-theme-scroll', isDark.value ? '22,22,22' : '155,155,155');
     document.documentElement.style.setProperty('--v-theme-bg-scroll', isDark.value ? '66,66,66' : '222,222,222');
@@ -65,14 +63,22 @@
     max-width: 1244px;
     width: calc(100% - 36px);
     margin: 0 auto;
-  }  
+  }
   .header {
+    background-color: rgb(var(--v-theme-surface));
     position: sticky; 
+    display: flex;
     z-index: 999; 
     top: 0;
   }
+  .header-btn {
+    width: calc(20vw - (15px / 5));
+  }
   .v-tab--selected {
     font-weight: 1000 !important;
+  }
+  .v-btn--stacked .v-icon {
+    margin-bottom: 4px;
   }
   :deep(.v-switch) .v-switch__thumb {
     background-color: rgb(var(--v-theme-switch)) !important;

@@ -149,7 +149,7 @@
   let types = ref(['All']);
 
   const filterBar = document.getElementsByClassName('filter-bar');
-  let isSticky = ref(false);
+  let isSticky = ref(true);
 
   const toggleToolbar = () => {
     if (isSticky.value) filterBar[0].style.top = '84px';    
@@ -196,7 +196,7 @@
     transition: top .5s;
     z-index: 3;
     height: 84px;
-    top: 84px;
+    top: 0px;
     left: 18px;
     right: 18px;
   }
