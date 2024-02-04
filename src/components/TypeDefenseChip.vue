@@ -15,14 +15,14 @@
     <div class="mb-n1">{{ type }}</div>
     <div
       class="font-weight-regular text-white effectiveness-chip"
-      :class="effectiveness == 1 ? 'elevation-n1' : 'elevation-2'"
+      :class="effectiveness != 1 ? 'elevation-2' : 'elevation-n1'"
       @click.stop="effectiveness != 1 ? emit('onTypeClicked', type) : ''"
       v-ripple.stop="effectiveness != 1 ? false : true"
       :style="{
         width: '76px',
         height: '28px',
         fontSize: getEffectivenessFont(effectiveness),
-        backgroundColor: effectiveness == 1 ? 'rgb(var(--v-theme-on-surface-variant))' : getEffectivenessColor(effectiveness),
+        backgroundColor: getEffectivenessColor(effectiveness),
         borderRadius: '24px',
         justifyContent: 'center',
         display: 'inline-flex',
@@ -61,6 +61,7 @@
     if (effectiveness == 4.00) return '#73D216';
     if (effectiveness == 2.00) return '#4E9A06';
     if (effectiveness == 1.25) return '#4E9A06';
+    if (effectiveness == 1.00) return 'rgb(var(--v-theme-on-surface-variant))';
     if (effectiveness == 0.50) return '#A40000';
     if (effectiveness == 0.25) return '#7C0000';
     if (effectiveness == 0.00) return '#2E3436';
