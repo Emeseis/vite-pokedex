@@ -87,7 +87,7 @@ export const useStore = () => {
         this.typeDefenseList = (await axios.get(`${this.API_URL}/getTypes`)).data;
       },
       async getAllPokemons() {
-        this.allPokemonsList = (await axios.post(`${store.API_URL}/getPokemons`, this.defaultSearchParams)).data.pokemons;
+        this.allPokemonsList = (await axios.post(`${this.API_URL}/getPokemons`, this.defaultSearchParams)).data.pokemons;
       },
       async fetchPokemonInfo() {
         const pokemon = (await axios.get(`${this.API_URL}/getPokemonInfo?id=${this.pokemonClicked.id}`)).data;

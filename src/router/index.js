@@ -47,10 +47,12 @@ router.beforeEach(async (to, from, next) => {
     const pokemonExists = store.pokemonMapList.has(to.params.name);
     if (pokemonExists) store.pokemonObjectClicked = store.pokemonMapList.get(to.params.name);
     else try {
+      next();
       store.isLoading = true;
       store.pokemonClicked = (await axios.get(`${store.API_URL}/getPokemon?name=${to.params.name}`)).data;
       await store.fetchPokemonInfo();
       store.isLoading = false;
+      return;
     } catch (err) {
       console.error(err);
       return next({ name: 'NotFound' });
