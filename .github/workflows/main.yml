@@ -11,7 +11,7 @@ jobs:
   Docker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -27,8 +27,10 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Push new version
-        run: git push
+      - name: Pull/Push new version
+        run: |
+          git pull origin master
+          git push origin master
 
       - name: Login to DockerHub Registry
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
