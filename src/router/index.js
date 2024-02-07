@@ -54,6 +54,7 @@ router.beforeEach(async (to, from, next) => {
       return next();
     } catch (err) {
       console.error(err);
+      store.isLoading = false;
       return next({ name: 'NotFound' });
     }
   }
